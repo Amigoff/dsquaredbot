@@ -1,1 +1,1 @@
-web: python da.py
+web: gunicorn da.py --workers=3
