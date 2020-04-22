@@ -2,7 +2,7 @@ import discord
 import youtube_dl
 from discord.ext import commands
 import os
-tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp_3Lg.s5-YF_7dQ4jMMihDzxw-2XGznso"
+tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp_8mQ.JsqGK1yalx1G38m9Xzh9-XXpx5c"
 client = commands.Bot(command_prefix='!')
 @client.command(pass_context=True)
 async def da(ctx, arg):
