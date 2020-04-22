@@ -57,7 +57,7 @@ async def manda(ctx, url):
         if file.endswith(".mp3"):
             name = file
             os.rename(file, "song.mp3")
-    discord.opus.load_opus(__name__)
+    discord.opus.load_opus("song.mp3")
     while not discord.opus.is_loaded():
         time.sleep(0.5)
     print('opus_loaded')
