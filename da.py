@@ -10,6 +10,7 @@ sys.path.append(f'{path}/ffmpeg')
 
 tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp__5Q.HCQ_UQLz-2irr6xGt0_L9-NNkn4"
 client = commands.Bot(command_prefix='!')
+
 OPUS_LIBS = ['libopus-0.x86.dll', 'libopus-0.x64.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
 
 
@@ -21,10 +22,11 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
         try:
             discord.opus.load_opus(opus_lib)
             return
-        except OSError:
-            pass
+        except OSError as e:
+            print('error os', e)
 
         raise RuntimeError('Could not load an opus lib. Tried %s' % (', '.join(opus_libs)))
+
 
 @client.command(pass_context=True)
 async def da(ctx, arg):
@@ -71,7 +73,7 @@ async def manda(ctx, url):
         if file.endswith(".mp3"):
             name = file
             os.rename(file, "song.mp3")
-    await load_opus_lib()
+    load_opus_lib()
     print('opus_loaded')
     voice.play(discord.FFmpegPCMAudio("song.mp3"))
     # except Exception as e:
