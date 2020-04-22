@@ -35,7 +35,6 @@ async def manda(ctx, url):
         channel = ctx.author.voice.channel
         voice = await channel.connect()
         print('Вызвана команда "манда"')
-
         await ctx.send("Зделаю дарагой ежжи")
         songthere = os.path.isfile("song.mp3")
         if songthere:
@@ -59,5 +58,5 @@ async def manda(ctx, url):
                 os.rename(file, "song.mp3")
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
     except Exception as e:
-        await ctx.send(f'Ошибочка бля {e}')
+        await ctx.send(f'уа уа Ошибочка бля {e}')
 client.run(tok)
