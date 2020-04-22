@@ -21,7 +21,7 @@ async def pizda(ctx):
         await voice_client.disconnect()
         await ctx.send("Откинулся Аркадий")
     except Exception as e:
-        ctx.send(f'Ошибочка бля {e}')
+        await ctx.send(f'Ошибочка бля {e}')
 
 
 @client.command(pass_context=True)
@@ -54,5 +54,5 @@ async def manda(ctx, url):
                 os.rename(file, "song.mp3")
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
     except Exception as e:
-        ctx.send(f'Ошибочка бля {e}')
+        await ctx.send(f'Ошибочка бля {e}')
 client.run(tok)
