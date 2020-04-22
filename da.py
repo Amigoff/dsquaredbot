@@ -1,7 +1,12 @@
 import discord
 import youtube_dl
 from discord.ext import commands
+import sys
 import os
+path = os.getcwd()
+print(path)
+sys.path.append(f'{path}/ffmpeg')
+
 tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp__5Q.HCQ_UQLz-2irr6xGt0_L9-NNkn4"
 client = commands.Bot(command_prefix='!')
 
