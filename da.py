@@ -74,6 +74,7 @@ async def manda(ctx, url):
             name = file
             os.rename(file, "song.mp3")
     load_opus_lib()
+    
     print('opus_loaded')
     voice.play(discord.FFmpegPCMAudio("song.mp3"))
     # except Exception as e:
