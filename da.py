@@ -4,14 +4,27 @@ from discord.ext import commands
 import sys
 import os
 import time
-
 path = os.getcwd()
 print(path)
 sys.path.append(f'{path}/ffmpeg')
 
 tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp__5Q.HCQ_UQLz-2irr6xGt0_L9-NNkn4"
 client = commands.Bot(command_prefix='!')
+OPUS_LIBS = ['libopus-0.x86.dll', 'libopus-0.x64.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
 
+
+def load_opus_lib(opus_libs=OPUS_LIBS):
+    if discord.opus.is_loaded():
+        return True
+
+    for opus_lib in opus_libs:
+        try:
+            discord.opus.load_opus(opus_lib)
+            return
+        except OSError:
+            pass
+
+        raise RuntimeError('Could not load an opus lib. Tried %s' % (', '.join(opus_libs)))
 
 @client.command(pass_context=True)
 async def da(ctx, arg):
@@ -34,6 +47,8 @@ async def pizda(ctx):
 @client.command(pass_context=True)
 async def manda(ctx, url):
     # try:
+    channel = ctx.author.voice.channel
+    voice = await channel.connect()
     print('Вызвана команда "манда"')
     await ctx.send("Зделаю дарагой ежжи")
     songthere = os.path.isfile("song.mp3")
@@ -56,25 +71,9 @@ async def manda(ctx, url):
         if file.endswith(".mp3"):
             name = file
             os.rename(file, "song.mp3")
-
-    user = ctx.message.author
-    voice_channel = user.voice.voice_channel
-    channel = None
-    # only play music if user is in a voice channel
-    if voice_channel != None:
-        # grab user's voice channel
-        channel = voice_channel.name
-        await client.say('User is in channel: ' + channel)
-        # create StreamPlayer
-        vc = await client.join_voice_channel(voice_channel)
-        player = vc.create_ffmpeg_player('song.mp3', after=lambda: print('done'))
-        player.start()
-        while not player.is_done():
-            await time.sleep(1)
-        # disconnect after the player has finished
-        player.stop()
-        await vc.disconnect()
-    # voice.play(discord.FFmpegPCMAudio("song.mp3"))
+    await load_opus_lib()
+    print('opus_loaded')
+    voice.play(discord.FFmpegPCMAudio("song.mp3"))
     # except Exception as e:
     #     await ctx.send(f'уа уа Ошибочка бля {e}')
 client.run(tok)
