@@ -11,7 +11,7 @@ sys.path.append(f'{path}/ffmpeg')
 tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp__5Q.HCQ_UQLz-2irr6xGt0_L9-NNkn4"
 client = commands.Bot(command_prefix='!')
 
-OPUS_LIBS = ['libopus-0.x86.dll', 'libopus-0.x64.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
+OPUS_LIBS = ['libopus.so.0.5.3', 'libopus-0.x86.dll', 'libopus-0.x64.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
 
 
 def load_opus_lib(opus_libs=OPUS_LIBS):
