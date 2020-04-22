@@ -4,6 +4,7 @@ from discord.ext import commands
 import os
 tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp__5Q.HCQ_UQLz-2irr6xGt0_L9-NNkn4"
 client = commands.Bot(command_prefix='!')
+
 @client.command(pass_context=True)
 async def da(ctx, arg):
     await ctx.send("хуйню базаришь")
