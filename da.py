@@ -25,7 +25,7 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
         except OSError as e:
             print('error os', e)
 
-        raise RuntimeError('Could not load an opus lib. Tried %s' % (', '.join(opus_libs)))
+        #raise RuntimeError('Could not load an opus lib. Tried %s' % (', '.join(opus_libs)))
 
 
 @client.command(pass_context=True)
@@ -74,7 +74,7 @@ async def manda(ctx, url):
             name = file
             os.rename(file, "song.mp3")
     load_opus_lib()
-    
+
     print('opus_loaded')
     voice.play(discord.FFmpegPCMAudio("song.mp3"))
     # except Exception as e:
