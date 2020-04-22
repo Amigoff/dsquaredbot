@@ -3,6 +3,7 @@ import youtube_dl
 from discord.ext import commands
 import sys
 import os
+import time
 path = os.getcwd()
 print(path)
 sys.path.append(f'{path}/ffmpeg')
@@ -56,6 +57,10 @@ async def manda(ctx, url):
         if file.endswith(".mp3"):
             name = file
             os.rename(file, "song.mp3")
+    discord.opus.load_opus(__name__)
+    while not discord.opus.is_loaded():
+        time.sleep(0.5)
+    print('opus_loaded')
     voice.play(discord.FFmpegPCMAudio("song.mp3"))
     # except Exception as e:
     #     await ctx.send(f'уа уа Ошибочка бля {e}')
