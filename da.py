@@ -8,7 +8,7 @@ path = os.getcwd()
 print(path)
 sys.path.append(f'{path}/ffmpeg')
 
-tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp__5Q.HCQ_UQLz-2irr6xGt0_L9-NNkn4"
+tok = "NzAyMTM5MjM5MTIyNDY4OTc0.XqA3pw.Y7-YPukENatknfDO0raXiyV5NiU"
 client = commands.Bot(command_prefix='!')
 
 OPUS_LIBS = ['libopus.so.0.5.3', 'libopus-0.x86.dll', 'libopus-0.x64.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
@@ -75,8 +75,11 @@ async def manda(ctx, url):
             if file.endswith(".mp3"):
                 name = file
                 os.rename(file, "song.mp3")
-
-        voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        await voice.play(discord.FFmpegPCMAudio("song.mp3"))
     except Exception as e:
-        await ctx.send(f'уа уа Ошибочка бля {e}')
+        print('Error', e)
+        try:
+            await ctx.send(f'уа уа Ошибочка бля {e}')
+        except:
+            pass
 client.run(tok)
