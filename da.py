@@ -57,11 +57,14 @@ async def manda(ctx, url):
         if file.endswith(".mp3"):
             name = file
             os.rename(file, "song.mp3")
-    discord.opus.load_opus()
-    while not discord.opus.is_loaded():
-        time.sleep(0.5)
-    print('opus_loaded')
-    voice.play(discord.FFmpegPCMAudio("song.mp3"))
+    player = voice.create_ffmpeg_player('vuvuzela.mp3', after=lambda: print('done'))
+    player.start()
+    while not player.is_done():
+        await time.sleep(1)
+    # disconnect after the player has finished
+    player.stop()
+    await voice.disconnect()
+    # voice.play(discord.FFmpegPCMAudio("song.mp3"))
     # except Exception as e:
     #     await ctx.send(f'уа уа Ошибочка бля {e}')
 client.run(tok)
