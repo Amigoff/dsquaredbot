@@ -27,6 +27,8 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
 
         #raise RuntimeError('Could not load an opus lib. Tried %s' % (', '.join(opus_libs)))
 
+load_opus_lib()
+print('opus_loaded')
 
 @client.command(pass_context=True)
 async def da(ctx, arg):
@@ -48,35 +50,33 @@ async def pizda(ctx):
 
 @client.command(pass_context=True)
 async def manda(ctx, url):
-    # try:
-    channel = ctx.author.voice.channel
-    voice = await channel.connect()
-    print('Вызвана команда "манда"')
-    await ctx.send("Зделаю дарагой ежжи")
-    songthere = os.path.isfile("song.mp3")
-    if songthere:
-        os.remove("song.mp3")
+    try:
+        channel = ctx.author.voice.channel
+        voice = await channel.connect()
+        print('Вызвана команда "манда"')
+        await ctx.send("Зделаю дарагой ежжи")
+        songthere = os.path.isfile("song.mp3")
+        if songthere:
+            os.remove("song.mp3")
 
-    ydl_opts = {
-        "format": "bestaudio/beat",
-        "postprocessors": [{
-            "key": "FFmpegExtractAudio",
-            "preferredcodec": "mp3",
-            "preferredquality": "192",
-        }],
-    }
+        ydl_opts = {
+            "format": "bestaudio/beat",
+            "postprocessors": [{
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "mp3",
+                "preferredquality": "192",
+            }],
+        }
 
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
-    for file in os.listdir("./"):
-        print(f'Тут файл: {file}')
-        if file.endswith(".mp3"):
-            name = file
-            os.rename(file, "song.mp3")
-    load_opus_lib()
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+        for file in os.listdir("./"):
+            print(f'Тут файл: {file}')
+            if file.endswith(".mp3"):
+                name = file
+                os.rename(file, "song.mp3")
 
-    print('opus_loaded')
-    voice.play(discord.FFmpegPCMAudio("song.mp3"))
-    # except Exception as e:
-    #     await ctx.send(f'уа уа Ошибочка бля {e}')
+        voice.play(discord.FFmpegPCMAudio("song.mp3"))
+    except Exception as e:
+        await ctx.send(f'уа уа Ошибочка бля {e}')
 client.run(tok)
