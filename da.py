@@ -4,6 +4,7 @@ from discord.ext import commands
 import sys
 import os
 import time
+
 path = os.getcwd()
 print(path)
 sys.path.append(f'{path}/ffmpeg')
