@@ -76,5 +76,11 @@ async def manda(ctx, url):
                 name = file
                 os.rename(file, "song.mp3")
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
+    except Exception as e:
+        print('Error', e)
+        try:
+            await ctx.send(f'уа уа Ошибочка бля {e}')
+        except:
+            pass    
     
 client.run(tok)
