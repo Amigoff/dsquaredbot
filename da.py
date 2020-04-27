@@ -74,10 +74,9 @@ async def manda(ctx, url):
             if file.endswith(".mp3"):
                 name = file
                 os.rename(file, "song.mp3")
-        try:        
-            await voice.play(discord.FFmpegPCMAudio("song.mp3"))
-        except Exception as e:
-            await ctx.send(f'Error {e}')
+        voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        voice.source = discord.PCMVolumeTransformer(voice.source)
+        voice.source.volume = 0.07
     except Exception as e:
         print('Error', e)
         try:
