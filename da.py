@@ -6,7 +6,7 @@ import os
 import time
 path = os.getcwd()
 print(path)
-sys.path.append(f'{path}/ffmpeg\bin')
+sys.path.append(f'{path}/ffmpeg')
 
 tok = "NzAyMTM5MjM5MTIyNDY4OTc0.XqA3pw.Y7-YPukENatknfDO0raXiyV5NiU"
 client = commands.Bot(command_prefix='!')
