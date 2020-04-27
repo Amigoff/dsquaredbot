@@ -51,7 +51,6 @@ async def pizda(ctx):
 async def manda(ctx, url):
     try:
         channel = ctx.author.voice.channel
-        voice = await channel.connect()
         print('Вызвана команда "манда"')
         await ctx.send("Зделаю дарагой ежжи")
         songthere = os.path.isfile("song.mp3")
@@ -69,6 +68,7 @@ async def manda(ctx, url):
 
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([url])
+        voice = await channel.connect()    
         for file in os.listdir("./"):
             print(f'Тут файл: {file}')
             if file.endswith(".mp3"):
