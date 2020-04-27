@@ -74,7 +74,10 @@ async def manda(ctx, url):
             if file.endswith(".mp3"):
                 name = file
                 os.rename(file, "song.mp3")
-        voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        try:        
+            voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        except Exception as e:
+            print('Error', e)
     except Exception as e:
         print('Error', e)
         try:
