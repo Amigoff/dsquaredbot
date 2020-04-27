@@ -77,7 +77,7 @@ async def manda(ctx, url):
         try:        
             voice.play(discord.FFmpegPCMAudio("song.mp3"))
         except Exception as e:
-            print('Error', e)
+            await ctx.send(f'Error {e}')
     except Exception as e:
         print('Error', e)
         try:
