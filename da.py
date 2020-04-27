@@ -59,7 +59,7 @@ async def manda(ctx, url):
             os.remove("song.mp3")
 
         ydl_opts = {
-            "format": "bestaudio/beat",
+            "format": "bestaudio/best",
             "postprocessors": [{
                 "key": "FFmpegExtractAudio",
                 "preferredcodec": "mp3",
