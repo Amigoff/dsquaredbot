@@ -37,7 +37,7 @@ async def a(ctx, arg, url="ф", vol=0.7):
     if str(arg) == "побазарим":
         await da(ctx)
     if str(arg) == "подкрути":
-        await v(ctx, arg)
+        await v(ctx, url)
 @client.command(pass_context=True)
 async def v(ctx, arg):
     voice.source.volume = float(arg)
