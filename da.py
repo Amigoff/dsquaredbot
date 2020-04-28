@@ -63,6 +63,9 @@ async def pizda(ctx):
 
 @client.command(pass_context=True)
 async def manda(ctx, url, vol=0.7):
+    lst = []
+    lst.append(url)
+    count = 0
     global voice
     try:
         channel = ctx.author.voice.channel
@@ -83,15 +86,18 @@ async def manda(ctx, url, vol=0.7):
             "preferredquality": "192",
         }],
     }
-
+    urp = lst[count]
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+        ydl.download([urp])
     for file in os.listdir("./"):
         print(f'Тут файл: {file}')
         if file.endswith(".mp3"):
             name = file
             os.rename(file, "song.mp3")
-    voice.play(discord.FFmpegPCMAudio("song.mp3"))
+    try:        
+        voice.play(discord.FFmpegPCMAudio("song.mp3"), after = lambda e: count += 1)
+    except:
+        lst.append(url)
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = float(vol)
 client.run(tok)
