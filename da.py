@@ -56,7 +56,7 @@ async def pizda(ctx):
 
 
 @client.command(pass_context=True)
-async def manda(ctx, url):
+async def manda(ctx, url, vol=0,07):
     global voice
     try:
         channel = ctx.author.voice.channel
@@ -86,5 +86,6 @@ async def manda(ctx, url):
             name = file
             os.rename(file, "song.mp3")
     voice.play(discord.FFmpegPCMAudio("song.mp3"))
-    
+    voice.source = discord.PCMVolumeTransformer(voice.source)
+    voice.source.volume = float(vol)
 client.run(tok)
