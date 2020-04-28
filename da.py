@@ -100,6 +100,7 @@ async def manda(ctx, url, vol=0.7):
         count += 1
     except:
         lst.append(url)
+        count += 1
     for i in range(1, count):
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download(lst[i])
