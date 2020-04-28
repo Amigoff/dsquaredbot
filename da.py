@@ -95,7 +95,8 @@ async def manda(ctx, url, vol=0.7):
             name = file
             os.rename(file, "song.mp3")
     try:        
-        voice.play(discord.FFmpegPCMAudio("song.mp3"), after = lambda e: count += 1)
+        voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        count += 1
     except:
         lst.append(url)
     voice.source = discord.PCMVolumeTransformer(voice.source)
