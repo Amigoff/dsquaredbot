@@ -29,7 +29,7 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
 load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
-async def !(ctx, arg, url):
+async def a(ctx, arg, url):
     if str(arg) == "сыграй дарагой":
         manda(ctx, url)
 
