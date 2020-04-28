@@ -63,6 +63,7 @@ async def pizda(ctx):
 
 @client.command(pass_context=True)
 async def manda(ctx, url, vol=0.7):
+    global lst
     lst = []
     lst.append(url)
     count = 0
@@ -99,6 +100,8 @@ async def manda(ctx, url, vol=0.7):
         count += 1
     except:
         lst.append(url)
+    for i in range(1, count):
+        voice.play(discord.FFmpegPCMAudio("song.mp3"))
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = float(vol)
 client.run(tok)
