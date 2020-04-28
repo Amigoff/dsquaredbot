@@ -28,6 +28,10 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
 
 load_opus_lib()
 print('opus_loaded')
+@client.command(pass_context=True)
+async def !(ctx, arg, url):
+    if str(arg) == "сыграй дарагой":
+        manda(ctx, url)
 
 @client.command(pass_context=True)
 async def da(ctx, arg):
@@ -48,7 +52,7 @@ async def pizda(ctx):
 
 
 @client.command(pass_context=True)
-async def сыграй дарагой(ctx, url):
+async def manda(ctx, url):
     try:
         channel = ctx.author.voice.channel
         print('Вызвана команда "манда"')
