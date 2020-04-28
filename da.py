@@ -101,6 +101,13 @@ async def manda(ctx, url, vol=0.7):
     except:
         lst.append(url)
     for i in range(1, count):
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download(lst[i])
+        for file in os.listdir("./"):
+            print(f'Тут файл: {file}')
+            if file.endswith(".mp3"):
+                name = file
+                os.rename(file, "song.mp3")
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = float(vol)
