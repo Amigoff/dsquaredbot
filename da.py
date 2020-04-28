@@ -30,11 +30,15 @@ load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
 async def a(ctx, arg, url):
-    if str(arg) == "сыграйдарагой":
+    if str(arg) == "сыграй_дарагой":
         await manda(ctx, url)
+    if str(arg) == "фсо":
+        await pizda(ctx)
+    if str(arg) == "побазарим":
+        await da(ctx)
 
 @client.command(pass_context=True)
-async def da(ctx, arg):
+async def da(ctx):
     print('Вызвана команда "да"')
     await ctx.send("хуйню базаришь")
 
