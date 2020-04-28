@@ -29,9 +29,9 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
 load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
-async def a(ctx, arg, url):
+async def a(ctx, arg, url, vol=0.07):
     if str(arg) == "сыграй_дарагой":
-        await manda(ctx, url)
+        await manda(ctx, url, vol)
     if str(arg) == "фсо" and str(url) == "давай":
         await pizda(ctx)
     if str(arg) == "побазарим":
