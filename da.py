@@ -29,13 +29,19 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
 load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
-async def a(ctx, arg, url, vol=0.07):
+async def a(ctx, arg, url="ф", vol=0.7):
     if str(arg) == "сыграй_дарагой":
         await manda(ctx, url, vol)
     if str(arg) == "фсо" and str(url) == "давай":
         await pizda(ctx)
     if str(arg) == "побазарим":
         await da(ctx)
+    if str(arg) == "подкрути":
+        await v(ctx, arg)
+@client.command(pass_context=True)
+async def v(ctx, arg):
+    voice.source.volume = float(arg)
+    
 
 @client.command(pass_context=True)
 async def da(ctx):
@@ -56,7 +62,7 @@ async def pizda(ctx):
 
 
 @client.command(pass_context=True)
-async def manda(ctx, url, vol=0.07):
+async def manda(ctx, url, vol=0.7):
     global voice
     try:
         channel = ctx.author.voice.channel
