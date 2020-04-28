@@ -56,7 +56,7 @@ async def pizda(ctx):
 
 
 @client.command(pass_context=True)
-async def manda(ctx, url, vol=0,07):
+async def manda(ctx, url, vol=0.07):
     global voice
     try:
         channel = ctx.author.voice.channel
