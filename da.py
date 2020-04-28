@@ -32,7 +32,7 @@ print('opus_loaded')
 async def a(ctx, arg, url):
     if str(arg) == "сыграй_дарагой":
         await manda(ctx, url)
-    if str(arg) == "фсо":
+    if str(arg) == "фсо" and str(url) == "давай":
         await pizda(ctx)
     if str(arg) == "побазарим":
         await da(ctx)
@@ -50,7 +50,7 @@ async def pizda(ctx):
         guild = ctx.message.guild
         voice_client = guild.voice_client
         await voice_client.disconnect()
-        await ctx.send("Откинулся Аркадий")
+        await ctx.send("Мусора прижали")
     except Exception as e:
         await ctx.send(f'Ошибочка бля {e}')
 
