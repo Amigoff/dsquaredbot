@@ -48,38 +48,34 @@ async def pizda(ctx):
 
 
 @client.command(pass_context=True)
-async def manda(ctx, url):
+async def сыграй дарагой(ctx, url):
     try:
         channel = ctx.author.voice.channel
         print('Вызвана команда "манда"')
         await ctx.send("Зделаю дарагой ежжи")
         songthere = os.path.isfile("song.mp3")
-        if songthere:
-            os.remove("song.mp3")
-
-        ydl_opts = {
-            "format": "bestaudio/best",
-            "postprocessors": [{
-                "key": "FFmpegExtractAudio",
-                "preferredcodec": "mp3",
-                "preferredquality": "192",
-            }],
-        }
-
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
-        voice = await channel.connect()    
-        for file in os.listdir("./"):
-            print(f'Тут файл: {file}')
-            if file.endswith(".mp3"):
-                name = file
-                os.rename(file, "song.mp3")
-        voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        voice = await channel.connect()
     except Exception as e:
         print('Error', e)
-        try:
-            await ctx.send(f'уа уа Ошибочка бля {e}')
-        except:
-            pass    
+    if songthere:
+        os.remove("song.mp3")
+
+    ydl_opts = {
+        "format": "bestaudio/best",
+        "postprocessors": [{
+            "key": "FFmpegExtractAudio",
+            "preferredcodec": "mp3",
+            "preferredquality": "192",
+        }],
+    }
+
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+    for file in os.listdir("./"):
+        print(f'Тут файл: {file}')
+        if file.endswith(".mp3"):
+            name = file
+            os.rename(file, "song.mp3")
+    voice.play(discord.FFmpegPCMAudio("song.mp3"))
     
 client.run(tok)
