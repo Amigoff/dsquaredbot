@@ -31,7 +31,7 @@ print('opus_loaded')
 @client.command(pass_context=True)
 async def a(ctx, arg, url):
     if str(arg) == "сыграйдарагой":
-        manda(ctx, url)
+        await manda(ctx, url)
 
 @client.command(pass_context=True)
 async def da(ctx, arg):
