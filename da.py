@@ -97,6 +97,7 @@ async def manda(ctx, url, vol=0.7):
             os.rename(file, "song.mp3")
     try:
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        del lst[0]
     except:
         lst.append
     while lst:        
