@@ -99,7 +99,7 @@ async def manda(ctx, url, vol=0.7):
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
         del lst[0]
     except:
-        lst.append
+        lst.append[url]
     while lst:        
          urp = lst[0]
          with youtube_dl.YoutubeDL(ydl_opts) as ydl:
