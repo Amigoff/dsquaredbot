@@ -30,7 +30,7 @@ load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
 async def a(ctx, arg, url):
-    if str(arg) == "сыграй дарагой":
+    if str(arg) == "сыграйдарагой":
         manda(ctx, url)
 
 @client.command(pass_context=True)
