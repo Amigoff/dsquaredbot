@@ -63,10 +63,11 @@ async def pizda(ctx):
     except Exception as e:
         await ctx.send(f'Ошибочка бля {e}')
        
-async def play():
+def play():
     global lst
     global count
     global voice
+    count = 1
     while len(lst) > 0:
         urp = lst[0]
         songthere = os.path.isfile("song.mp3")
@@ -81,8 +82,8 @@ async def play():
                 os.rename(file, "song.mp3")
              
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
-        
         lst.remove(urp)
+    count = 0    
     
             
 
@@ -112,9 +113,9 @@ async def manda(ctx, url, vol=0.3):
             "preferredquality": "192",
         }],
     }
-    try:
+    if count == 0:
         play()
-    except:
+    else:
         pass   
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = float(vol)
