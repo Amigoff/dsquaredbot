@@ -79,7 +79,7 @@ def play():
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
         print(lst)
         del lst[0]
-    lst = []    
+    
             
 
 
