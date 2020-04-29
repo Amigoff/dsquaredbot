@@ -77,8 +77,6 @@ async def manda(ctx, url, vol=0.3):
         voice = await channel.connect()
     except Exception as e:
         print('Error', e)
-    if songthere:
-        os.remove("song.mp3")
 
     ydl_opts = {
         "format": "bestaudio/best",
@@ -91,6 +89,8 @@ async def manda(ctx, url, vol=0.3):
     if count == 0:
         count = 1
         urp = lst[0]
+        if songthere:
+            os.remove("song.mp3")
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([urp])
         for file in os.listdir("./"):
@@ -101,9 +101,11 @@ async def manda(ctx, url, vol=0.3):
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
         del lst[0]
     else:
-        lst.append[url]
+        lst.append[str(url)]
     while len(lst) > 0:        
          urp = lst[0]
+         if songthere:
+             os.remove("song.mp3")   
          with youtube_dl.YoutubeDL(ydl_opts) as ydl:
              ydl.download([urp])
          for file in os.listdir("./"):
