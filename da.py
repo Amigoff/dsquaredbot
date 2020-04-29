@@ -61,7 +61,7 @@ async def pizda(ctx):
     except Exception as e:
         await ctx.send(f'Ошибочка бля {e}')
 def play():
-    global(lst)
+    global lst
     global count
     while len(lst) > 0:       
         urp = lst[0]
