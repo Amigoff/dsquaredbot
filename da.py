@@ -104,11 +104,12 @@ async def manda(ctx, url, vol=0.3):
     if len(lst) > 1:
         await ctx.send("Добавлено в очередь")
         await ctx.send("Длина очереди " + str(len(lst) - 1))
+    else:
+        await ctx.send("Зделаю дарагой ежжи")
     global voice
     try:
         channel = ctx.author.voice.channel
         print('Вызвана команда "манда"')
-        await ctx.send("Зделаю дарагой ежжи")
         songthere = os.path.isfile("song.mp3")
         voice = await channel.connect()
     except Exception as e:
