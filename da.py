@@ -62,25 +62,26 @@ async def pizda(ctx):
         await ctx.send(f'Ошибочка бля {e}')
 def play():
     while len(lst) > 0:       
-            urp = lst[0]
-            if songthere:
-                os.remove("song.mp3")   
-            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([urp])
-            for file in os.listdir("./"):
-                print(f'Тут файл: {file}')
-                if file.endswith(".mp3"):
-                    name = file
-                    os.rename(file, "song.mp3")
-            count = 1        
-            voice.play(discord.FFmpegPCMAudio("song.mp3"))
-            del lst[0]
-            count = 0
-            await ctx.send(lst)    
+        urp = lst[0]
+        if songthere:
+            os.remove("song.mp3")   
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([urp])
+        for file in os.listdir("./"):
+            print(f'Тут файл: {file}')
+            if file.endswith(".mp3"):
+                name = file
+                os.rename(file, "song.mp3")
+        count = 1        
+        voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        del lst[0]
+    count = 0
+            
 
 
 @client.command(pass_context=True)
 async def manda(ctx, url, vol=0.3):
+    global ydl_opts
     global count
     global lst
     lst.append(url)
