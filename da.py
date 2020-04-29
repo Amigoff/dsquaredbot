@@ -80,10 +80,11 @@ async def play():
             print(f'Тут файл: {file}')
             if file.endswith(".mp3"):
                 name = file
-                os.rename(file, "song.mp3")
+                os.rename(file, "song.mp3")        
              
-        voice.play(discord.FFmpegPCMAudio("song.mp3"))
-        while not voice.is_done():
+        player = voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        
+        while not player.is_done():
             await asyncio.sleep(1)
         lst.remove(urp)
     count = 0    
