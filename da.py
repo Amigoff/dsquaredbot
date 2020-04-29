@@ -83,7 +83,7 @@ async def play():
                 os.rename(file, "song.mp3")        
              
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
-        while not voice.is_playing():
+        while voice.is_playing():
             await asyncio.sleep(1)
         lst.remove(urp)
     count = 0    
