@@ -102,7 +102,7 @@ async def manda(ctx, url, vol=0.3):
         del lst[0]
     else:
         lst.append[str(url)]
-    for i in lst::        
+    for i in lst:       
         urp = lst[0]
         if songthere:
             os.remove("song.mp3")   
