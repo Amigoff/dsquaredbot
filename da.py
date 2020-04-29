@@ -102,19 +102,19 @@ async def manda(ctx, url, vol=0.3):
         del lst[0]
     else:
         lst.append[str(url)]
-    while len(lst) > 0:        
-         urp = lst[0]
-         if songthere:
-             os.remove("song.mp3")   
-         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-             ydl.download([urp])
-         for file in os.listdir("./"):
-             print(f'Тут файл: {file}')
-             if file.endswith(".mp3"):
-                 name = file
-                 os.rename(file, "song.mp3")
-         voice.play(discord.FFmpegPCMAudio("song.mp3"))
-         del lst[0]
+    for i in lst::        
+        urp = lst[0]
+        if songthere:
+            os.remove("song.mp3")   
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([urp])
+        for file in os.listdir("./"):
+            print(f'Тут файл: {file}')
+            if file.endswith(".mp3"):
+                name = file
+                os.rename(file, "song.mp3")
+        voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        del lst[0]
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = float(vol)
 client.run(tok)
