@@ -110,6 +110,7 @@ async def manda(ctx, url, vol=0.3):
     }
     if count == 0:
         play()
+    await ctx.send(lst)    
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = float(vol)
 client.run(tok)
