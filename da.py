@@ -63,6 +63,7 @@ async def pizda(ctx):
 def play():
     while len(lst) > 0:       
         urp = lst[0]
+        songthere = os.path.isfile("song.mp3")
         if songthere:
             os.remove("song.mp3")   
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
@@ -84,6 +85,7 @@ async def manda(ctx, url, vol=0.3):
     global ydl_opts
     global count
     global lst
+    global songthere
     lst.append(url)
     count = 0
     global voice
