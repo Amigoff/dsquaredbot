@@ -34,7 +34,7 @@ load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
 async def a(ctx, arg, url="0.3", vol=0.3):
-    if str(arg) == "сыграй_дарагой":
+    if str(arg) == "сыграй":
         await manda(ctx, url, vol)
     if str(arg) == "фсо" and str(url) == "давай":
         await pizda(ctx)
@@ -42,6 +42,8 @@ async def a(ctx, arg, url="0.3", vol=0.3):
         await da(ctx)
     if str(arg) == "подкрути":
         await v(ctx, url)
+    if str(arg) == "очисти":
+        await clean(ctx)
 @client.command(pass_context=True)
 async def v(ctx, arg):
     voice.source.volume = float(arg)
@@ -88,9 +90,7 @@ async def play():
         lst.remove(urp)
     count = 0    
     
-            
-
-
+    
 @client.command(pass_context=True)
 async def manda(ctx, url, vol=0.3):
     global ydl_opts
@@ -123,4 +123,11 @@ async def manda(ctx, url, vol=0.3):
         await play()
     else:
         pass  
+
+@client.command(pass_context=True)
+async def clean(ctx):
+    lst = []
+    await ctx.send("Проведена чистка среди офицеров")
+    await ctx.send("Длина очереди " + str(len(lst) - 1))
+    
 client.run(tok)
