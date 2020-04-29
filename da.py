@@ -8,6 +8,7 @@ print(path)
 sys.path.append(f'{path}/ffmpeg')
 lst = []
 count = 0
+q = Queue()
 
 tok = "NzAyMTM5MjM5MTIyNDY4OTc0.XqA3pw.Y7-YPukENatknfDO0raXiyV5NiU"
 client = commands.Bot(command_prefix='!')
@@ -90,7 +91,7 @@ async def manda(ctx, url, vol=0.3):
     global count
     global lst
     global songthere
-    lst.append(url)
+    q.put(url)
     global voice
     try:
         channel = ctx.author.voice.channel
@@ -109,8 +110,10 @@ async def manda(ctx, url, vol=0.3):
             "preferredquality": "192",
         }],
     }
-    if len(lst) > 0:
+    try:
         await play()
+    except:
+        pass
     await ctx.send(lst)    
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = float(vol)
