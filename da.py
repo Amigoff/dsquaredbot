@@ -8,7 +8,7 @@ print(path)
 sys.path.append(f'{path}/ffmpeg')
 lst = []
 count = 0
-q = Queue()
+
 
 tok = "NzAyMTM5MjM5MTIyNDY4OTc0.XqA3pw.Y7-YPukENatknfDO0raXiyV5NiU"
 client = commands.Bot(command_prefix='!')
@@ -91,7 +91,7 @@ async def manda(ctx, url, vol=0.3):
     global count
     global lst
     global songthere
-    q.put(url)
+    lst.append(url)
     global voice
     try:
         channel = ctx.author.voice.channel
