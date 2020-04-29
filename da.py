@@ -77,7 +77,6 @@ def play():
                 os.rename(file, "song.mp3")
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
         print(lst)
-    lst = []
             
 
 
