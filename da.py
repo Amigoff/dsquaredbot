@@ -29,7 +29,7 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
 load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
-async def a(ctx, arg, url="0.7", vol=0.7):
+async def a(ctx, arg, url="0.3", vol=0.3):
     if str(arg) == "сыграй_дарагой":
         await manda(ctx, url, vol)
     if str(arg) == "фсо" and str(url) == "давай":
@@ -62,7 +62,7 @@ async def pizda(ctx):
 
 
 @client.command(pass_context=True)
-async def manda(ctx, url, vol=0.7):
+async def manda(ctx, url, vol=0.3):
     global lst
     lst = []
     lst.append(url)
@@ -100,7 +100,7 @@ async def manda(ctx, url, vol=0.7):
         del lst[0]
     except:
         lst.append[url]
-    while lst:        
+    while len(lst) > 0:        
          urp = lst[0]
          with youtube_dl.YoutubeDL(ydl_opts) as ydl:
              ydl.download([urp])
