@@ -79,7 +79,7 @@ async def play():
                 name = file
                 os.rename(file, "song.mp3")
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
-        await ctx.send(lst)
+        ctx.send(lst)
         lst.pop(0)
     
             
