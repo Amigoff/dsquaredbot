@@ -115,6 +115,7 @@ async def manda(ctx, url, vol=0.3):
                 os.rename(file, "song.mp3")
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
         del lst[0]
+    await ctx.send("lst")    
     voice.source = discord.PCMVolumeTransformer(voice.source)
     voice.source.volume = float(vol)
 client.run(tok)
