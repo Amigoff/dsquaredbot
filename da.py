@@ -64,7 +64,7 @@ async def pizda(ctx):
 def play():
     global lst
     global count
-    for urp in lst::       
+    for urp in lst:   
         songthere = os.path.isfile("song.mp3")
         if songthere:
             os.remove("song.mp3")   
