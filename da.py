@@ -3,6 +3,7 @@ import youtube_dl
 from discord.ext import commands
 import sys
 import os
+import asyncio
 path = os.getcwd()
 print(path)
 sys.path.append(f'{path}/ffmpeg')
@@ -82,6 +83,8 @@ def play():
                 os.rename(file, "song.mp3")
              
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        while not voice.is_done():
+            await asyncio.sleep(1)
         lst.remove(urp)
     count = 0    
     
