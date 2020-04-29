@@ -87,7 +87,10 @@ async def play():
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
         while voice.is_playing():
             await asyncio.sleep(1)
-        lst.remove(urp)
+        try:    
+            lst.remove(urp)
+        except:
+            pass
     count = 0    
     
     
@@ -100,7 +103,7 @@ async def manda(ctx, url, vol=0.3):
     lst.append(url)
     if len(lst) > 1:
         await ctx.send("Добавлено в очередь")
-        await ctx.send("Длина очереди" + str(len(lst) - 1))
+        await ctx.send("Длина очереди " + str(len(lst) - 1))
     global voice
     try:
         channel = ctx.author.voice.channel
@@ -126,8 +129,9 @@ async def manda(ctx, url, vol=0.3):
 
 @client.command(pass_context=True)
 async def clean(ctx):
+    global lst
     lst = []
     await ctx.send("Проведена чистка среди офицеров")
-    await ctx.send("Длина очереди " + str(len(lst) - 1))
+    await ctx.send("Длина очереди " + str(len(lst)))
     
 client.run(tok)
