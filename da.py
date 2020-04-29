@@ -79,6 +79,7 @@ def play():
             if file.endswith(".mp3"):
                 name = file
                 os.rename(file, "song.mp3")
+        ctx.send(lst)        
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
         ctx.send(lst)
         lst.remove(urp)
