@@ -61,7 +61,8 @@ async def pizda(ctx):
         await ctx.send("Мусора прижали")
     except Exception as e:
         await ctx.send(f'Ошибочка бля {e}')
-def play():
+@client.command(pass_context=True)        
+async def play():
     global lst
     global count
     while len(lst) > 0:
@@ -77,7 +78,7 @@ def play():
                 name = file
                 os.rename(file, "song.mp3")
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
-        print(lst)
+        ctx.send(lst)
         lst.pop(0)
     
             
