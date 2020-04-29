@@ -64,8 +64,7 @@ async def pizda(ctx):
 def play():
     global lst
     global count
-    while len(lst) > 0:       
-        urp = lst[0]
+    for urp in lst::       
         songthere = os.path.isfile("song.mp3")
         if songthere:
             os.remove("song.mp3")   
@@ -80,6 +79,7 @@ def play():
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
         del lst[0]
     count = 0
+    lst = []
             
 
 
