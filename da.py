@@ -75,10 +75,8 @@ def play():
             if file.endswith(".mp3"):
                 name = file
                 os.rename(file, "song.mp3")
-        count = 1        
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
         print(lst)
-        count = 0
     lst = []
             
 
@@ -108,7 +106,7 @@ async def manda(ctx, url, vol=0.3):
             "preferredquality": "192",
         }],
     }
-    if count == 0:
+    if len(lst) > 0:
         play()
     await ctx.send(lst)    
     voice.source = discord.PCMVolumeTransformer(voice.source)
