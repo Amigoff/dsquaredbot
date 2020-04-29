@@ -63,7 +63,7 @@ async def pizda(ctx):
     except Exception as e:
         await ctx.send(f'Ошибочка бля {e}')
        
-def play():
+async def play():
     global lst
     global count
     global voice
