@@ -94,10 +94,11 @@ async def manda(ctx, url, vol=0.3):
         if file.endswith(".mp3"):
             name = file
             os.rename(file, "song.mp3")
-    try:
+    if count == 0:
+        count = 1
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
         del lst[0]
-    except:
+    else:
         lst.append[url]
     while len(lst) > 0:        
          urp = lst[0]
