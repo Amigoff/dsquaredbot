@@ -77,7 +77,7 @@ def play():
                 os.rename(file, "song.mp3")
         count = 1        
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
-        del lst[0]
+        print(lst)
     count = 0
     lst = []
             
