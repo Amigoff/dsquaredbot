@@ -61,6 +61,7 @@ async def pizda(ctx):
     except Exception as e:
         await ctx.send(f'Ошибочка бля {e}')
 def play():
+    global count
     while len(lst) > 0:       
         urp = lst[0]
         songthere = os.path.isfile("song.mp3")
