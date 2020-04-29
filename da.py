@@ -6,6 +6,7 @@ import os
 path = os.getcwd()
 print(path)
 sys.path.append(f'{path}/ffmpeg')
+lst = []
 
 tok = "NzAyMTM5MjM5MTIyNDY4OTc0.XqA3pw.Y7-YPukENatknfDO0raXiyV5NiU"
 client = commands.Bot(command_prefix='!')
@@ -65,7 +66,6 @@ async def pizda(ctx):
 async def manda(ctx, url, vol=0.3):
     global count
     global lst
-    lst = []
     lst.append(url)
     count = 0
     global voice
@@ -102,7 +102,7 @@ async def manda(ctx, url, vol=0.3):
         del lst[0]
     else:
         lst.append[str(url)]
-    for i in lst:       
+    while len(lst) > 0:       
         urp = lst[0]
         if songthere:
             os.remove("song.mp3")   
