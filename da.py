@@ -46,6 +46,7 @@ async def a(ctx, arg, url="0.3", vol=0.3):
         await clean(ctx)
 @client.command(pass_context=True)
 async def v(ctx, arg):
+    global voice
     voice.source.volume = float(arg)
     
 
