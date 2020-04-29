@@ -98,6 +98,10 @@ async def manda(ctx, url, vol=0.3):
     global lst
     global songthere
     lst.append(url)
+    if len(lst) > 1:
+        await ctx.send("Добавлено в очередь")
+        await ctx.send("Длина очереди", len(lst) - 1)
+        
     global voice
     try:
         channel = ctx.author.voice.channel
