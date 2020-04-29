@@ -63,7 +63,6 @@ async def pizda(ctx):
 
 @client.command(pass_context=True)
 async def manda(ctx, url, vol=0.3):
-    global lst
     lst = []
     lst.append(url)
     count = 0
