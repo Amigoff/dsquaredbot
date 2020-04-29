@@ -78,7 +78,7 @@ def play():
         count = 1        
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
         print(lst)
-    count = 0
+        count = 0
     lst = []
             
 
