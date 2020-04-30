@@ -44,6 +44,12 @@ async def a(ctx, arg, url="0.3", vol=0.3):
         await v(ctx, url)
     if str(arg) == "очисти":
         await clean(ctx)
+    if str(arg) == "паехали":
+        await r(ctx)
+    if str(arg) == "стопэ":
+        await p(ctx)
+    if str(arg) == "хватит":
+        await st(ctx)
 @client.command(pass_context=True)
 async def v(ctx, arg):
     global voice
@@ -86,7 +92,7 @@ async def play():
                 os.rename(file, "song.mp3")        
              
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
-        while voice.is_playing():
+        while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
         try:    
             lst.remove(urp)
@@ -135,5 +141,26 @@ async def clean(ctx):
     lst = []
     await ctx.send("Проведена чистка среди офицеров")
     await ctx.send("Длина очереди " + str(len(lst)))
+@client.command(pass_context=True)
+async def p(ctx):
+    global voice
+    try:
+        voice.pause()
+    except:
+        pass
+
+async def r(ctx):
+    global voice
+    try:
+        voice.resume()
+    except:
+        pass
+
+async def st(ctx):
+    global voice
+    try:
+        voice.stop()
+    except:
+        pass
     
 client.run(tok)
