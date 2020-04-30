@@ -163,7 +163,7 @@ async def st(ctx):
     except:
         pass
 @client.command(pass_context=True)
-async def help(ctx):
+async def info(ctx):
     await ctx.send("Префикс: !a\
                   \nПроигрывание музыки: сыграй\
                   \nОтключение от голосового канала: фсо давай\
