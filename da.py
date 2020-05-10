@@ -79,23 +79,17 @@ async def play():
     global voice
     count = 1
     while len(lst) > 0:
-        urp = lst[0]
-        songthere = os.path.isfile("song.mp3")
-        if songthere:
-            os.remove("song.mp3")   
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([urp])
         for file in os.listdir("./"):
             print(f'Тут файл: {file}')
             if file.endswith(".mp3"):
-                name = file
-                os.rename(file, "song.mp3")        
-             
-        voice.play(discord.FFmpegPCMAudio("song.mp3"))
+                lst.append(file)    
+        voice.play(discord.FFmpegPCMAudio("lst[0]"))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
         try:    
-            lst.remove(urp)
+            os.remove(lst[0])
         except:
             pass
     count = 0    
@@ -107,7 +101,12 @@ async def manda(ctx, url, vol=0.3):
     global count
     global lst
     global songthere
-    lst.append(url)
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+        for file in os.listdir("./"):
+            print(f'Тут файл: {file}')
+            if file.endswith(".mp3"):
+                lst.append(file) 
     if len(lst) > 1:
         await ctx.send("Добавлено в очередь")
         await ctx.send("Длина очереди " + str(len(lst) - 1))
@@ -117,7 +116,6 @@ async def manda(ctx, url, vol=0.3):
     try:
         channel = ctx.author.voice.channel
         print('Вызвана команда "манда"')
-        songthere = os.path.isfile("song.mp3")
         voice = await channel.connect()
     except Exception as e:
         print('Error', e)
