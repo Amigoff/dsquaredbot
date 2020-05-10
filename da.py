@@ -79,12 +79,6 @@ async def play():
     global voice
     count = 1
     while len(lst) > 0:
-        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([urp])
-        for file in os.listdir("./"):
-            print(f'Тут файл: {file}')
-            if file.endswith(".mp3"):
-                lst.append(file)    
         voice.play(discord.FFmpegPCMAudio("lst[0]"))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
@@ -106,7 +100,7 @@ async def manda(ctx, url, vol=0.3):
         for file in os.listdir("./"):
             print(f'Тут файл: {file}')
             if file.endswith(".mp3"):
-                lst.append(file) 
+                lst.append(str(file)) 
     if len(lst) > 1:
         await ctx.send("Добавлено в очередь")
         await ctx.send("Длина очереди " + str(len(lst) - 1))
