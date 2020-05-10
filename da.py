@@ -95,6 +95,14 @@ async def manda(ctx, url, vol=0.3):
     global count
     global lst
     global songthere
+    ydl_opts = {
+        "format": "bestaudio/best",
+        "postprocessors": [{
+            "key": "FFmpegExtractAudio",
+            "preferredcodec": "mp3",
+            "preferredquality": "192",
+        }],
+    }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
         for file in os.listdir("./"):
@@ -114,14 +122,6 @@ async def manda(ctx, url, vol=0.3):
     except Exception as e:
         print('Error', e)
 
-    ydl_opts = {
-        "format": "bestaudio/best",
-        "postprocessors": [{
-            "key": "FFmpegExtractAudio",
-            "preferredcodec": "mp3",
-            "preferredquality": "192",
-        }],
-    }
     if count == 0:
         await play()
     else:
