@@ -96,7 +96,7 @@ async def manda(ctx, url, vol=0.3):
     global lst
     global songthere
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([url])
+        ydl.download([url])
         for file in os.listdir("./"):
             print(f'Тут файл: {file}')
             if file.endswith(".mp3"):
