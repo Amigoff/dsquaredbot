@@ -81,12 +81,9 @@ async def play():
     while len(lst) > 0:
         voice.play(discord.FFmpegPCMAudio(lst[0]))
         while voice.is_playing() or voice.is_paused():
-            await asyncio.sleep(1)
-        try:    
-            os.remove(lst[0])
-            lst.remove(lst[0])
-        except:
-            pass
+            await asyncio.sleep(1) 
+        os.remove(lst[0])
+        del lst[0]
     count = 0    
     
     
