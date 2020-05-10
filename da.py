@@ -84,6 +84,7 @@ async def play():
             await asyncio.sleep(1)
         try:    
             os.remove(lst[0])
+            lst.remove(lst[0])
         except:
             pass
     count = 0    
