@@ -79,7 +79,7 @@ async def play():
     global voice
     count = 1
     while len(lst) > 0:
-        voice.play(discord.FFmpegPCMAudio("lst[0]"))
+        voice.play(discord.FFmpegPCMAudio(lst[0]))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
         try:    
