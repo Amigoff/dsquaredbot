@@ -11,7 +11,7 @@ lst = []
 count = 0
 
 
-tok = "Os4aL73-fVnfrn5xqSkx0YaOBuMNDfpL"
+tok = "301dcb1961f83be63cf63ec72fa490e4e6cfa2ff721b89913b136d9415de7e09"
 client = commands.Bot(command_prefix='!')
 
 OPUS_LIBS = ['libopus.so.0.5.3', 'libopus-0.x86.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
