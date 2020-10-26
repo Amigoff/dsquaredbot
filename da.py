@@ -4,6 +4,8 @@ from discord.ext import commands
 import sys
 import os
 import asyncio
+import socket
+socket.gethostbyname("")
 path = os.getcwd()
 print(path)
 sys.path.append(f'{path}/ffmpeg')
