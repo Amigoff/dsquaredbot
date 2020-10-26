@@ -20,3 +20,4 @@ yarl
 youtube-dl
 opuslib
 gunicorn
+dnspython==1.16.0
