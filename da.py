@@ -52,10 +52,6 @@ async def a(ctx, arg, url="0.3", vol=0.3):
         await p(ctx)
     if str(arg) == "хватит":
         await st(ctx)
-    if str(arg) == "Тбилиси":
-        await manda("а", https://www.youtube.com/watch?v=v941VC0wHJk&t=148s")
-    if str(arg) == "ало":
-        await manda("а", https://www.youtube.com/watch?v=KNHqSWJAEBs")
 @client.command(pass_context=True)
 async def v(ctx, arg):
     global voice
