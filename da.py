@@ -82,7 +82,7 @@ async def play():
     global count
     global voice
     count = 1
-    while len(lst) > 0:
+    while len(lst1) > 0:
         ydl_opts = {
         "format": "bestaudio/best",
         "postprocessors": [{
@@ -103,7 +103,7 @@ async def play():
         os.remove(lst[0])
         del lst[0]
         del lst1[0]              
-        count = 0    
+    count = 0    
     
     
 @client.command(pass_context=True)
