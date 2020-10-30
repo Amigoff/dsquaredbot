@@ -10,6 +10,7 @@ path = os.getcwd()
 print(path)
 sys.path.append(f'{path}/ffmpeg')
 lst = []
+lst1 = []
 count = 0
 
 
@@ -77,41 +78,43 @@ async def pizda(ctx):
        
 async def play():
     global lst
+    global lst1
     global count
     global voice
     count = 1
     while len(lst) > 0:
+        ydl_opts = {
+        "format": "bestaudio/best",
+        "postprocessors": [{
+            "key": "FFmpegExtractAudio",
+            "preferredcodec": "mp3",
+            "preferredquality": "192",
+            }],
+        }
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([lst1[0])
+            for file in os.listdir("./"):
+                print(f'Тут файл: {file}')
+                if file.endswith(".mp3"):
+                    lst.append(str(file)) 
         voice.play(discord.FFmpegPCMAudio(lst[0]))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1) 
         os.remove(lst[0])
         del lst[0]
-    count = 0    
+        del lst1[0]              
+        count = 0    
     
     
 @client.command(pass_context=True)
 async def manda(ctx, url, vol=0.3):
     global ydl_opts
     global count
-    global lst
+    global lst1
     global songthere
-    ydl_opts = {
-        "format": "bestaudio/best",
-        "postprocessors": [{
-            "key": "FFmpegExtractAudio",
-            "preferredcodec": "mp3",
-            "preferredquality": "192",
-        }],
-    }
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
-        for file in os.listdir("./"):
-            print(f'Тут файл: {file}')
-            if file.endswith(".mp3"):
-                lst.append(str(file)) 
-    if len(lst) > 1:
+    if len(lst1) > 1:
         await ctx.send("Добавлено в очередь")
-        await ctx.send("Длина очереди " + str(len(lst) - 1))
+        await ctx.send("Длина очереди " + str(len(lst1) - 1))
     else:
         await ctx.send("Зделаю дарагой ежжи")
     global voice
