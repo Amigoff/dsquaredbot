@@ -92,7 +92,7 @@ async def play():
             }],
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ydl.download([lst1[0])
+            ydl.download(lst1[0])
             for file in os.listdir("./"):
                 print(f'Тут файл: {file}')
                 if file.endswith(".mp3"):
