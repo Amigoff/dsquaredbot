@@ -53,6 +53,7 @@ async def a(ctx, arg, url="0.3", vol=0.3):
         await p(ctx)
     if str(arg) == "хватит":
         await st(ctx)
+    await ctx.send("Я сдох")    
 @client.command(pass_context=True)
 async def v(ctx, arg):
     global voice
