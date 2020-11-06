@@ -52,8 +52,7 @@ async def a(ctx, arg, url="0.3", vol=0.3):
     if str(arg) == "стопэ":
         await p(ctx)
     if str(arg) == "хватит":
-        await st(ctx)
-    await ctx.send("Я сдох")    
+        await st(ctx)  
 @client.command(pass_context=True)
 async def v(ctx, arg):
     global voice
@@ -63,7 +62,7 @@ async def v(ctx, arg):
 @client.command(pass_context=True)
 async def da(ctx):
     print('Вызвана команда "да"')
-    await ctx.send("хуйню базаришь")
+    await ctx.send("С дном рождения, пидарас")
 
 
 @client.command(pass_context=True)
