@@ -63,8 +63,9 @@ async def CENA(ctx):
     global lst1
     global voice
     lst1.append("https://www.youtube.com/watch?v=-cZ7ndjhhps&t=13s")
-    channel = ctx.author.voice.channel
-    voice = await channel.connect()
+    try:
+        channel = ctx.author.voice.channel
+        voice = await channel.connect()
     await play()
 @client.command(pass_context=True)
 async def da(ctx):
