@@ -65,16 +65,8 @@ async def CENA(ctx):
     lst1.append("https://www.youtube.com/watch?v=-cZ7ndjhhps&t=13s")
     channel = ctx.author.voice.channel
     voice = await channel.connect()
-    try:
-        r = requests.get("https://ceknricek.com/photo/plugin/article/2019/1559993620_5-org.jpg")
-        for file in os.listdir("./"):
-                if file.endswith(".jpg"):
-                    ceno = file
-    with open('ceno', 'rb') as f:
-    picture = discord.File(f)
-    await channel.send(channel, picture)                
+    client.say("https://cdn.vox-cdn.com/thumbor/g6Jtnph2yAxaL-3CkykcRXGRk80=/0x0:1200x675/1600x900/cdn.vox-cdn.com/uploads/chorus_image/image/55953361/239_RR_01292017cc_2863__4d5e8362ec55fde017437b255f27b877.0.jpg")
     await play()
-
 @client.command(pass_context=True)
 async def da(ctx):
     print('Вызвана команда "да"')
