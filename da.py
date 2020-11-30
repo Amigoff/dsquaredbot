@@ -65,6 +65,12 @@ async def CENA(ctx):
     lst1.append("https://www.youtube.com/watch?v=-cZ7ndjhhps&t=13s")
     channel = ctx.author.voice.channel
     voice = await channel.connect()
+    try:
+        r = requests.get("https://ceknricek.com/photo/plugin/article/2019/1559993620_5-org.jpg")
+        for file in os.listdir("./"):
+                if file.endswith(".jpg"):
+                    ceno = file
+    await channel.send(file=discord.File('ceno'))                
     await play()
 
 @client.command(pass_context=True)
