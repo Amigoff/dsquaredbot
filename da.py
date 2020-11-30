@@ -58,6 +58,11 @@ async def v(ctx, arg):
     global voice
     voice.source.volume = float(arg)
     
+@client.command(pass_context=True)
+async def CENA():    
+    global lst1
+    lst1.append("https://www.youtube.com/watch?v=-cZ7ndjhhps&t=13s")
+    play()
 
 @client.command(pass_context=True)
 async def da(ctx):
@@ -136,8 +141,8 @@ async def manda(ctx, url, vol=0.3):
 
 @client.command(pass_context=True)
 async def clean(ctx):
-    global lst
-    lst = []
+    global lst1
+    lst1 = []
     await ctx.send("Проведена чистка среди офицеров")
     await ctx.send("Длина очереди " + str(len(lst)))
 @client.command(pass_context=True)
