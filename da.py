@@ -112,8 +112,8 @@ async def manda(ctx, url, vol=0.3):
     global count
     global lst1
     global songthere
-    print(ctx)
     print(url)
+    print("Тут ссылка")
     lst1.append(url)
     if len(lst1) > 1:
         await ctx.send("Добавлено в очередь")
