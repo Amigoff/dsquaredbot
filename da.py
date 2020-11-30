@@ -88,6 +88,7 @@ async def da(ctx):
 async def random4ik(ctx):
     print("Играем в рулетку!")
     channel = ctx.author.voice.channel
+    print('Channel members: {}'.format(channel.members))
     random_user = choice(channel.members)
     await ctx.send("Выигрывает {}! Нахуй с пляжа, петушок".format(random_user.display_name))
     await random_user.kick(reason='Умер')
