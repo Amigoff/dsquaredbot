@@ -50,26 +50,26 @@ print('opus_loaded')
 async def a(ctx, *arg):
 
     print(arg)
-    if str(arg) == "сыграй":
+    if str(arg[0]) == "сыграй":
         url = arg[-2]
         vol = arg[-1]
         await manda(ctx, url, vol)
-    if str(arg) == "фсо":
+    if str(arg[0]) == "фсо":
         await pizda(ctx)
-    if str(arg) == "побазарим":
+    if str(arg[0]) == "побазарим":
         await da(ctx)
-    if str(arg) == "подкрути":
+    if str(arg[0]) == "подкрути":
         url = arg[-1]
         await v(ctx, url)
-    if str(arg) == "очисти":
+    if str(arg[0]) == "очисти":
         await clean(ctx)
-    if str(arg) == "паехали":
+    if str(arg[0]) == "паехали":
         await r(ctx)
-    if str(arg) == "стопэ":
+    if str(arg[0]) == "стопэ":
         await p(ctx)
-    if str(arg) == "хватит":
+    if str(arg[0]) == "хватит":
         await st(ctx)
-    if str(arg) == 'рулетка':
+    if str(arg[0]) == 'рулетка':
         await random4ik(ctx)
     arg_str = ' '.join(arg)
     target = arg[-1]
