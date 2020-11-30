@@ -100,8 +100,7 @@ async def play():
         voice.play(discord.FFmpegPCMAudio(lst[0]))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1) 
-        os.remove(lst[0])
-        del lst[0]
+        os.remove(lst1[0])
         del lst1[0]              
     count = 0    
     
@@ -112,8 +111,6 @@ async def manda(ctx, url, vol=0.3):
     global count
     global lst1
     global songthere
-    print(url)
-    print("Тут ссылка")
     lst1.append(url)
     if len(lst1) > 1:
         await ctx.send("Добавлено в очередь")
@@ -129,6 +126,7 @@ async def manda(ctx, url, vol=0.3):
         print('Error', e)
 
     if count == 0:
+        print(lst1)
         await play()
     else:
         pass  
