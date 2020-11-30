@@ -8,7 +8,9 @@ import socket
 from random import choice, randint
 from gtts import gTTS
 import requests
-
+import threading
+import datetime
+import time
 
 socket.gethostbyname("")
 path = os.getcwd()
@@ -117,7 +119,7 @@ async def v(ctx, arg):
 
 
 @client.command(pass_context=True)
-async def CENA(ctx):    
+async def CENA(ctx):
     global lst1
     global voice
     lst1.append("https://www.youtube.com/watch?v=-cZ7ndjhhps&t=13s")
@@ -126,7 +128,33 @@ async def CENA(ctx):
         voice = await channel.connect()
     except:
         pass
-    await play()
+    members = channel.members
+
+    task1 = asyncio.create_task(set_nicknames('AND HIS NAME IS JOHN SENO', members))
+    task2 = asyncio.create_task(play())
+
+    await task1
+    await task2
+
+async def set_nicknames(new, members):
+    N = 15
+    old_name = {}
+    for member in members:
+        old_name[member.id] = {'old_name': member.name, 'error': 0}
+    error = 0
+    for _ in range(0, 1):
+        for i in range(len(new) - N + 1):
+            for member in members:
+                if not old_name[member.id]['error']:
+                    try:
+                        await member.edit(nick=new[i:i + N])
+                    except:
+                        old_name[member.id]['error'] = 1
+                        continue
+
+    for member in members:
+        if not old_name[member.id]['error']:
+            await member.edit(nick=old_name[member.id]['old_name'])
 
 
 @client.command(pass_context=True)
@@ -283,7 +311,7 @@ async def pizda(ctx):
         await ctx.send("Мусора прижали")
     except Exception as e:
         await ctx.send(f'Ошибочка бля {e}')
-       
+
 async def play():
     global lst
     global lst1
@@ -292,11 +320,11 @@ async def play():
     count = 1
     while len(lst1) > 0:
         ydl_opts = {
-        "format": "bestaudio/best",
-        "postprocessors": [{
-            "key": "FFmpegExtractAudio",
-            "preferredcodec": "mp3",
-            "preferredquality": "192",
+            "format": "bestaudio/best",
+            "postprocessors": [{
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "mp3",
+                "preferredquality": "192",
             }],
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
@@ -307,15 +335,14 @@ async def play():
             for file in os.listdir("./"):
                 print(f'Тут файл: {file}')
                 if file.endswith(".mp3"):
-                    lst.append(str(file)) 
+                    lst.append(str(file))
         voice.play(discord.FFmpegPCMAudio(lst[0]))
         while voice.is_playing() or voice.is_paused():
-            await asyncio.sleep(1) 
+            await asyncio.sleep(1)
         os.remove(lst1[0])
-        del lst1[0]              
-    count = 0    
-    
-    
+        del lst1[0]
+    count = 0
+
 @client.command(pass_context=True)
 async def manda(ctx, url, vol=0.3):
     global ydl_opts
