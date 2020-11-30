@@ -45,13 +45,7 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
 load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
-async def a(ctx, *arg):
-    try:
-        url = arg[-2]
-        vol = arg[-1]
-    except:
-        url = ''
-        vol = 0.3
+async def a(ctx, arg, url='', vol=0.3):
     if str(arg) == "сыграй":
         await manda(ctx, url, vol)
     if str(arg) == "фсо":
@@ -77,11 +71,11 @@ async def a(ctx, *arg):
     elif str(arg) == 'погода_на_районе':
         await weather(ctx, 'Москва, Алексеевская')
     elif str(arg) == 'погода':
-        await weather(ctx, 'Москва')
+        await weather(ctx, url or 'Москва')
     elif str(arg) == 'пробки_на_районе':
         await traffic(ctx, 'Москва, Алексеевская')
     elif str(arg) == 'пробки':
-        await traffic(ctx, 'Красная площадь', 12)
+        await traffic(ctx, url or 'Красная площадь', 12)
     elif 'вероятность' in str(arg).lower():
         await posib(ctx, arg)
 
