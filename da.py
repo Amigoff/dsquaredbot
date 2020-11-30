@@ -45,7 +45,7 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
 load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
-async def a(ctx, arg, url='', vol=0.3):
+async def a(ctx, *arg, url='', vol=0.3):
     if str(arg) == "сыграй":
         await manda(ctx, url, vol)
     if str(arg) == "фсо":
