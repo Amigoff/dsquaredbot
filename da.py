@@ -89,16 +89,22 @@ async def random4ik(ctx):
     global voice
     print("Играем в рулетку!")
     channel = ctx.author.voice.channel
+
     try:
         voice = await channel.connect()
     except:
         pass
     print('Channel members: {}'.format(channel.members))
     random_user = choice(channel.members)
+
+    guild = ctx.message.guild
+    print('MEMBERS GUILD: {}'.format(guild.members))
+    
+    kick_channel = await guild.create_voice_channel(name='kick')
+
     await ctx.send("Выигрывает {}! Нахуй с пляжа, петушок".format(random_user.display_name))
-    kick_channel = await client.create_channel(ctx.message.server, "kick", type=discord.ChannelType.voice)
-    await client.move_member(random_user, kick_channel)
-    await client.delete_channel(kick_channel)
+    await random_user.edit(voice_channel=kick_channel)
+    await guild.delete(kick_channel)
 
 
 @client.command(pass_context=True)
