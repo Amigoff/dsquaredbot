@@ -5,7 +5,7 @@ import sys
 import os
 import asyncio
 import socket
-from random import choice
+from random import choice, randint
 from gtts import gTTS
 import requests
 
@@ -21,6 +21,8 @@ intents = discord.Intents.default()
 intents.members = True
 
 tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp7sHw.tb7X4XSUcMthvgiVEz_7hN1Vrn0"
+yandex_api_key = '3c39ba17-9a2c-4ba4-9e70-9f695fb7eae5'
+whether_api_key = '75f6890557ef108e7ad5b23fd1acf04c'
 client = commands.Bot(command_prefix='!', intents=intents)
 
 OPUS_LIBS = ['libopus.so.0.5.3', 'libopus-0.x86.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
@@ -42,10 +44,16 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
 load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
-async def a(ctx, arg, url="0.3", vol=0.3):
+async def a(ctx, *arg):
+    try:
+        url = arg[-2]
+        vol = arg[-1]
+    except:
+        url = ''
+        vol = 0.3
     if str(arg) == "сыграй":
         await manda(ctx, url, vol)
-    if str(arg) == "фсо" and str(url) == "давай":
+    if str(arg) == "фсо":
         await pizda(ctx)
     if str(arg) == "побазарим":
         await da(ctx)
@@ -61,6 +69,46 @@ async def a(ctx, arg, url="0.3", vol=0.3):
         await st(ctx)
     if str(arg) == 'рулетка':
         await random4ik(ctx)
+    elif str(arg) == 'расскажи_чё_на_районе':
+        await information(ctx, 'Москва, Алексеевская')
+    elif str(arg) == 'расскажи':
+        await information(ctx, 'Москва, Красная площадь', 12)
+    elif str(arg) == 'погода_на_районе':
+        await weather(ctx, 'Москва, Алексеевская')
+    elif str(arg) == 'погода':
+        await weather(ctx, 'Москва')
+    elif str(arg) == 'пробки_на_районе':
+        await traffic(ctx, 'Москва, Алексеевская')
+    elif str(arg) == 'пробки':
+        await traffic(ctx, 'Красная площадь', 12)
+    elif 'вероятность' in str(arg).lower():
+        await posib(ctx, arg)
+
+
+@client.command(pass_context=True)
+async def goroskop(ctx, arg=None):
+    start = ['Всё будет хорошо', "Всё будет плохо", 'Вы умрёте', "Вы будете жить", 'Завтра вы умрёте',
+             'Аллах Агбар']
+    mid = ['вас ждёт успех', 'вас ждёт победа', 'вас ждёт поражение', '100%', 'деньги придут к вам', 'вы потеряете 100 рублей на дороге']
+    el = 'скоро вы получите {} по {}'.format(randint(2, 5), choice(['математике', "физике", "русскому", "обществу", "какой-то херне"]))
+    p = randint(0, 2)
+    if p == 0:
+        await ctx.send(el)
+    elif p == 1:
+        member = '{}'.format(choice(ctx.guild.members).mention)
+        texts = ['Отрежет вам яйца', "Съест вас", "Отдаст вам долг", "Решит за вас домашку", "и вы решите сбежать вместе",
+                 "прыгнет с 11 этажа", "скажет вам что-то важное"]
+        await ctx.send('{} {}'.format(member, choice(texts)))
+    else:
+        await ctx.send(choice(start) + ' ' + choice(mid))
+
+
+
+
+@client.command(pass_context=True)
+async def posib(ctx, arg):
+    # arg = arg.lower().replace('вероятность', '').replace('что', '').replace(',', '')
+    await ctx.send('{}%'.format(randint(0, 100)))
 
 
 @client.command(pass_context=True)
@@ -133,21 +181,17 @@ async def say(ctx, *arg):
 
 
 @client.command(pass_context=True)
-async def weather(ctx, arg=None):
-    api_key = '75f6890557ef108e7ad5b23fd1acf04c'
+async def weather(ctx, city=None):
 
-    if not arg:
+    if not city:
         city = 'Moscow'
-    else:
-        city = arg
-    days = int(1)
 
     res = requests.get("http://api.openweathermap.org/data/2.5/weather",
-                       params={'q': city, 'units': 'metric', 'lang': 'ru', 'APPID': api_key})
+                       params={'q': city, 'units': 'metric', 'lang': 'ru', 'APPID': whether_api_key})
     data = res.json()
     print(data)
-    # if data['cod'] != '200':
-    #     return await say(ctx, "Ошибка вышла, не могу узнать текущую погоду")
+    if data['cod'] != 200:
+        return await say(ctx, "Ошибка вышла, не могу узнать текущую погоду")
 
     data = res.json()
     conditions = data['weather'][0]['description']
@@ -156,10 +200,76 @@ async def weather(ctx, arg=None):
     temp_max = round(data['main']['temp_max'])
     text = "Сейчас в Москве {}. Температура {} градус.".format(conditions, temp)
     if temp_min != temp_max:
-        text += "Максимально будет {}, минимально {} градусов".format(temp_max, temp_min)
+        text += "Максимально будет {}, минимально {} градусов.".format(temp_max, temp_min)
+    text += 'Скорость ветра {} метров в секунду'.format(data['wind']['speed'])
     return await say(ctx, text)
 
 
+@client.command(pass_context=True)
+async def information(ctx, *args):
+    await weather(ctx, *args)
+    await traffic(ctx, *args)
+
+def represents_int(s):
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
+
+@client.command(pass_context=True)
+async def traffic(ctx, *args):
+    if represents_int(args[-1]):
+        zoom = args[-1]
+        place = ' '.join(args[:-1])
+    else:
+        zoom = 13
+        place = ' '.join(args)
+
+    if not place:
+        place = 'Moscow'
+
+    x1, y1, x2, y2 = fetch_coordinates(place)
+    x = (x1 + x2) / 2
+    y = (y1 + y2) / 2
+    filename = load_map_by_coords(x, y, zoom=zoom)
+    await say(ctx, 'Отправляю карту пробок...')
+    await ctx.send(file=discord.File(filename))
+
+
+def load_map_by_coords(x, y, zoom=16, typ="map,trf"):
+    """Получение карты по координатам"""
+    ll = str(x) + "," + str(y)
+    map_request = "http://static-maps.yandex.ru/1.x/?ll={ll}&z={z}&l={type}".format(ll=ll, z=zoom, type=typ)
+    response = requests.get(map_request)
+    if not response:
+        print("Ошибка выполнения запроса:")
+        print(map_request)
+        print("Http статус:", response.status_code, "(", response.reason, ")")
+        sys.exit(1)
+
+    # Запись полученного изображения в файл.
+    map_file = "map.png"
+    try:
+        with open(map_file, "wb") as file:
+            file.write(response.content)
+    except IOError as ex:
+        print("Ошибка записи временного файла:", ex)
+    return map_file
+
+
+def fetch_coordinates(place):
+    """Получение координат места на карте"""
+    base_url = "https://search-maps.yandex.ru/v1/"
+    params = {"text": str(place), 'type': 'geo', "apikey": yandex_api_key, "format": "json", 'lang': 'ru-RU'}
+    response = requests.get(base_url, params=params)
+    # print(response.json())
+    response_data = response.json()['properties']['ResponseMetaData']['SearchResponse']
+    print(response_data)
+    lon1, lat1 = response_data['boundedBy'][0]
+    lon2, lat2 = response_data['boundedBy'][1]
+    return lon1, lat1, lon2, lat2
 
 
 @client.command(pass_context=True)
