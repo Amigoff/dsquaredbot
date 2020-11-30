@@ -45,14 +45,19 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
 load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
-async def a(ctx, *arg, url='', vol=0.3):
+async def a(ctx, *arg):
+
+    print(arg)
     if str(arg) == "сыграй":
+        url = arg[-2]
+        vol = arg[-1]
         await manda(ctx, url, vol)
     if str(arg) == "фсо":
         await pizda(ctx)
     if str(arg) == "побазарим":
         await da(ctx)
     if str(arg) == "подкрути":
+        url = arg[-1]
         await v(ctx, url)
     if str(arg) == "очисти":
         await clean(ctx)
@@ -64,18 +69,20 @@ async def a(ctx, *arg, url='', vol=0.3):
         await st(ctx)
     if str(arg) == 'рулетка':
         await random4ik(ctx)
-    elif str(arg) == 'расскажи_чё_на_районе':
+    arg_str = ' '.join(arg)
+    target = arg[-1]
+    if str(arg_str) == 'расскажи чё на районе':
         await information(ctx, 'Москва, Алексеевская')
-    elif str(arg) == 'расскажи':
+    elif str(arg_str) == 'расскажи':
         await information(ctx, 'Москва, Красная площадь', 12)
-    elif str(arg) == 'погода_на_районе':
+    elif str(arg_str) == 'погода на районе':
         await weather(ctx, 'Москва, Алексеевская')
-    elif str(arg) == 'погода':
-        await weather(ctx, url or 'Москва')
-    elif str(arg) == 'пробки_на_районе':
+    elif str(arg_str) == 'погода':
+        await weather(ctx, target or 'Москва')
+    elif str(arg_str) == 'пробки на районе':
         await traffic(ctx, 'Москва, Алексеевская')
-    elif str(arg) == 'пробки':
-        await traffic(ctx, url or 'Красная площадь', 12)
+    elif str(arg_str) == 'пробки':
+        await traffic(ctx, target or 'Красная площадь', 12)
     elif 'вероятность' in str(arg).lower():
         await posib(ctx, arg)
 
@@ -190,7 +197,9 @@ async def weather(ctx, city=None):
     temp = round(data['main']['temp'])
     temp_min = round(data['main']['temp_min'])
     temp_max = round(data['main']['temp_max'])
-    text = "Сейчас в Москве {}. Температура {} градус.".format(conditions, temp)
+    if city == 'Moscow':
+        city = 'Москва'
+    text = "Сейчас в {} {}. Температура {} градус.".format(city, conditions, temp)
     if temp_min != temp_max:
         text += "Максимально будет {}, минимально {} градусов.".format(temp_max, temp_min)
     text += 'Скорость ветра {} метров в секунду'.format(data['wind']['speed'])
