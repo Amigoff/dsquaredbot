@@ -15,9 +15,11 @@ lst = []
 lst1 = []
 count = 0
 
+intents = discord.Intents.default()
+intents.members = True
 
 tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp7sHw.tb7X4XSUcMthvgiVEz_7hN1Vrn0"
-client = commands.Bot(command_prefix='!')
+client = commands.Bot(command_prefix='!', intents=intents)
 
 OPUS_LIBS = ['libopus.so.0.5.3', 'libopus-0.x86.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
 
@@ -99,12 +101,12 @@ async def random4ik(ctx):
 
     guild = ctx.message.guild
     print('MEMBERS GUILD: {}'.format(guild.members))
-    
+
     kick_channel = await guild.create_voice_channel(name='kick')
 
     await ctx.send("Выигрывает {}! Нахуй с пляжа, петушок".format(random_user.display_name))
     await random_user.edit(voice_channel=kick_channel)
-    await guild.delete(kick_channel)
+    await kick_channel.delete()
 
 
 @client.command(pass_context=True)
