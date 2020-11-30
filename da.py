@@ -8,6 +8,8 @@ import socket
 from random import choice, randint
 from gtts import gTTS
 import requests
+import requests_html
+from bs4 import BeautifulSoup
 
 socket.gethostbyname("")
 path = os.getcwd()
@@ -91,10 +93,10 @@ async def goroskop(ctx, arg=None):
              'Аллах Агбар']
     mid = ['вас ждёт успех', 'вас ждёт победа', 'вас ждёт поражение', '100%', 'деньги придут к вам', 'вы потеряете 100 рублей на дороге']
     el = 'скоро вы получите {} по {}'.format(randint(2, 5), choice(['математике', "физике", "русскому", "обществу", "какой-то херне"]))
-    p = randint(0, 2)
-    if p == 0:
+    p = randint(1, 4)
+    if p == 1:
         await ctx.send(el)
-    elif p == 1:
+    elif p == 2:
         member = '{}'.format(choice(ctx.guild.members).mention)
         texts = ['Отрежет вам яйца', "Съест вас", "Отдаст вам долг", "Решит за вас домашку", "и вы решите сбежать вместе",
                  "прыгнет с 11 этажа", "скажет вам что-то важное"]
@@ -102,8 +104,13 @@ async def goroskop(ctx, arg=None):
     else:
         await ctx.send(choice(start) + ' ' + choice(mid))
 
-
-
+@client.command(pass_context=True)
+async def k(ctx):
+    url = 'https://ytroulette.com/'
+    session = requests_html.AsyncHTMLSession()
+    r = await session.get(url)
+    await r.html.arender()
+    print(r.html.find('#videoDiv').src)
 
 @client.command(pass_context=True)
 async def posib(ctx, arg):
