@@ -96,7 +96,9 @@ async def random4ik(ctx):
     print('Channel members: {}'.format(channel.members))
     random_user = choice(channel.members)
     await ctx.send("Выигрывает {}! Нахуй с пляжа, петушок".format(random_user.display_name))
-    await random_user.kick(reason='Умер')
+    kick_channel = await ctx.create_channel(ctx.message.server, "kick", type=discord.ChannelType.voice)
+    await ctx.move_member(random_user, kick_channel)
+    await ctx.delete_channel(kick_channel)
 
 
 @client.command(pass_context=True)
