@@ -6,6 +6,7 @@ import os
 import asyncio
 import socket
 from random import choice
+from gtts import gTTS
 
 socket.gethostbyname("")
 path = os.getcwd()
@@ -107,6 +108,24 @@ async def random4ik(ctx):
     await ctx.send("Выигрывает {}! Нахуй с пляжа, петушок".format(random_user.display_name))
     await random_user.edit(voice_channel=kick_channel)
     await kick_channel.delete()
+    await say(ctx, 'Ха-ха, бля')
+
+
+@client.command(pass_context=True)
+async def say(ctx, arg):
+    channel = ctx.author.voice.channel
+    print('Вызвана команда "манда"')
+    try:
+        voice = await channel.connect()
+    except:
+        voice = channel
+
+    tts = gTTS(arg, lang='ru')
+    tts.save('answer.mp3')
+
+    voice.play(discord.FFmpegPCMAudio('answer.mp3'))
+    while voice.is_playing() or voice.is_paused():
+        await asyncio.sleep(1)
 
 
 @client.command(pass_context=True)
