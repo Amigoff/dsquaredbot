@@ -59,7 +59,7 @@ async def v(ctx, arg):
     voice.source.volume = float(arg)
     
 @client.command(pass_context=True)
-async def CENA():    
+async def CENA(ctx):    
     global lst1
     lst1.append("https://www.youtube.com/watch?v=-cZ7ndjhhps&t=13s")
     play()
