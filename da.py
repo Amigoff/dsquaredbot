@@ -7,6 +7,7 @@ import asyncio
 import socket
 from random import choice
 from gtts import gTTS
+import requests
 
 socket.gethostbyname("")
 path = os.getcwd()
@@ -112,7 +113,7 @@ async def random4ik(ctx):
 
 
 @client.command(pass_context=True)
-async def say(ctx, arg):
+async def say(ctx, *arg):
     global voice
     print('Вызвана команда "манда"')
     try:
@@ -120,13 +121,45 @@ async def say(ctx, arg):
         voice = await channel.connect()
     except:
         pass
-
-    tts = gTTS(arg, lang='ru')
+    if not isinstance(arg, str):
+        tts = gTTS(*arg, lang='ru')
+    else:
+        tts = gTTS(arg, lang='ru')
     tts.save('answer.mp3')
 
     voice.play(discord.FFmpegPCMAudio('answer.mp3'))
     while voice.is_playing() or voice.is_paused():
         await asyncio.sleep(1)
+
+
+@client.command(pass_context=True)
+async def weather(ctx, arg=None):
+    api_key = '75f6890557ef108e7ad5b23fd1acf04c'
+
+    if not arg:
+        city = 'Moscow'
+    else:
+        city = arg
+    days = int(1)
+
+    res = requests.get("http://api.openweathermap.org/data/2.5/weather",
+                       params={'q': city, 'units': 'metric', 'lang': 'ru', 'APPID': api_key})
+    data = res.json()
+    print(data)
+    # if data['cod'] != '200':
+    #     return await say(ctx, "Ошибка вышла, не могу узнать текущую погоду")
+
+    data = res.json()
+    conditions = data['weather'][0]['description']
+    temp = round(data['main']['temp'])
+    temp_min = round(data['main']['temp_min'])
+    temp_max = round(data['main']['temp_max'])
+    text = "Сейчас в Москве {}. Температура {} градус.".format(conditions, temp)
+    if temp_min != temp_max:
+        text += "Максимально будет {}, минимально {} градусов".format(temp_max, temp_min)
+    return await say(ctx, text)
+
+
 
 
 @client.command(pass_context=True)
