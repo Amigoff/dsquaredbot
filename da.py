@@ -89,7 +89,10 @@ async def random4ik(ctx):
     global voice
     print("Играем в рулетку!")
     channel = ctx.author.voice.channel
-    voice = await channel.connect()
+    try:
+        voice = await channel.connect()
+    except:
+        pass
     print('Channel members: {}'.format(channel.members))
     random_user = choice(channel.members)
     await ctx.send("Выигрывает {}! Нахуй с пляжа, петушок".format(random_user.display_name))
