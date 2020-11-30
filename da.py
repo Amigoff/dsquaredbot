@@ -70,7 +70,9 @@ async def CENA(ctx):
         for file in os.listdir("./"):
                 if file.endswith(".jpg"):
                     ceno = file
-    await channel.send(file=discord.File('ceno'))                
+    with open('ceno', 'rb') as f:
+    picture = discord.File(f)
+    await channel.send(channel, picture)                
     await play()
 
 @client.command(pass_context=True)
