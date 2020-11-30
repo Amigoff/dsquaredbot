@@ -130,11 +130,17 @@ async def CENA(ctx):
         pass
     members = channel.members
 
-    task1 = asyncio.create_task(set_nicknames('AND HIS NAME IS JOHN SENO', members))
-    task2 = asyncio.create_task(play())
+    def a():
+        loop = asyncio.get_event_loop()
 
-    await task1
-    await task2
+        task1 = loop.create_task(set_nicknames('AND HIS NAME IS JOHN SENO', members))
+        task2 = loop.create_task(play())
+
+        await task1
+        await task2
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(a())
 
 async def set_nicknames(new, members):
     N = 15
