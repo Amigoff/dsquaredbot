@@ -93,6 +93,8 @@ async def play():
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ur = lst1[0]
+            print(ur)
+            print("Тут ссылка")
             ydl.download(ur)
             for file in os.listdir("./"):
                 print(f'Тут файл: {file}')
