@@ -54,12 +54,17 @@ async def a(ctx, arg, url="0.3", vol=0.3):
     if str(arg) == "стопэ":
         await p(ctx)
     if str(arg) == "хватит":
-        await st(ctx)  
+        await st(ctx)
+    if str(arg) == 'рулетка':
+        await random4ik(ctx)
+
+
 @client.command(pass_context=True)
 async def v(ctx, arg):
     global voice
     voice.source.volume = float(arg)
-    
+
+
 @client.command(pass_context=True)
 async def CENA(ctx):    
     global lst1
