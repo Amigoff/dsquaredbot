@@ -148,7 +148,7 @@ async def set_nicknames(new, members):
     for member in members:
         old_name[member.id] = {'old_name': member.name, 'error': 0}
     error = 0
-    for _ in range(0, 1):
+    for _ in range(0, 10):
         for i in range(len(new) - N + 1):
             for member in members:
                 if not old_name[member.id]['error']:
