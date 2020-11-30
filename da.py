@@ -5,6 +5,8 @@ import sys
 import os
 import asyncio
 import socket
+from random import choice
+
 socket.gethostbyname("")
 path = os.getcwd()
 print(path)
@@ -69,10 +71,21 @@ async def CENA(ctx):
     except:
         pass
     await play()
+
+
 @client.command(pass_context=True)
 async def da(ctx):
     print('Вызвана команда "да"')
     await ctx.send("С дном рождения, пидарас")
+
+
+@client.command(pass_context=True)
+async def random4ik(ctx):
+    print("Играем в рулетку!")
+    channel = ctx.author.voice.channel
+    random_user = choice(channel.members)
+    await ctx.send("Выигрывает {}! Нахуй с пляжа, петушок".format(random_user.display_name))
+    await random_user.kick(reason='Умер')
 
 
 @client.command(pass_context=True)
