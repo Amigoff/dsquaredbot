@@ -8,8 +8,7 @@ import socket
 from random import choice, randint
 from gtts import gTTS
 import requests
-import requests_html
-from bs4 import BeautifulSoup
+
 
 socket.gethostbyname("")
 path = os.getcwd()
@@ -103,14 +102,6 @@ async def goroskop(ctx, arg=None):
         await ctx.send('{} {}'.format(member, choice(texts)))
     else:
         await ctx.send(choice(start) + ' ' + choice(mid))
-
-@client.command(pass_context=True)
-async def k(ctx):
-    url = 'https://ytroulette.com/'
-    session = requests_html.AsyncHTMLSession()
-    r = await session.get(url)
-    await r.html.arender()
-    print(r.html.find('#videoDiv').src)
 
 @client.command(pass_context=True)
 async def posib(ctx, arg):
