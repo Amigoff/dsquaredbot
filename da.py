@@ -66,6 +66,8 @@ async def CENA(ctx):
     try:
         channel = ctx.author.voice.channel
         voice = await channel.connect()
+    except:
+        pass
     await play()
 @client.command(pass_context=True)
 async def da(ctx):
