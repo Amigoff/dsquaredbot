@@ -62,7 +62,7 @@ async def v(ctx, arg):
 async def CENA(ctx):    
     global lst1
     lst1.append("https://www.youtube.com/watch?v=-cZ7ndjhhps&t=13s")
-    play()
+    await play()
 
 @client.command(pass_context=True)
 async def da(ctx):
