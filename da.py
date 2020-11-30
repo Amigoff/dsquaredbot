@@ -95,7 +95,7 @@ async def play():
             ur = lst1[0]
             print(ur)
             print("Тут ссылка")
-            ydl.download(ur)
+            ydl.download([ur])
             for file in os.listdir("./"):
                 print(f'Тут файл: {file}')
                 if file.endswith(".mp3"):
