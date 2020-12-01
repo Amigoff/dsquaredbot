@@ -93,6 +93,8 @@ async def a(ctx, *arg):
         await skaji(ctx, arg)
     elif 'кто' in str(arg).lower():
         await who(ctx, arg)
+    elif 'когда' in str(arg).lower():
+        await when(ctx, arg)
 
 
 @client.command(pass_context=True)
@@ -128,6 +130,12 @@ async def who(ctx, arg=None):
     member = '{}'.format(choice(ctx.guild.members).mention)
     await ctx.send(member)
 
+@client.command(pass_context=True)
+async def when(ctx, arg=None):
+    start_date = date.today().replace(day=1, month=1, year=2021).toordinal()
+    end_date = date.today().replace(day=31, month=12, year=2050).toordinal()
+    random_day = date.fromordinal(random.randint(start_date, end_date))
+    await ctx.send('Это произойдёт {}'.format(random_day.isoformat()))
 
 @client.command(pass_context=True)
 async def v(ctx, arg):
