@@ -75,15 +75,15 @@ async def a(ctx, *arg):
     target = arg[-1]
     if str(arg_str) == 'расскажи чё на районе':
         await information(ctx, 'Москва, Алексеевская')
-    elif str(arg_str) == 'расскажи':
+    elif str(arg[0]) == 'расскажи':
         await information(ctx, 'Москва, Красная площадь', 12)
     elif str(arg_str) == 'погода на районе':
         await weather(ctx, 'Москва, Алексеевская')
-    elif str(arg_str) == 'погода':
+    elif str(arg[0]) == 'погода':
         await weather(ctx, target or 'Москва')
     elif str(arg_str) == 'пробки на районе':
         await traffic(ctx, 'Москва, Алексеевская')
-    elif str(arg_str) == 'пробки':
+    elif str(arg[0]) == 'пробки':
         await traffic(ctx, target or 'Красная площадь', 12)
     elif 'вероятность' in str(arg).lower():
         await posib(ctx, arg)
