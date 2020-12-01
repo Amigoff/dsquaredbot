@@ -6,6 +6,7 @@ import os
 import asyncio
 import socket
 from random import choice, randint
+import random
 from gtts import gTTS
 import requests
 import threading
