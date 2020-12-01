@@ -76,7 +76,9 @@ async def a(ctx, *arg):
     if str(arg_str) == 'расскажи чё на районе':
         await information(ctx, 'Москва, Алексеевская')
     elif str(arg[0]) == 'расскажи':
-        await information(ctx, 'Москва, Красная площадь', 12)
+        if target == 'расскажи':
+            target = None
+        await information(ctx, target or 'Москва, Красная площадь', 12)
     elif str(arg_str) == 'погода на районе':
         await weather(ctx, 'Москва, Алексеевская')
     elif str(arg[0]) == 'погода':
