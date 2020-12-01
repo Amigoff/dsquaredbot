@@ -91,6 +91,8 @@ async def a(ctx, *arg):
         await posib(ctx, arg)
     elif 'скажи' in str(arg).lower():
         await skaji(ctx, arg)
+    elif 'кто' in str(arg).lower():
+        await who(ctx, arg)
 
 
 @client.command(pass_context=True)
@@ -111,17 +113,21 @@ async def goroskop(ctx, arg=None):
         await ctx.send(choice(start) + ' ' + choice(mid))
 
 @client.command(pass_context=True)
-async def posib(ctx, arg):
+async def posib(ctx, arg=None):
     # arg = arg.lower().replace('вероятность', '').replace('что', '').replace(',', '')
     await ctx.send('{}%'.format(randint(0, 100)))
 
     
 @client.command(pass_context=True)
-async def skaji(ctx, arg):
-    # arg = arg.lower().replace('вероятность', '').replace('что', '').replace(',', '')
+async def skaji(ctx, arg=None):
     await ctx.send('{}'.format(['Да, Аллах говорит, что будет так' if randint(0, 1) else 'Нет'][0]))
 
     
+@client.command(pass_context=True)
+async def who(ctx, arg=None):
+    member = '{}'.format(choice(ctx.guild.members).mention)
+    await ctx.send(member)
+
 
 @client.command(pass_context=True)
 async def v(ctx, arg):
