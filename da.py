@@ -132,9 +132,9 @@ async def who(ctx, arg=None):
 
 @client.command(pass_context=True)
 async def when(ctx, arg=None):
-    start_date = date.today().replace(day=1, month=1, year=2021).toordinal()
-    end_date = date.today().replace(day=31, month=12, year=2050).toordinal()
-    random_day = date.fromordinal(random.randint(start_date, end_date))
+    start_date = datetime.date.today().replace(day=1, month=1, year=2021).toordinal()
+    end_date = datetime.date.today().replace(day=31, month=12, year=2050).toordinal()
+    random_day = datetime.date.fromordinal(random.randint(start_date, end_date))
     await ctx.send('Это произойдёт {}'.format(random_day.isoformat()))
 
 @client.command(pass_context=True)
