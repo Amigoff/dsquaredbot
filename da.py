@@ -87,6 +87,8 @@ async def a(ctx, *arg):
         await traffic(ctx, target or 'Красная площадь', 12)
     elif 'вероятность' in str(arg).lower():
         await posib(ctx, arg)
+    elif 'скажи' in str(arg).lower():
+        await skaji(ctx, arg)
 
 
 @client.command(pass_context=True)
@@ -111,6 +113,13 @@ async def posib(ctx, arg):
     # arg = arg.lower().replace('вероятность', '').replace('что', '').replace(',', '')
     await ctx.send('{}%'.format(randint(0, 100)))
 
+    
+@client.command(pass_context=True)
+async def skaji(ctx, arg):
+    # arg = arg.lower().replace('вероятность', '').replace('что', '').replace(',', '')
+    await ctx.send('{}'.format(['Да, Аллах говорит, что будет так' if randint(0, 1) else 'Нет'][0]))
+
+    
 
 @client.command(pass_context=True)
 async def v(ctx, arg):
