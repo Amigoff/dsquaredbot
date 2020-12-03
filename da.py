@@ -399,7 +399,8 @@ async def play():
         voice.play(discord.FFmpegPCMAudio(lst[0]))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
-        os.remove(lst1[0])
+        os.remove(lst[0])
+        del lst[0]
         del lst1[0]
     count = 0
 
@@ -432,7 +433,8 @@ async def manda(ctx, url, vol=0.3):
 @client.command(pass_context=True)
 async def clean(ctx):
     global lst1
-    os.remove(lst1[0])
+    lst = []
+    os.remove(lst[0])
     os.remove('answer.mp3')
     lst1 = []
     await ctx.send("Проведена чистка среди офицеров")
