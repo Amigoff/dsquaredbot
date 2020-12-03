@@ -118,7 +118,7 @@ async def anal(ctx, arg=None):
     await play()
     
 @client.command(pass_context=True)
-async def vader(ctx, arg=None):    
+async def alah(ctx, arg=None):    
     global lst1
     global voice
     try:
