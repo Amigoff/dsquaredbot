@@ -53,7 +53,7 @@ async def a(ctx, *arg):
     print(arg)
     if str(arg[0]) == "сыграй":
         url = arg[-1]
-        await manda(ctx, url, vol)
+        await manda(ctx, url)
     if str(arg[0]) == "фсо":
         await pizda(ctx)
     if str(arg[0]) == "побазарим":
