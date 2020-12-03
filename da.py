@@ -103,6 +103,7 @@ async def a(ctx, *arg):
 @client.command(pass_context=True)
 async def anal(ctx, arg=None):
     global lst1
+    global voice
     try:
         channel = ctx.author.voice.channel
         voice = await channel.connect()
