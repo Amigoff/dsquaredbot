@@ -436,7 +436,7 @@ async def clean(ctx):
     os.remove('answer.mp3')
     lst1 = []
     await ctx.send("Проведена чистка среди офицеров")
-    await ctx.send("Длина очереди " + str(len(lst)))
+    await ctx.send("Длина очереди " + str(len(lst1)))
 @client.command(pass_context=True)
 async def p(ctx):
     global voice
