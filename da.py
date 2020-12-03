@@ -428,7 +428,7 @@ async def play():
     count = 0
 
 @client.command(pass_context=True)
-async def manda(ctx, url, vol=0.3):
+async def manda(ctx, url):
     global ydl_opts
     global count
     global lst1
