@@ -432,6 +432,8 @@ async def manda(ctx, url, vol=0.3):
 @client.command(pass_context=True)
 async def clean(ctx):
     global lst1
+    os.remove(lst1[0])
+    os.remove('answer.mp3')
     lst1 = []
     await ctx.send("Проведена чистка среди офицеров")
     await ctx.send("Длина очереди " + str(len(lst)))
