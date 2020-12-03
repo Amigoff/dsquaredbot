@@ -247,16 +247,17 @@ async def random4ik(ctx):
 @client.command(pass_context=True)
 async def say(ctx, *arg):
     global voice
+    arg_str = ' '.join(arg)
     print('Вызвана команда "манда"')
     try:
         channel = ctx.author.voice.channel
         voice = await channel.connect()
     except:
         pass
-    if not isinstance(arg, str):
-        tts = gTTS(*arg, lang='ru')
+    if not isinstance(arg_str, str):
+        tts = gTTS(arg_str, lang='ru')
     else:
-        tts = gTTS(arg, lang='ru')
+        tts = gTTS(arg_str, lang='ru')
     tts.save('answer.mp3')
 
     voice.play(discord.FFmpegPCMAudio('answer.mp3'))
