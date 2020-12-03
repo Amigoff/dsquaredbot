@@ -108,10 +108,9 @@ async def anal(ctx, arg=None):
         voice = await channel.connect()
     except:
         pass
-    spisAk = ["https://www.youtube.com/watch?v=idJKsVao0Kk", "https://www.youtube.com/watch?v=VWxjcQjHA7o",
+    vid = choice(["https://www.youtube.com/watch?v=idJKsVao0Kk", "https://www.youtube.com/watch?v=VWxjcQjHA7o",
              "https://www.youtube.com/watch?v=NqX7GsLaOJM", "https://www.youtube.com/watch?v=MnnXemPKR7w", "https://www.youtube.com/watch?v=vHjY3okumj4"
-             "https://www.youtube.com/watch?v=KTfyGVI9Yxc"]
-    vid = choice(spisAk)
+             "https://www.youtube.com/watch?v=KTfyGVI9Yxc"])
     lst1.append(vid)
     await play()
     
