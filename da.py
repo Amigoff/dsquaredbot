@@ -116,7 +116,18 @@ async def anal(ctx, arg=None):
     vid = spisAk[num]
     lst1.append(vid)
     await play()
-    
+
+@client.command(pass_context=True)
+async def vader(ctx, arg=None):    
+    global lst1
+    global voice
+    try:
+        channel = ctx.author.voice.channel
+        voice = await channel.connect()
+    except:
+        pass
+    lst1.append("https://www.youtube.com/watch?v=U49RgwMSHc0")
+    await play()
 
 
 @client.command(pass_context=True)
