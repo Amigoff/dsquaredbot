@@ -96,6 +96,25 @@ async def a(ctx, *arg):
         await who(ctx, arg)
     elif 'когда' in str(arg).lower():
         await when(ctx, arg)
+    elif "анальная рулетка" in str(arg).lower():
+        await anal(ctx)
+        
+
+@client.command(pass_context=True)
+async def anal(ctx, arg=None):
+    global lst1
+    try:
+        channel = ctx.author.voice.channel
+        voice = await channel.connect()
+    except:
+        pass
+    spisAk = ["https://www.youtube.com/watch?v=idJKsVao0Kk", "https://www.youtube.com/watch?v=VWxjcQjHA7o",
+             "https://www.youtube.com/watch?v=NqX7GsLaOJM", "https://www.youtube.com/watch?v=MnnXemPKR7w", "https://www.youtube.com/watch?v=vHjY3okumj4"
+             "https://www.youtube.com/watch?v=KTfyGVI9Yxc"]
+    vid = choice(spisAk)
+    lst1.append(vid)
+    await play()
+    
 
 
 @client.command(pass_context=True)
