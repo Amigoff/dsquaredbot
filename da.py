@@ -418,7 +418,7 @@ async def play():
             ur = lst1[0]
             print(ur)
             print("Тут ссылка")
-            if ur.startswith("http"):
+            if str(ur).startswith("http"):
                 ydl.download([ur])
             else:
                 arg = " ".join(ur)
