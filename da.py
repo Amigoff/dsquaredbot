@@ -422,7 +422,8 @@ async def play():
                 ydl.download([ur])
             except:
                 arg = " ".join(ur)
-                ydl.download(f"ytsearch:{arg}")
+                print(arg)
+                ydl.download(ytsearch: arg)
             for file in os.listdir("./"):
                 print(f'Тут файл: {file}')
                 if file.endswith(".mp3"):
