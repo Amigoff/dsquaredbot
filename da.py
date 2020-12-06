@@ -408,7 +408,7 @@ async def play():
                 "key": "FFmpegExtractAudio",
                 "preferredcodec": "mp3",
                 "preferredquality": "192",
-                "noplaylist": True
+                'noplaylist' : True,
             }],
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
