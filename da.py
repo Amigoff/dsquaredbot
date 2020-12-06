@@ -52,9 +52,8 @@ async def a(ctx, *arg):
 
     print(arg)
     if str(arg[0]) == "сыграй":
-        lsar = lst(arg)
-        url = lsar[1:]
-        if len(url) == 1:
+        url = arg[1:]
+        if len(arg) == 2:
             await manda(ctx, url[0])
         else:
             await manda(ctx, url)
