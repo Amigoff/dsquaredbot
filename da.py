@@ -423,7 +423,7 @@ async def play():
             else:
                 arg = " ".join(ur)
                 print(arg)
-                ydl("ytsearch: arg")
+                ydl "ytsearch: arg"
             for file in os.listdir("./"):
                 print(f'Тут файл: {file}')
                 if file.endswith(".mp3"):
