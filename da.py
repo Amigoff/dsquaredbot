@@ -118,7 +118,7 @@ async def anal(ctx, arg=None):
              "https://www.youtube.com/watch?v=KTfyGVI9Yxc"]
     vid = spisAk[num]
     lst1.append(vid)
-    await play()
+    await play(ctx)
     
 @client.command(pass_context=True)
 async def alah(ctx, arg=None):    
@@ -130,7 +130,7 @@ async def alah(ctx, arg=None):
     except:
         pass
     lst1.append("https://www.youtube.com/watch?v=tW9YEa7-zTI")
-    await play()
+    await play(ctx)
     
 
 @client.command(pass_context=True)
@@ -143,7 +143,7 @@ async def vader(ctx, arg=None):
     except:
         pass
     lst1.append("https://www.youtube.com/watch?v=U49RgwMSHc0")
-    await play()
+    await play(ctx)
 
 
 @client.command(pass_context=True)
@@ -214,7 +214,7 @@ async def CENA(ctx):
         loop = asyncio.get_event_loop()
 
         task1 = loop.create_task(set_nicknames('AND HIS NAME IS JOHN SENO', members))
-        task2 = loop.create_task(play())
+        task2 = loop.create_task(play(ctx))
 
         await task1
         await task2
@@ -399,7 +399,7 @@ async def pizda(ctx):
     except Exception as e:
         await ctx.send(f'Ошибочка бля {e}')
 
-async def play():
+async def play(ctx):
     global lst
     global lst1
     global count
@@ -463,7 +463,7 @@ async def manda(ctx, url):
 
     if count == 0:
         print(lst1)
-        await play()
+        await play(ctx)
     else:
         pass  
 
