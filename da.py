@@ -428,6 +428,7 @@ async def play():
                 print(f'Тут файл: {file}')
                 if file.endswith(".mp3"):
                     lst.append(str(file))
+                    await ctx.send("Играю:: " + str(file)) 
         voice.play(discord.FFmpegPCMAudio(lst[0]))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
