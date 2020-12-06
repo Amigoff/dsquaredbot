@@ -436,6 +436,7 @@ async def play():
         del lst[0]
         del lst1[0]
     count = 0
+    
 
 @client.command(pass_context=True)
 async def manda(ctx, url):
@@ -494,6 +495,7 @@ async def st(ctx):
         voice.stop()
     except:
         pass
+    await(clean)
 @client.command(pass_context=True)
 async def info(ctx):
     await ctx.send("Префикс: !a\
