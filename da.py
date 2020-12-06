@@ -423,7 +423,8 @@ async def play():
             else:
                 arg = " ".join(ur)
                 print(arg)
-                ydl.extract_info(ytsearch: arg, download=True)
+                stroka = "ytsearch: " + arg
+                ydl.extract_info(stroka, download=True)
             for file in os.listdir("./"):
                 print(f'Тут файл: {file}')
                 if file.endswith(".mp3"):
