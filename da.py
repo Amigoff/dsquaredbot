@@ -52,8 +52,13 @@ async def a(ctx, *arg):
 
     print(arg)
     if str(arg[0]) == "сыграй":
-        url = arg[-1]
-        await manda(ctx, url)
+        lsar = arg.split()
+        url = lsar[1:]
+        if len(url) == 1:
+            await manda(ctx, url[0])
+        else:
+            await manda(ctx, url)
+
     if str(arg[0]) == "фсо":
         await pizda(ctx)
     if str(arg[0]) == "побазарим":
@@ -408,14 +413,17 @@ async def play():
                 "key": "FFmpegExtractAudio",
                 "preferredcodec": "mp3",
                 "preferredquality": "192",
-                "noplaylist": True,
             }],
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ur = lst1[0]
             print(ur)
             print("Тут ссылка")
-            ydl.download([ur])
+            try:
+                ydl.download([ur])
+            except:
+                arg = " ".join(ur)
+                ydl.download(f"ytsearch:{arg}")
             for file in os.listdir("./"):
                 print(f'Тут файл: {file}')
                 if file.endswith(".mp3"):
