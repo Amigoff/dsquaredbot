@@ -430,7 +430,7 @@ async def play(ctx):
                 if file.endswith(".mp3"):
                     lst.append(str(file))
         voice.play(discord.FFmpegPCMAudio(lst[0]))
-        await ctx.send("Играю: " + lst[0])
+        await ctx.send("Играю: " + lst[0][:-16])
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
         try:
