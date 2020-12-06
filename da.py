@@ -495,7 +495,7 @@ async def st(ctx):
         voice.stop()
     except:
         pass
-    await(clean)
+    await clean(ctx)
 @client.command(pass_context=True)
 async def info(ctx):
     await ctx.send("Префикс: !a\
