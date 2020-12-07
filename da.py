@@ -472,6 +472,7 @@ async def manda(ctx, url):
 @client.command(pass_context=True)
 async def clean(ctx):
     global lst1
+    global lst
     lst = []
     for file in os.listdir("./"):
         if file.endswith(".mp3"):
