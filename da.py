@@ -292,6 +292,8 @@ async def say(ctx, *arg):
     voice.play(discord.FFmpegPCMAudio('answer.mp3'))
     while voice.is_playing() or voice.is_paused():
         await asyncio.sleep(1)
+    os.remove("answer.mp3")    
+        
 
 
 @client.command(pass_context=True)
