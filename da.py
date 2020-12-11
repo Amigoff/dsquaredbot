@@ -101,11 +101,11 @@ async def a(ctx, *arg):
     elif "анальная рулетка" in str(arg).lower():
         await anal(ctx)
     elif " или " in str(arg).lower:
-        awat choose(ctx)
+        awat choose(ctx, arg)
 
 
 @client.command(pass_context=True)
-async def choose(ctx, *arg):
+async def choose(ctx, arg):
     list = arg.split(" или ")
     await ctx.send(choice(lisst))
         
