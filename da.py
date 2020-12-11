@@ -129,7 +129,7 @@ async def vibori(ctx, arg):
     t = ""
     for k in arg:
         if k.lower() != "голосование":
-            t += str(arg[k])
+            t += str(k)
     golos = {}
     stroka = "Голосование" + str(t)
     for item in t:
