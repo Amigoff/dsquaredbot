@@ -49,6 +49,9 @@ load_opus_lib()
 print('opus_loaded')
 @client.command(pass_context=True)
 async def a(ctx, *arg):
+    global mes
+    global golos
+    global
 
     print(arg)
     if str(arg[0]) == "сыграй":
@@ -102,6 +105,35 @@ async def a(ctx, *arg):
         await anal(ctx)
     elif "или" in str(arg):
         await choose(ctx, arg)
+    elif "голосование" in str(arg).lower():
+        await vibori(ctx, arg)
+    elif "голосую" in str(arg).lower():
+        if str(arg[-1]).lower() in golos:
+            golos[str(arg[-1])] += 1
+            await mes.delete()
+            stroka = "Голосование" + str(t)
+            for item in t:
+                stroka += "\n"
+                stroka += str(item + ": " + str(spisok[item]))
+            mes = await ctx.send(stroka)
+        else:
+            await ctx.send("Нет такого варианта")
+            
+   
+
+@client.command(pass_context=True)
+async def vibori(ctx, arg):
+    global golos
+    global mes
+    t = arg[1:]
+    golos = {}
+    stroka = "Голосование" + str(t)
+    for item in t:
+        golos[str(item)] = 0
+        stroka += "\n"
+        stroka += str(item + ": " + str(golos[item]))
+    mes = await ctx.send(stroka)    
+    
 
 
 @client.command(pass_context=True)
