@@ -107,7 +107,7 @@ async def a(ctx, *arg):
 @client.command(pass_context=True)
 async def choose(ctx, arg):
     list = arg.split(" или ")
-    await ctx.send(choice(lisst))
+    await ctx.send(choice(list))
         
 
 @client.command(pass_context=True)
