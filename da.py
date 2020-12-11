@@ -142,7 +142,7 @@ async def vibori(ctx, arg):
         stroka += str(item + ": " + str(golos[item]))
     mes = await ctx.send(stroka)    
     lst1.append("https://youtu.be/XjuWHekyRtA")
-    await play
+    await play(ctx)
 
 
 @client.command(pass_context=True)
