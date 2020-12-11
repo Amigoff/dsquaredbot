@@ -106,7 +106,10 @@ async def a(ctx, *arg):
     elif "или" in str(arg):
         await choose(ctx, arg)
     elif "голосование" in str(arg).lower():
-        await vibori(ctx, arg)
+        await vibori(ctx, arg[int(arg[-1]):-2])
+        for k in arg[1:int(arg[-1])]:
+            t += " "
+            t += str(k)
     elif "голосую" in str(arg).lower():
         if str(arg[-1]).lower() in golos:
             golos[str(arg[-1]).lower()] += 1
@@ -129,11 +132,6 @@ async def vibori(ctx, arg):
     global tt
     global lst1
     global voice
-    t = ""
-    for k in arg:
-        if k.lower() != "голосование":
-            t += " "
-            t += str(k)
     golos = {}
     stroka = "Голосование" + str(t)
     tt = t.split()
