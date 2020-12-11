@@ -51,7 +51,6 @@ print('opus_loaded')
 async def a(ctx, *arg):
     global mes
     global golos
-    global
 
     print(arg)
     if str(arg[0]) == "сыграй":
