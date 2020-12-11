@@ -100,7 +100,7 @@ async def a(ctx, *arg):
         await when(ctx, arg)
     elif "анальная рулетка" in str(arg).lower():
         await anal(ctx)
-    elif " или " in str(arg):
+    elif "или" in str(arg):
         await choose(ctx, str(arg))
 
 
