@@ -109,7 +109,7 @@ async def a(ctx, *arg):
         await vibori(ctx, arg)
     elif "голосую" in str(arg).lower():
         if str(arg[-1]).lower() in golos:
-            golos[str(arg[-1])] += 1
+            golos[str(arg[-1]).lower()] += 1
             await mes.delete()
             stroka = "Голосование" + str(t)
             for item in tt:
