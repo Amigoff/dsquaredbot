@@ -107,6 +107,7 @@ async def a(ctx, *arg):
         await choose(ctx, arg)
     elif "голосование" in str(arg).lower():
         await vibori(ctx, arg[int(arg[-1]):-2])
+        t = ""
         for k in arg[1:int(arg[-1])]:
             t += " "
             t += str(k)
