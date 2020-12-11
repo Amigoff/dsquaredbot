@@ -127,8 +127,9 @@ async def vibori(ctx, arg):
     global mes
     global t
     t = ""
-    for k in range(1, len(arg)):
-        t += str(arg[k])
+    for k in arg:
+        if k.lower() != "голосование":
+            t += str(arg[k])
     golos = {}
     stroka = "Голосование" + str(t)
     for item in t:
