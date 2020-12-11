@@ -51,8 +51,7 @@ print('opus_loaded')
 async def a(ctx, *arg):
     global mes
     global golos
-    global t
-
+    global t 
     print(arg)
     if str(arg[0]) == "сыграй":
         url = arg[1:]
@@ -111,6 +110,7 @@ async def a(ctx, *arg):
         for k in arg[1:int(arg[-1])]:
             t += " "
             t += str(k)
+            print(k)
     elif "голосую" in str(arg).lower():
         if str(arg[-1]).lower() in golos:
             golos[str(arg[-1]).lower()] += 1
