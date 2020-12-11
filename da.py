@@ -461,7 +461,7 @@ async def manda(ctx, url):
     try:
         channel = ctx.author.voice.channel
         print('Вызвана команда "манда"')
-        voice = await channel.connect()
+        voice = await channel.connect(timeout=10.0)
     except Exception as e:
         print('Error', e)
 
@@ -482,7 +482,9 @@ async def clean(ctx):
     lst1 = []
     await ctx.send("Проведена чистка среди офицеров")
     await ctx.send("Длина очереди " + str(len(lst1)))
-@client.command(pass_context=True)
+
+    
+    @client.command(pass_context=True)
 async def p(ctx):
     global voice
     try:
@@ -504,6 +506,8 @@ async def st(ctx):
     except:
         pass
     await clean(ctx)
+
+    
 @client.command(pass_context=True)
 async def info(ctx):
     await ctx.send("Префикс: !a\
