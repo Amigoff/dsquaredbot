@@ -484,7 +484,7 @@ async def clean(ctx):
     await ctx.send("Длина очереди " + str(len(lst1)))
 
     
-    @client.command(pass_context=True)
+@client.command(pass_context=True)
 async def p(ctx):
     global voice
     try:
