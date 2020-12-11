@@ -127,6 +127,7 @@ async def vibori(ctx, arg):
     global mes
     global t
     global tt
+    global lst1
     t = ""
     for k in arg:
         if k.lower() != "голосование":
@@ -140,7 +141,8 @@ async def vibori(ctx, arg):
         stroka += "\n"
         stroka += str(item + ": " + str(golos[item]))
     mes = await ctx.send(stroka)    
-    
+    lst1.append("https://youtu.be/XjuWHekyRtA")
+    await play
 
 
 @client.command(pass_context=True)
