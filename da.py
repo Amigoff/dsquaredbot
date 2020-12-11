@@ -128,6 +128,7 @@ async def vibori(ctx, arg):
     global t
     global tt
     global lst1
+    global voice
     t = ""
     for k in arg:
         if k.lower() != "голосование":
@@ -140,7 +141,12 @@ async def vibori(ctx, arg):
         golos[str(item)] = 0
         stroka += "\n"
         stroka += str(item + ": " + str(golos[item]))
-    mes = await ctx.send(stroka)    
+    mes = await ctx.send(stroka)
+    try:
+        channel = ctx.author.voice.channel
+        voice = await channel.connect()
+    except:
+        pass
     lst1.append("https://youtu.be/XjuWHekyRtA")
     await play(ctx)
 
