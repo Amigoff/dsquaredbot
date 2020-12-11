@@ -57,7 +57,6 @@ async def a(ctx, *arg):
             await manda(ctx, url[0])
         else:
             await manda(ctx, url)
-
     if str(arg[0]) == "фсо":
         await pizda(ctx)
     if str(arg[0]) == "побазарим":
@@ -101,6 +100,14 @@ async def a(ctx, *arg):
         await when(ctx, arg)
     elif "анальная рулетка" in str(arg).lower():
         await anal(ctx)
+    elif " или " in str(arg).lower:
+        awat choose(ctx)
+
+
+@client.command(pass_context=True)
+async def choose(ctx, *arg):
+    list = arg.split(" или ")
+    await ctx.send(choice(lisst))
         
 
 @client.command(pass_context=True)
