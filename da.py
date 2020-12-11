@@ -51,7 +51,8 @@ print('opus_loaded')
 async def a(ctx, *arg):
     global mes
     global golos
-    global t 
+    global t
+    global tt
     print(arg)
     if str(arg[0]) == "сыграй":
         url = arg[1:]
