@@ -112,9 +112,9 @@ async def a(ctx, *arg):
             golos[str(arg[-1])] += 1
             await mes.delete()
             stroka = "Голосование" + str(t)
-            for item in t:
+            for item in tt:
                 stroka += "\n"
-                stroka += str(item + ": " + str(spisok[item]))
+                stroka += str(item + ": " + str(golos[item]))
             mes = await ctx.send(stroka)
         else:
             await ctx.send("Нет такого варианта")
@@ -126,13 +126,16 @@ async def vibori(ctx, arg):
     global golos
     global mes
     global t
+    global tt
     t = ""
     for k in arg:
         if k.lower() != "голосование":
+            t += " "
             t += str(k)
     golos = {}
     stroka = "Голосование" + str(t)
-    for item in t:
+    tt = t.split()
+    for item in tt:
         golos[str(item)] = 0
         stroka += "\n"
         stroka += str(item + ": " + str(golos[item]))
