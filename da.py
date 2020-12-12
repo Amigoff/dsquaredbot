@@ -107,16 +107,16 @@ async def a(ctx, *arg):
         await choose(ctx, arg)
     elif "голосование" in str(arg).lower():
         t = ""
-        for k in arg[1:int(arg[-1])]:
+        for k in arg[1:-int(arg[-1]) + 1]:
             t += " "
             t += str(k)
             print(k)
-        await vibori(ctx, arg[int(arg[-1]):-2])    
+        await vibori(ctx, arg[int(arg[-1]):-1])    
     elif "голосую" in str(arg).lower():
         if str(arg[-1]).lower() in golos:
             golos[str(arg[-1]).lower()] += 1
             await mes.delete()
-            stroka = "Голосование" + str(t)
+            strkoa = "Голосование" + str(t)
             for item in tt:
                 stroka += "\n"
                 stroka += str(item + ": " + str(golos[item]))
@@ -148,7 +148,10 @@ async def vibori(ctx, arg):
     except:
         pass
     lst1.append("https://youtu.be/XjuWHekyRtA")
-    await play(ctx)
+    try:
+        await play(ctx)
+    except:
+        pass 
 
 
 @client.command(pass_context=True)
