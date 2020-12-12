@@ -116,7 +116,7 @@ async def a(ctx, *arg):
         if str(arg[-1]).lower() in golos:
             golos[str(arg[-1]).lower()] += 1
             await mes.delete()
-            strkoa = "Голосование" + str(t)
+            stroka = "Голосование" + str(t)
             for item in tt:
                 stroka += "\n"
                 stroka += str(item + ": " + str(golos[item]))
