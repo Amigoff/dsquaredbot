@@ -106,12 +106,12 @@ async def a(ctx, *arg):
     elif "или" in str(arg):
         await choose(ctx, arg)
     elif "голосование" in str(arg).lower():
-        await vibori(ctx, arg[int(arg[-1]):-2])
         t = ""
         for k in arg[1:int(arg[-1])]:
             t += " "
             t += str(k)
             print(k)
+        await vibori(ctx, arg[int(arg[-1]):-2])    
     elif "голосую" in str(arg).lower():
         if str(arg[-1]).lower() in golos:
             golos[str(arg[-1]).lower()] += 1
