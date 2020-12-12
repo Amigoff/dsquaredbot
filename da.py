@@ -136,7 +136,11 @@ async def vibori(ctx, arg):
     global voice
     golos = {}
     stroka = "Голосование" + str(t)
-    tt = t.split()
+    s_arg = ""
+    for k in arg:
+        s_arg += k 
+        s_arg += " "
+    tt = s_arg.split()
     for item in tt:
         golos[str(item)] = 0
         stroka += "\n"
