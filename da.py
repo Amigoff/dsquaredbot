@@ -311,7 +311,7 @@ async def set_nicknames(new, members):
 @client.command(pass_context=True)
 async def da(ctx):
     print('Вызвана команда "да"')
-    await ctx.send("С дном рождения, пидарас")
+    await ctx.send("Без баб")
 
 
 @client.command(pass_context=True)
