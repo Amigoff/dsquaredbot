@@ -57,7 +57,7 @@ async def a(ctx, *arg):
     
     arg_string = str(arg)
     
-    if arg_string == "сыграй":
+    if "сыграй" in arg_string:
         url = arg[1:]
         if len(arg) == 2:
             await manda(ctx, url[0])
