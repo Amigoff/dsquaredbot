@@ -55,7 +55,7 @@ async def a(ctx, *arg):
     global t
     global tt
     
-    arg_string = str(arg)
+    arg_string = str(arg).lower()
     ctx.send(arg_string)
 
 
