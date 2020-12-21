@@ -180,11 +180,12 @@ async def record(ctx, arg=None):
         ctx.voice_client.listen(discord.UserFilter(discord.WaveSink(str(wave_file)), ctx.author))
     else:
         ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
+    await say(ctx, "ЗАПИСЫВАЮ, ЕПТА")
     await ctx.send("ЗАПИСЫВАЮ, ЕПТА")
     await asyncio.sleep(5)
     ctx.voice_client.stop_listening()
     # print(discord.File(fp, filename='record.wav'))
-    await ctx.send("Ща распознаем, что ты сказал, долбоёб!")
+    await say(ctx, "Ща распознаем, что ты сказал, долбоёб!")
     result = recorgnize(wave_file)
     await ctx.send("- {}".format(result))
     if 'сено' in result:
