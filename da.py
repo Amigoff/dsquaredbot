@@ -25,6 +25,8 @@ count = 0
 intents = discord.Intents.default()
 intents.members = True
 
+
+NAME = 'аллах'
 tok = "NzkwNTUyMTY3NjUxMzQ0Mzg1.X-CRFA.6K1AM1L088_JSP9o7Z4-J5b4sAk"
 yandex_api_key = '3c39ba17-9a2c-4ba4-9e70-9f695fb7eae5'
 whether_api_key = '75f6890557ef108e7ad5b23fd1acf04c'
@@ -55,9 +57,8 @@ async def a(ctx, *arg):
     global t
     global tt
     
-    arg_str = ' '.join(arg).lower().replace('аллах ', '')
+    arg_str = ' '.join(arg).lower().replace("{} ".format(NAME), '')
     target = arg[-1]
-    await ctx.send(arg_str)
 
     if "сыграй" in arg_str:
         url = arg[1:]
@@ -176,6 +177,8 @@ RECORDING = {}
  
 @client.command(pass_context=True)
 async def record(ctx, arg=None):
+    global NAME
+    
     if not ctx.voice_client:
         await ctx.author.voice.channel.connect()
     
@@ -201,8 +204,8 @@ async def record(ctx, arg=None):
         # await say(ctx, "Ща распознаем, что ты сказал, долбоёб!")
         try:
             result = recorgnize(wave_file)
-            await ctx.send("- {}".format(result))
-            if 'аллах ' in result.lower():
+            if f"{NAME} " in result.lower():
+                await ctx.send("- {}".format(result))
                 await ctx.send('Выполняю')
                 result = result.lower().replace('мистер', '')
                 if 'сено' in result:
@@ -406,15 +409,16 @@ async def say(ctx, *arg):
         tts = gTTS(arg_str, lang='ru')
     else:
         tts = gTTS(str(arg_str), lang='ru')
-    tts.save('answer.mp3')
+    
+    filename = datetime.datetime.now().strftime("%y%m%d_%H%M%S") + '.mp3'
+    tts.save(filename)
 
     try:
-        voice.play(discord.FFmpegPCMAudio('answer.mp3'))
-        while voice.is_playing() or voice.is_paused():
-            await asyncio.sleep(1)
-    except:
-        pass
-    os.remove("answer.mp3")    
+        lst1.append(filename)
+        await play(ctx)
+    except Exception as e:
+        print('err', e)
+    os.remove(filename)    
         
 
 
