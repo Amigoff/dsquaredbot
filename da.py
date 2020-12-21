@@ -12,6 +12,7 @@ import requests
 import threading
 import datetime
 import time
+from recognizer import recorgnize
 
 socket.gethostbyname("")
 path = os.getcwd()
@@ -183,9 +184,11 @@ async def record(ctx, arg=None):
     await asyncio.sleep(5)
     ctx.voice_client.stop_listening()
     # print(discord.File(fp, filename='record.wav'))
-    await ctx.send("Recording being sent. Please wait!")
-    await ctx.send('Here\'s, your record file.', file=discord.File(fp, filename=str(wave_file)))
-
+    await ctx.send("Ща распознаем, что ты сказал, долбоёб!")
+    result = recorgnize(wave_file)
+    await ctx.send("Как-то долбоёб сказал: {}".format(result))
+    
+    
 @client.command(pass_context=True)
 async def anal(ctx, arg=None):
     global lst1
