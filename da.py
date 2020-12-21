@@ -55,48 +55,47 @@ async def a(ctx, *arg):
     global t
     global tt
     
-    arg_string = str(arg).lower()
-    ctx.send(arg_string)
+    arg_str = ' '.join(arg).lower()
+    target = arg[-1]
+    await ctx.send(arg_str)
 
-
-    if "сыграй" in arg_string:
+    if "сыграй" in arg_str:
         url = arg[1:]
         if len(arg) == 2:
             await manda(ctx, url[0])
         else:
             await manda(ctx, url)
-    if "фсо" in arg_string or ('всё' in arg_string and 'пока' in arg_string):
+    if "фсо" in arg_str or ('всё' in arg_str and 'пока' in arg_str):
         await pizda(ctx)
-    if "побазарим" in arg_string:
+    if "побазарим" in arg_str:
         await da(ctx)
-    if "подкрути" in arg_string:
+    if "подкрути" in arg_str:
         url = arg[-1]
         await v(ctx, url)
-    if "очисти" in arg_string:
+    if "очисти" in arg_str:
         await clean(ctx)
-    if "паехали" in arg_string:
+    if "паехали" in arg_str:
         await r(ctx)
-    if "стопэ" in arg_string:
+    if "стопэ" in arg_str:
         await p(ctx)
-    if "хватит" in arg_string:
+    if "хватит" in arg_str:
         await st(ctx)
-    if 'рулетка' in arg_string:
+    if 'рулетка' in arg_str:
         await random4ik(ctx)
-    arg_str = ' '.join(arg)
-    target = arg[-1]
+
     if str(arg_str) == 'расскажи чё на районе':
         await information(ctx, 'Москва, Алексеевская')
-    elif 'расскажи' in arg_string:
+    elif 'расскажи' in arg_str:
         if target == 'расскажи':
             target = None
         await information(ctx, target or 'Москва, Красная площадь', 12)
     elif str(arg_str) == 'погода на районе':
         await weather(ctx, 'Москва, Алексеевская')
-    elif arg_string == 'погода':
+    elif arg_str == 'погода':
         await weather(ctx, target or 'Москва')
     elif str(arg_str) == 'пробки на районе':
         await traffic(ctx, 'Москва, Алексеевская')
-    elif arg_string == 'пробки':
+    elif arg_str == 'пробки':
         await traffic(ctx, target or 'Красная площадь', 12)
     elif 'вероятность' in str(arg).lower():
         await posib(ctx, arg)
