@@ -201,7 +201,7 @@ async def record(ctx, arg=None):
         try:
             result = recorgnize(wave_file)
             await ctx.send("- {}".format(result))
-            if 'мистер' in result.lower():
+            if 'аллах ' in result.lower():
                 await ctx.send('Выполняю')
                 result = result.lower().replace('мистер', '')
                 if 'сено' in result:
