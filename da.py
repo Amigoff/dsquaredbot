@@ -185,7 +185,7 @@ async def record(ctx, arg=None):
         await ctx.author.voice.channel.connect()
     
     if RECORDING.get(ctx.author.mention):
-        await say('Уже распознаю твою речь, брат, э. Стопаю')
+        await say(ctx, 'Уже распознаю твою речь, брат, э. Стопаю')
         RECORDING.pop(ctx.author.mention)
         return
     RECORDING[ctx.author.mention] = True
@@ -416,9 +416,17 @@ async def say(ctx, *arg):
     tts.save(filename)
         
     try:
+        try:
+            voice.pause()
+        except:
+            pass
         voice.play(discord.FFmpegPCMAudio(filename))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
+        try:
+            voice.pause()
+        except:
+            pass
     except Exception as e:
         print('err', e)   
     os.remove(filename)
