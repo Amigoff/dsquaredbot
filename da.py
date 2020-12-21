@@ -13,7 +13,6 @@ import threading
 import datetime
 import time
 
-os.add_dll_directory(os.getcwd())
 socket.gethostbyname("")
 path = os.getcwd()
 print(path)
