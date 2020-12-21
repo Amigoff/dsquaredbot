@@ -66,25 +66,25 @@ async def a(ctx, *arg):
             await manda(ctx, url[0])
         else:
             await manda(ctx, url)
-    if "фсо" in arg_str or ('всё' in arg_str and 'пока' in arg_str):
+    elif "фсо" in arg_str or ('всё' in arg_str and 'пока' in arg_str):
         await pizda(ctx)
-    if "побазарим" in arg_str:
+    elif "побазарим" in arg_str:
         await da(ctx)
-    if "подкрути" in arg_str:
+    elif "подкрути" in arg_str:
         url = arg[-1]
         await v(ctx, url)
-    if "очисти" in arg_str:
+    elif "очисти" in arg_str:
         await clean(ctx)
-    if "паехали" in arg_str:
+    elif "паехали" in arg_str:
         await r(ctx)
-    if "стопэ" in arg_str:
+    elif "стопэ" in arg_str:
         await p(ctx)
-    if "хватит" in arg_str:
+    elif "хватит" in arg_str:
         await st(ctx)
-    if 'рулетка' in arg_str:
+    elif 'рулетка' in arg_str:
         await random4ik(ctx)
 
-    if str(arg_str) == 'расскажи чё на районе':
+    elif str(arg_str) == 'расскажи чё на районе':
         await information(ctx, 'Москва, Алексеевская')
     elif 'расскажи' in arg_str:
         if target == 'расскажи':
@@ -128,7 +128,9 @@ async def a(ctx, *arg):
             mes = await ctx.send(stroka)
         else:
             await ctx.send("Нет такого варианта")
-            
+    else:
+        return 1
+    return 0
    
 
 @client.command(pass_context=True)
@@ -178,12 +180,12 @@ RECORDING = {}
 @client.command(pass_context=True)
 async def record(ctx, arg=None):
     global NAME
-    
+    await say(ctx, "Начинаем, ежжи, рад тебя снова видеть")
     if not ctx.voice_client:
         await ctx.author.voice.channel.connect()
     
     if RECORDING.get(ctx.author.mention):
-        await ctx.send('Уже распознаю твою речь, брат, э. Стопаю')
+        await say('Уже распознаю твою речь, брат, э. Стопаю')
         RECORDING.pop(ctx.author.mention)
         return
     RECORDING[ctx.author.mention] = True
@@ -417,8 +419,7 @@ async def say(ctx, *arg):
         lst1.append(filename)
         await play(ctx)
     except Exception as e:
-        print('err', e)
-    os.remove(filename)    
+        print('err', e)   
         
 
 
