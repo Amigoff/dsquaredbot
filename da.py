@@ -55,7 +55,7 @@ async def a(ctx, *arg):
     global t
     global tt
     
-    arg_str = ' '.join(arg).lower()
+    arg_str = ' '.join(arg).lower().replace('аллах ', '')
     target = arg[-1]
     await ctx.send(arg_str)
 
