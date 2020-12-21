@@ -167,31 +167,42 @@ async def choose(ctx, arg):
     lt = list.split("или")    
     sl = choice(lt)
     await ctx.send(sl)
-        
+ 
+
+RECORDING = {}
+ 
 @client.command(pass_context=True)
 async def record(ctx, arg=None):
     if not ctx.voice_client:
         await ctx.author.voice.channel.connect()
     
-    wave_file = "1.wav"
-    open(wave_file, 'a').close()
-    fp = open(wave_file, 'rb')
-    if True:
-        ctx.voice_client.listen(discord.UserFilter(discord.WaveSink(str(wave_file)), ctx.author))
-    else:
-        ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
-    await say(ctx, "ЗАПИСЫВАЮ, ЕПТА")
-    await ctx.send("ЗАПИСЫВАЮ, ЕПТА")
-    await asyncio.sleep(5)
-    ctx.voice_client.stop_listening()
-    # print(discord.File(fp, filename='record.wav'))
-    await say(ctx, "Ща распознаем, что ты сказал, долбоёб!")
-    result = recorgnize(wave_file)
-    await ctx.send("- {}".format(result))
-    if 'сено' in result:
-        await CENA(ctx)
-        return 
-    await a(ctx, result)
+    if RECORDING.get(ctx.author.mention):
+        await ctx.send('Уже распознаю твою речь, брат, э')
+        return
+    RECORDING[ctx.author.mention] = True
+    
+    wave_file = datetime.datetime.now().strftime("%y%m%d_%H%M%S") + '.wav'
+    
+    while True:
+        open(wave_file, 'a').close()
+        fp = open(wave_file, 'rb')
+        if True:
+            ctx.voice_client.listen(discord.UserFilter(discord.WaveSink(str(wave_file)), ctx.author))
+        else:
+            ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
+        await say(ctx, "ЗАПИСЫВАЮ, ЕПТА")
+        await ctx.send("ЗАПИСЫВАЮ, ЕПТА")
+        await asyncio.sleep(5)
+        ctx.voice_client.stop_listening()
+        # await say(ctx, "Ща распознаем, что ты сказал, долбоёб!")
+        await ctx.send("- {}".format(result))
+        result = recorgnize(wave_file)
+        if 'мистер' in result.lower():
+            if 'сено' in result:
+                await CENA(ctx)
+                return 
+            await a(ctx, result)
+        
     
     
     
@@ -369,16 +380,17 @@ async def random4ik(ctx):
 async def say(ctx, *arg):
     global voice
     arg_str = ' '.join(arg)
-    print('Вызвана команда "манда"')
+    print('Говорю {}'.format(arg_str))
     try:
         channel = ctx.author.voice.channel
         voice = await channel.connect()
-    except:
-        pass
+    except Exception as e:
+        print(f'ОШИБКА ПОЛУЧЕНИЯ VOICE: {e}')
+        
     if not isinstance(arg_str, str):
         tts = gTTS(arg_str, lang='ru')
     else:
-        tts = gTTS(arg_str, lang='ru')
+        tts = gTTS(' '.join(arg_str), lang='ru')
     tts.save('answer.mp3')
 
     try:
