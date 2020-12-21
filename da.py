@@ -54,45 +54,47 @@ async def a(ctx, *arg):
     global golos
     global t
     global tt
-    print(arg)
-    if str(arg[0]) == "сыграй":
+    
+    arg_string = str(arg)
+    
+    if arg_string == "сыграй":
         url = arg[1:]
         if len(arg) == 2:
             await manda(ctx, url[0])
         else:
             await manda(ctx, url)
-    if str(arg[0]) == "фсо":
+    if "фсо" in arg_string:
         await pizda(ctx)
-    if str(arg[0]) == "побазарим":
+    if "побазарим" in arg_string:
         await da(ctx)
-    if str(arg[0]) == "подкрути":
+    if "подкрути" in arg_string:
         url = arg[-1]
         await v(ctx, url)
-    if str(arg[0]) == "очисти":
+    if "очисти" in arg_string:
         await clean(ctx)
-    if str(arg[0]) == "паехали":
+    if "паехали" in arg_string:
         await r(ctx)
-    if str(arg[0]) == "стопэ":
+    if "стопэ" in arg_string:
         await p(ctx)
-    if str(arg[0]) == "хватит":
+    if "хватит" in arg_string:
         await st(ctx)
-    if str(arg[0]) == 'рулетка':
+    if 'рулетка' in arg_string:
         await random4ik(ctx)
     arg_str = ' '.join(arg)
     target = arg[-1]
     if str(arg_str) == 'расскажи чё на районе':
         await information(ctx, 'Москва, Алексеевская')
-    elif str(arg[0]) == 'расскажи':
+    elif 'расскажи' in arg_string:
         if target == 'расскажи':
             target = None
         await information(ctx, target or 'Москва, Красная площадь', 12)
     elif str(arg_str) == 'погода на районе':
         await weather(ctx, 'Москва, Алексеевская')
-    elif str(arg[0]) == 'погода':
+    elif arg_string == 'погода':
         await weather(ctx, target or 'Москва')
     elif str(arg_str) == 'пробки на районе':
         await traffic(ctx, 'Москва, Алексеевская')
-    elif str(arg[0]) == 'пробки':
+    elif arg_string == 'пробки':
         await traffic(ctx, target or 'Красная площадь', 12)
     elif 'вероятность' in str(arg).lower():
         await posib(ctx, arg)
@@ -193,7 +195,7 @@ async def record(ctx, arg=None):
             ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
         # await say(ctx, "ЗАПИСЫВАЮ, ЕПТА")
         # await ctx.send("ЗАПИСЫВАЮ, ЕПТА")
-        await asyncio.sleep(5)
+        await asyncio.sleep(3)
         ctx.voice_client.stop_listening()
         # await say(ctx, "Ща распознаем, что ты сказал, долбоёб!")
         try:
@@ -208,7 +210,7 @@ async def record(ctx, arg=None):
                 await a(ctx, result)
         except Exception as e:
             print(e)
-            await ctx.send('Ошибка, брат, запусти ещё раз распознавание. ')
+            await ctx.send('Ошибка {}, брат, запусти ещё раз распознавание. '.format(e))
             break
     RECORDING[ctx.author.mention] = False
     
