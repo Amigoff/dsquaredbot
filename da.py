@@ -180,11 +180,11 @@ async def record(ctx, arg=None):
         ctx.voice_client.listen(discord.UserFilter(discord.WaveSink(str(wave_file)), ctx.author))
     else:
         ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
-    await asyncio.sleep(30)
+    await asyncio.sleep(5)
     ctx.voice_client.stop_listening()
     # print(discord.File(fp, filename='record.wav'))
     await ctx.send("Recording being sent. Please wait!")
-    await ctx.send('Here\'s, your record file.', file=discord.File(fp, filename=str(wave_file.name)))
+    await ctx.send('Here\'s, your record file.', file=discord.File(fp, filename=str(wave_file)))
 
 @client.command(pass_context=True)
 async def anal(ctx, arg=None):
