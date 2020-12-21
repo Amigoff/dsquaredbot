@@ -414,13 +414,15 @@ async def say(ctx, *arg):
     
     filename = datetime.datetime.now().strftime("%y%m%d_%H%M%S") + '.mp3'
     tts.save(filename)
-
+        
     try:
-        lst1.append(filename)
-        await play(ctx)
+        voice.play(discord.FFmpegPCMAudio(lst[0]))
+        await ctx.send("Играю: " + lst[0][:-16])
+        while voice.is_playing() or voice.is_paused():
+            await asyncio.sleep(1)
     except Exception as e:
         print('err', e)   
-        
+    os.remove(filename)
 
 
 @client.command(pass_context=True)
