@@ -183,7 +183,7 @@ async def record(ctx, arg=None):
     
     wave_file = datetime.datetime.now().strftime("%y%m%d_%H%M%S") + '.wav'
     
-    while True:
+    while ctx.voice_client:
         open(wave_file, 'a').close()
         fp = open(wave_file, 'rb')
         if True:
@@ -195,14 +195,17 @@ async def record(ctx, arg=None):
         await asyncio.sleep(5)
         ctx.voice_client.stop_listening()
         # await say(ctx, "Ща распознаем, что ты сказал, долбоёб!")
-        await ctx.send("- {}".format(result))
         result = recorgnize(wave_file)
+        await ctx.send("- {}".format(result))
         if 'мистер' in result.lower():
+            result = result.lower().replace('мистер', '')
             if 'сено' in result:
                 await CENA(ctx)
                 return 
             await a(ctx, result)
         
+    RECORDING[ctx.author.mention] = False
+    
     
     
     
