@@ -28,7 +28,7 @@ intents.members = True
 tok = "NzkwNTUyMTY3NjUxMzQ0Mzg1.X-CRFA.6K1AM1L088_JSP9o7Z4-J5b4sAk"
 yandex_api_key = '3c39ba17-9a2c-4ba4-9e70-9f695fb7eae5'
 whether_api_key = '75f6890557ef108e7ad5b23fd1acf04c'
-client = commands.Bot(command_prefix='>', intents=intents)
+client = commands.Bot(command_prefix='~', intents=intents)
 
 OPUS_LIBS = ['libopus.so.0.5.3', 'libopus-0.x86.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
 
@@ -170,7 +170,6 @@ async def choose(ctx, arg):
         
 @client.command(pass_context=True)
 async def record(ctx, arg=None):
-    time_record = 3
     if not ctx.voice_client:
         await ctx.author.voice.channel.connect()
     
@@ -181,12 +180,18 @@ async def record(ctx, arg=None):
         ctx.voice_client.listen(discord.UserFilter(discord.WaveSink(str(wave_file)), ctx.author))
     else:
         ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
+    await say("ЗАПИСЫВАЮ, ЕПТА")
     await asyncio.sleep(5)
     ctx.voice_client.stop_listening()
     # print(discord.File(fp, filename='record.wav'))
-    await ctx.send("Ща распознаем, что ты сказал, долбоёб!")
+    await say("Ща распознаем, что ты сказал, долбоёб!")
     result = recorgnize(wave_file)
-    await ctx.send("Как-то долбоёб сказал: {}".format(result))
+    await ctx.send("- {}".format(result))
+    if 'сено' in result:
+        await CENA(ctx)
+        return 
+    await a(ctx, result)
+    
     
     
 @client.command(pass_context=True)
