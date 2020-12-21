@@ -190,14 +190,15 @@ async def record(ctx, arg=None):
             ctx.voice_client.listen(discord.UserFilter(discord.WaveSink(str(wave_file)), ctx.author))
         else:
             ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
-        await say(ctx, "ЗАПИСЫВАЮ, ЕПТА")
-        await ctx.send("ЗАПИСЫВАЮ, ЕПТА")
+        # await say(ctx, "ЗАПИСЫВАЮ, ЕПТА")
+        # await ctx.send("ЗАПИСЫВАЮ, ЕПТА")
         await asyncio.sleep(5)
         ctx.voice_client.stop_listening()
         # await say(ctx, "Ща распознаем, что ты сказал, долбоёб!")
         result = recorgnize(wave_file)
         await ctx.send("- {}".format(result))
         if 'мистер' in result.lower():
+            await ctx.send('Выполняю')
             result = result.lower().replace('мистер', '')
             if 'сено' in result:
                 await CENA(ctx)
@@ -389,13 +390,14 @@ async def say(ctx, *arg):
         voice = await channel.connect()
     except Exception as e:
         print(f'ОШИБКА ПОЛУЧЕНИЯ VOICE: {e}')
-        
+    
+    print(': {}'.format(arg_str))
+    
     if not isinstance(arg_str, str):
         tts = gTTS(arg_str, lang='ru')
     else:
-        tts = gTTS(' '.join(arg_str), lang='ru')
+        tts = gTTS(arg_str, lang='ru')
     tts.save('answer.mp3')
-
 
     try:
         voice.play(discord.FFmpegPCMAudio('answer.mp3'))
