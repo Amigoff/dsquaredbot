@@ -176,9 +176,21 @@ async def choose(ctx, arg):
  
 
 RECORDING = {}
- 
 @client.command(pass_context=True)
-async def record(ctx, arg=None):
+async def record(ctx, *arg):
+     async def a():
+        loop = asyncio.get_event_loop()
+
+        task1 = loop.create_task(start_recognizion(ctx))
+
+        await task1
+        await task2
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(a())
+
+@client.command(pass_context=True)
+async def start_recognizion(ctx, arg=None):
     global NAME
     await say(ctx, "Начинаем, ежжи, рад тебя снова видеть")
     if not ctx.voice_client:
@@ -195,10 +207,14 @@ async def record(ctx, arg=None):
     while ctx.voice_client or RECORDING.get(ctx.author.mention):
         open(wave_file, 'a').close()
         fp = open(wave_file, 'rb')
-        if True:
+        
+        
+        if False:
             ctx.voice_client.listen(discord.UserFilter(discord.WaveSink(str(wave_file)), ctx.author))
         else:
             ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
+            
+        
         # await say(ctx, "ЗАПИСЫВАЮ, ЕПТА")
         # await ctx.send("ЗАПИСЫВАЮ, ЕПТА")
         await asyncio.sleep(5)
