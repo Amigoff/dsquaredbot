@@ -416,8 +416,7 @@ async def say(ctx, *arg):
     tts.save(filename)
         
     try:
-        voice.play(discord.FFmpegPCMAudio(lst[0]))
-        await ctx.send("Играю: " + lst[0][:-16])
+        voice.play(discord.FFmpegPCMAudio(filename))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
     except Exception as e:
