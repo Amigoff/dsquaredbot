@@ -206,8 +206,9 @@ async def record(ctx, arg=None):
                     await CENA(ctx)
                     return 
                 await a(ctx, result)
-        except:
-            await ctx.send('Ошибка, брат, запусти ещё раз распознавание.')
+        except Exception as e:
+            print(e)
+            await ctx.send('Ошибка, брат, запусти ещё раз распознавание. ')
             break
     RECORDING[ctx.author.mention] = False
     
