@@ -179,21 +179,21 @@ async def record(ctx, arg=None):
         await ctx.author.voice.channel.connect()
     
     if RECORDING.get(ctx.author.mention):
-        await ctx.send('Уже распознаю твою речь, брат, э')
-        
+        await ctx.send('Уже распознаю твою речь, брат, э. Стопаю')
+        RECORDING.pop(ctx.author.mention)
         return
     RECORDING[ctx.author.mention] = True
     
     wave_file = datetime.datetime.now().strftime("%y%m%d_%H%M%S") + '.wav'
     
-    while ctx.voice_client:
+    while ctx.voice_client or RECORDING.get(ctx.author.mention):
         open(wave_file, 'a').close()
         fp = open(wave_file, 'rb')
         if True:
             ctx.voice_client.listen(discord.UserFilter(discord.WaveSink(str(wave_file)), ctx.author))
         else:
             ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
-        # await say(ctx, "ЗАПИСЫВАЮ, ЕПТА")
+        await say(ctx, "ЗАПИСЫВАЮ, ЕПТА")
         # await ctx.send("ЗАПИСЫВАЮ, ЕПТА")
         await asyncio.sleep(5)
         ctx.voice_client.stop_listening()
@@ -212,7 +212,7 @@ async def record(ctx, arg=None):
             if "{}".format(e):
                 continue
             else: 
-                await ctx.send('Ошибка {}, брат'.format(e))
+                await say(ctx, 'Ошибка {}, брат'.format(e))
     RECORDING[ctx.author.mention] = False
     
     
@@ -404,7 +404,7 @@ async def say(ctx, *arg):
     if not isinstance(arg_str, str):
         tts = gTTS(arg_str, lang='ru')
     else:
-        tts = gTTS(arg_str, lang='ru')
+        tts = gTTS(str(arg_str), lang='ru')
     tts.save('answer.mp3')
 
     try:
