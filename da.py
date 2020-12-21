@@ -177,21 +177,6 @@ async def choose(ctx, arg):
     sl = choice(lt)
     await ctx.send(sl)
  
-
-
-@client.command(pass_context=True)
-async def record(ctx, *arg):
-    async def a():
-        loop = asyncio.get_event_loop()
-
-        task1 = loop.create_task(start_recognizion(ctx))
-
-        await task1
-        await task2
-
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(a())
-
 @client.command(pass_context=True)
 async def start_recognizion(ctx, arg=None):
     global NAME
@@ -231,16 +216,15 @@ async def start_recognizion(ctx, arg=None):
                 result = result.lower().replace('мистер', '')
                 if 'сено' in result:
                     await CENA(ctx)
-                    return 
+                    return
+                        
                 await a(ctx, *result.split())
         except Exception as e:
             if "{}".format(e):
-                continue
+                ctx.send('Ошибка: {}'.format(e))
             else: 
                 await say(ctx, 'Ошибка {}, брат'.format(e))
     RECORDING[ctx.author.mention] = False
-    
-    
     
     
 @client.command(pass_context=True)
