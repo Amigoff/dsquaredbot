@@ -396,6 +396,7 @@ async def say(ctx, *arg):
         tts = gTTS(' '.join(arg_str), lang='ru')
     tts.save('answer.mp3')
 
+
     try:
         voice.play(discord.FFmpegPCMAudio('answer.mp3'))
         while voice.is_playing() or voice.is_paused():
