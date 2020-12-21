@@ -34,6 +34,7 @@ client = commands.Bot(command_prefix='~', intents=intents)
 
 OPUS_LIBS = ['libopus.so.0.5.3', 'libopus-0.x86.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
 
+RECORDING = {}
 
 def load_opus_lib(opus_libs=OPUS_LIBS):
     if discord.opus.is_loaded():
@@ -56,6 +57,7 @@ async def a(ctx, *arg):
     global golos
     global t
     global tt
+    global RECORDING
     
     arg_str = ' '.join(arg).lower().replace("{} ".format(NAME), '')
     target = arg[-1]
@@ -67,6 +69,7 @@ async def a(ctx, *arg):
         else:
             await manda(ctx, url)
     elif "фсо" in arg_str or ('всё' in arg_str and 'пока' in arg_str):
+        RECORDING = {}
         await pizda(ctx)
     elif "побазарим" in arg_str:
         await da(ctx)
@@ -175,10 +178,10 @@ async def choose(ctx, arg):
     await ctx.send(sl)
  
 
-RECORDING = {}
+
 @client.command(pass_context=True)
 async def record(ctx, *arg):
-     async def a():
+    async def a():
         loop = asyncio.get_event_loop()
 
         task1 = loop.create_task(start_recognizion(ctx))
