@@ -13,6 +13,7 @@ import threading
 import datetime
 import time
 
+os.add_dll_directory(os.getcwd())
 socket.gethostbyname("")
 path = os.getcwd()
 print(path)
@@ -24,10 +25,10 @@ count = 0
 intents = discord.Intents.default()
 intents.members = True
 
-tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp7sHw.tb7X4XSUcMthvgiVEz_7hN1Vrn0"
+tok = "NzkwNTUyMTY3NjUxMzQ0Mzg1.X-CRFA.6K1AM1L088_JSP9o7Z4-J5b4sAk"
 yandex_api_key = '3c39ba17-9a2c-4ba4-9e70-9f695fb7eae5'
 whether_api_key = '75f6890557ef108e7ad5b23fd1acf04c'
-client = commands.Bot(command_prefix='!', intents=intents)
+client = commands.Bot(command_prefix='>', intents=intents)
 
 OPUS_LIBS = ['libopus.so.0.5.3', 'libopus-0.x86.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
 
@@ -167,6 +168,24 @@ async def choose(ctx, arg):
     sl = choice(lt)
     await ctx.send(sl)
         
+@client.command(pass_context=True)
+async def record(ctx, arg=None):
+    time_record = 3
+    if not ctx.voice_client:
+        await ctx.author.voice.channel.connect()
+    
+    wave_file = "1.wav"
+    open(wave_file, 'a').close()
+    fp = open(wave_file, 'rb')
+    if True:
+        ctx.voice_client.listen(discord.UserFilter(discord.WaveSink(str(wave_file)), ctx.author))
+    else:
+        ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
+    await discord.utils.sleep_until(time_record)
+    ctx.voice_client.stop_listening()
+    # print(discord.File(fp, filename='record.wav'))
+    await ctx.send("Recording being sent. Please wait!")
+    await ctx.send('Here\'s, your record file.', file=discord.File(fp, filename=str(wave_file.name)))
 
 @client.command(pass_context=True)
 async def anal(ctx, arg=None):
