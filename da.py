@@ -181,6 +181,7 @@ async def record(ctx, arg=None):
     else:
         ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
     await say("ЗАПИСЫВАЮ, ЕПТА")
+    await ctx.send("ЗАПИСЫВАЮ, ЕПТА")
     await asyncio.sleep(5)
     ctx.voice_client.stop_listening()
     # print(discord.File(fp, filename='record.wav'))
