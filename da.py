@@ -178,6 +178,7 @@ async def record(ctx, arg=None):
     
     if RECORDING.get(ctx.author.mention):
         await ctx.send('Уже распознаю твою речь, брат, э')
+        
         return
     RECORDING[ctx.author.mention] = True
     
@@ -195,16 +196,19 @@ async def record(ctx, arg=None):
         await asyncio.sleep(5)
         ctx.voice_client.stop_listening()
         # await say(ctx, "Ща распознаем, что ты сказал, долбоёб!")
-        result = recorgnize(wave_file)
-        await ctx.send("- {}".format(result))
-        if 'мистер' in result.lower():
-            await ctx.send('Выполняю')
-            result = result.lower().replace('мистер', '')
-            if 'сено' in result:
-                await CENA(ctx)
-                return 
-            await a(ctx, result)
-        
+        try:
+            result = recorgnize(wave_file)
+            await ctx.send("- {}".format(result))
+            if 'мистер' in result.lower():
+                await ctx.send('Выполняю')
+                result = result.lower().replace('мистер', '')
+                if 'сено' in result:
+                    await CENA(ctx)
+                    return 
+                await a(ctx, result)
+        except:
+            await ctx.send('Ошибка, брат, запусти ещё раз распознавание.')
+            break
     RECORDING[ctx.author.mention] = False
     
     
