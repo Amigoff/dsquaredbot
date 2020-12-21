@@ -210,9 +210,9 @@ async def record(ctx, arg=None):
                 await a(ctx, result)
         except Exception as e:
             if "{}".format(e):
-                await ctx.send('Ошибка {}, брат'.format(e))
+                continue
             else: 
-                break
+                await ctx.send('Ошибка {}, брат'.format(e))
     RECORDING[ctx.author.mention] = False
     
     
