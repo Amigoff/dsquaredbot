@@ -213,7 +213,7 @@ async def record(ctx, arg=None):
                 if 'сено' in result:
                     await CENA(ctx)
                     return 
-                await a(ctx, result)
+                await a(ctx, *result.split())
         except Exception as e:
             if "{}".format(e):
                 continue
