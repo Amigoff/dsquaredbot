@@ -56,7 +56,9 @@ async def a(ctx, *arg):
     global tt
     
     arg_string = str(arg)
-    
+    ctx.send(arg_string)
+
+
     if "сыграй" in arg_string:
         url = arg[1:]
         if len(arg) == 2:
