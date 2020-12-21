@@ -63,7 +63,7 @@ async def a(ctx, *arg):
             await manda(ctx, url[0])
         else:
             await manda(ctx, url)
-    if "фсо" in arg_string:
+    if "фсо" in arg_string or ('всё' in arg_string and 'пока' in arg_string):
         await pizda(ctx)
     if "побазарим" in arg_string:
         await da(ctx)
