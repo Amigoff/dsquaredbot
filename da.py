@@ -210,8 +210,8 @@ async def record(ctx, arg=None):
                 await a(ctx, result)
         except Exception as e:
             print(e)
-            await ctx.send('Ошибка {}, брат, запусти ещё раз распознавание. '.format(e))
-            break
+            await ctx.send('Ошибка {}, брат'.format(e))
+            
     RECORDING[ctx.author.mention] = False
     
     
@@ -445,7 +445,7 @@ async def weather(ctx, city=None):
 
 @client.command(pass_context=True)
 async def information(ctx, *args):
-    await weather(ctx, *args)
+    await weather(ctx, args[-1])
     await traffic(ctx, *args)
 
 def represents_int(s):
