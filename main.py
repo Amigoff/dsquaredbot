@@ -599,7 +599,8 @@ async def play(ctx):
 
         voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
 
-        await ctx.send("Играю: " + lst[0][:-16])
+        await ctx.send("Играю: " + lst[0])
+        await ctx.send(info)
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
         try:
@@ -629,7 +630,7 @@ async def manda(ctx, url):
         logger.info('Вызвана команда "манда"')
         voice = await channel.connect(timeout=10.0)
     except Exception as e:
-        logger.error('Error', e)
+        logger.error('Error: {}'.format(e))
 
     if count == 0:
         logger.info(lst1)
