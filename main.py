@@ -52,7 +52,7 @@ else:
     logger.info('OPUS LOADED')
 
 
-@client.command(pass_context=True)
+@client.command(pass_context=True, alias=['а'])
 async def a(ctx, *arg):
     """Обработка сообщений по префиксу 'a'"""
     global mes
@@ -204,8 +204,29 @@ async def choose(ctx, arg):
 
 
 @client.command(pass_context=True)
-async def start_recognizion(ctx, arg=None):
+async def start_recognizion(ctx, *args):
+
+    async def create_tasks():
+        loop = asyncio.get_event_loop()
+
+        task1 = loop.create_task(recognizion(ctx, start=True, time_delta=0))
+        task2 = loop.create_task(recognizion(ctx, start=False, time_delta=3))
+
+        await task1
+        await task2
+
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(create_tasks())
+
+
+async def recognizion(ctx, start=True, time_delta=0):
     global NAME
+
+    await asyncio.sleep(time_delta)
+
+    if start:
+        await say(ctx, "Начинаем, ежжи, рад тебя снова видеть")
+
     if not ctx.voice_client:
         await ctx.author.voice.channel.connect()
     
@@ -214,7 +235,6 @@ async def start_recognizion(ctx, arg=None):
         RECORDING.pop(ctx.author.mention)
         return
 
-    await say(ctx, "Начинаем, ежжи, рад тебя снова видеть")
     RECORDING[ctx.author.mention] = True
     
     wave_file = datetime.datetime.now().strftime("%y%m%d_%H%M%S") + '.wav'
@@ -224,6 +244,7 @@ async def start_recognizion(ctx, arg=None):
         if True:
             ctx.voice_client.listen(discord.UserFilter(discord.WaveSink(str(wave_file)), ctx.author))
         else:
+            # TODO: Проверить работоспособность
             ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
 
         await asyncio.sleep(5)
@@ -234,12 +255,14 @@ async def start_recognizion(ctx, arg=None):
             if f"{NAME} " in result.lower():
                 await ctx.send("- {}".format(result))
                 await ctx.send('Выполняю')
-                result = result.lower().replace('мистер', '')
+
+                # TODO: Транслит команд
                 if 'сено' in result:
                     await CENA(ctx)
                     return
                         
                 await a(ctx, *result.split())
+
         except Exception as e:
             if "{}".format(e):
                 ctx.send('Ошибка: {}'.format(e))
