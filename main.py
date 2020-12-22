@@ -2,16 +2,13 @@ import discord
 import youtube_dl
 from discord.ext import commands
 import sys
-import os
 import asyncio
 import socket
-from random import choice, randint
+from random import randint
 import random
 from gtts import gTTS
 import requests
-import threading
 import datetime
-import time
 from recognizer import recorgnize
 from config import *
 from logger import logger
@@ -181,7 +178,9 @@ async def vibori(ctx, arg):
         golos[str(item)] = 0
         stroka += "\n"
         stroka += str(item + ": " + str(golos[item]))
-    mes = await ctx.send(stroka)
+
+    embed = get_embed(title='ГОЛОСОВАНИЕ', description=stroka, color=discord.Colour(COLOR_BLUE))
+    mes = await ctx.send(embed=embed)
     try:
         channel = ctx.author.voice.channel
         voice = await channel.connect()
@@ -613,6 +612,7 @@ async def play(ctx):
 
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
+
         try:
             lst1.pop(0)
             lst.pop(0)
@@ -621,7 +621,7 @@ async def play(ctx):
     count = 0    
 
 
-def get_embed(title, color, description):
+def get_embed(title, color=discord.Colour(COLOR_BLUE), description=''):
     embed = discord.Embed(
         title=title,
         colour=color,
@@ -643,7 +643,7 @@ async def manda(ctx, url):
         await ctx.send(embed=embed)
     else:
         text = Phrases().get_phrase_playing_music('ok', len(lst1) - 1)
-        embed = get_embed(title='Проигрывание музыки', color=discord.Colour(COLOR_YELLOW), description=text)
+        embed = get_embed(title='Проигрывание музыки', color=discord.Colour(COLOR_GREEN), description=text)
         await ctx.send(embed=embed)
 
     global voice
@@ -652,9 +652,6 @@ async def manda(ctx, url):
         logger.info('Вызвана команда "манда"')
         voice = await channel.connect(timeout=10.0)
     except Exception as e:
-        text = Phrases().get_phrase_playing_music('error', len(lst1) - 1)
-        embed = get_embed(title='Проигрывание музыки', color=discord.Colour(COLOR_RED), description=text)
-        await ctx.send(embed=embed)
         logger.error('Error: {}'.format(e))
 
     if count == 0:
@@ -706,45 +703,44 @@ async def stop_playing(ctx):
 @client.command(pass_context=True)
 async def info(ctx):
     embed = get_embed(title='Шпора', color=discord.Colour(COLOR_BLUE), description='')
-    embed.add_field(name="Command List", value="Here are all commands", inline=False)
-    embed.add_field(name="!a сыграй <ссылка> (или) <поиск по названию>", value="Воспроизведение музыки", inline=True)
+    embed.add_field(name="Обращайся дорогой", value="Тут список того, что я умею", inline=False)
+    embed.add_field(name="!a сыграй <ссылка> (или) <поиск по названию>", value="Воспроизведение музыки", inline=False)
     embed.add_field(name="!a фсо давай (или) всё пока", value="Отключение от голосового канала",
-                    inline=True)
+                    inline=False)
     embed.add_field(name="!a очисти",
                     value="Очистка очереди проигрывания музыки",
-                    inline=True)
+                    inline=False)
     embed.add_field(name="!a стопэ",
-                    value="Пауза музыки", inline=True)
+                    value="Пауза музыки", inline=False)
     embed.add_field(name="!a хватит", value="Остановить воспроизведение",
-                    inline=True)
+                    inline=False)
     embed.add_field(name="!a побазарим",
-                    value="Побазарить за жизнь", inline=True)
+                    value="Побазарить за жизнь", inline=False)
     embed.add_field(name="!a расскажи чё на районе",
-                    value="Рассказать ситуацию на райончике", inline=True)
+                    value="Рассказать ситуацию на райончике", inline=False)
     embed.add_field(name="!a расскажи <Город>",
-                    value="Рассказать ситуацию где-то ещё", inline=True)
+                    value="Рассказать ситуацию где-то ещё", inline=False)
     embed.add_field(name="!a погода <Город>",
-                    value="Рассказать про погоду", inline=True)
+                    value="Рассказать про погоду", inline=False)
     embed.add_field(name="!a пробки <Город>",
-                    value="Рассказать про пробки", inline=True)
+                    value="Рассказать про пробки", inline=False)
     embed.add_field(name="!a голосование <вариант1> <вариант2>",
-                    value="Запустить голосование", inline=True)
+                    value="Запустить голосование", inline=False)
     embed.add_field(name="!a голосую <вариант>",
-                    value="Проголосовать в созданном голосовании", inline=True)
+                    value="Проголосовать в созданном голосовании", inline=False)
     embed.add_field(name="!a кто <описание>",
-                    value="Сказать, кто", inline=True)
+                    value="Сказать, кто", inline=False)
     embed.add_field(name="!a когда <описание>",
-                    value="Сказать, когда произойдёт что-то", inline=True)
+                    value="Сказать, когда произойдёт что-то", inline=False)
     embed.add_field(name="!a вероятность <описание>",
-                    value="Вычислить вероятность", inline=True)
+                    value="Вычислить вероятность", inline=False)
     embed.add_field(name="!anal",
-                    value="Анальная рулетка", inline=True)
+                    value="Анальная рулетка", inline=False)
     embed.add_field(name="!CENA",
-                    value="Джон Сина", inline=True)
+                    value="Джон Сина", inline=False)
     embed.add_field(name="!vader",
-                    value="Вэйдер", inline=True)
+                    value="Вэйдер", inline=False)
 
-    embed.set_footer(text=f"Обращайся дорогой")
     await ctx.send(embed=embed)
 
 client.run(tok)
