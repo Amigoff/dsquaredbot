@@ -599,15 +599,15 @@ async def play(ctx):
 
         voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
 
-        await ctx.send("Играю: " + lst[0])
-        await ctx.send(info)
+        # await ctx.send("Играю: " + lst[0])
+        await ctx.send("Играю: "+str(info))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
         try:
             os.remove(lst[0])
             del lst[0]
             del lst1[0]
-        except:
+        except Exception as e:
             pass
     count = 0    
 
