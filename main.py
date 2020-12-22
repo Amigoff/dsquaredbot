@@ -379,7 +379,6 @@ async def set_nicknames(new, members):
     old_name = {}
     for member in members:
         old_name[member.id] = {'old_name': member.name, 'error': 0}
-    error = 0
     for _ in range(0, 10):
         for i in range(len(new) - N + 1):
             for member in members:
@@ -606,7 +605,11 @@ async def play(ctx):
         dur = info["duration"] / 60 or "Стрим"
         if dur != 'Стрим':
             dur = str(round(dur, 2)) + 'мин.'
-        await ctx.send("Играю: " + info['title'] + f'\nДлительность: {dur}\n\n')
+            
+        text = "Играю: " + info['title'] + f'\nДлительность: {dur}\n\n'
+
+        embed = get_embed(title='Проигрывание музыки', color=discord.Colour('#2ECC71'), description=text)
+        await ctx.send(embed=embed)
 
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
@@ -617,6 +620,15 @@ async def play(ctx):
         except Exception as e:
             pass
     count = 0    
+
+
+def get_embed(title, color, description):
+    embed = discord.Embed(
+        title=title,
+        colour=color,
+        description=description,
+    )
+    return embed
 
 
 @client.command(pass_context=True)
