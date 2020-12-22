@@ -596,8 +596,10 @@ async def play(ctx):
             URL = info['formats'][0]['url']
 
         voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
-
-        await ctx.send("Играю: " + info['title'] + f'\nДлительность: {info["duration"] or "Стрим"}\n\nОписание: {info["description"]}')
+        dur = info["duration"] / 60 or "Стрим"
+        if dur != 'Стрим':
+            dur = str(dur) + 'мин.'
+        await ctx.send("Играю: " + info['title'] + f'\nДлительность: {dur}\n\n}')
         logger.info(str(info))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
