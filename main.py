@@ -597,7 +597,7 @@ async def play(ctx):
 
         voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
 
-        # await ctx.send("Играю: " + lst[0])
+        await ctx.send("Играю: " + info['title'] + f'\nДлительность: {info["duration"] or "Стрим"}\n\nОписание: {info["description"]}')
         logger.info(str(info))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
