@@ -705,28 +705,46 @@ async def stop_playing(ctx):
     
 @client.command(pass_context=True)
 async def info(ctx):
-    text = "Префикс: !a (английская), если не указано другое\
-              \nПроигрывание музыки: сыграй <ссылка> (или) <поиск по названию>\
-              \nОтключение от голосового канала: фсо давай (или) всё пока\
-              \nОчистка очереди проигрывания: очисти\
-              \nПауза: стопэ\
-              \nСнять с паузы: паехали\
-              \nОстановить воспроизведение: хватит\
-              \nПобазарить за жизнь: побазарим\
-              \nРассказать ситуацию на райончике: расскажи чё на районе\
-              \nРассказать ситуацию где-то ещё: расскажи <Город>\
-              \nРассказать про погоду: погода <Город>\
-              \nПробки: пробки <Город>\
-              \nГолосование: голосование <вариант1> <вариант2>\
-              \nПроголосовать: голосую <вариант>\
-              \nСказать, кто долбоёб: кто <описание>\
-              \nСказать, когда произойдёт что-то: когда <описание>\
-              \nВычислить вероятность: вероятность <описание>\
-              \nАнальная рулетка: анальная рулетка\
-              \nДжон Сина: !CENA\
-              \nVaider: !vader\
-              \nОбращайся дарагой"
-    embed = get_embed(title='Шпора', color=discord.Colour(COLOR_BLUE), description=text)
+    embed = get_embed(title='Шпора', color=discord.Colour(COLOR_BLUE), description='')
+    embed.add_field(name="Command List", value="Here are all commands", inline=False)
+    embed.add_field(name="!a сыграй <ссылка> (или) <поиск по названию>", value="Воспроизведение музыки", inline=True)
+    embed.add_field(name="!a фсо давай (или) всё пока", value="Отключение от голосового канала",
+                    inline=True)
+    embed.add_field(name="!a очисти",
+                    value="Очистка очереди проигрывания музыки",
+                    inline=True)
+    embed.add_field(name="!a стопэ",
+                    value="Пауза музыки", inline=True)
+    embed.add_field(name="!a хватит", value="Остановить воспроизведение",
+                    inline=True)
+    embed.add_field(name="!a побазарим",
+                    value="Побазарить за жизнь", inline=True)
+    embed.add_field(name="!a расскажи чё на районе",
+                    value="Рассказать ситуацию на райончике", inline=True)
+    embed.add_field(name="!a расскажи <Город>",
+                    value="Рассказать ситуацию где-то ещё", inline=True)
+    embed.add_field(name="!a погода <Город>",
+                    value="Рассказать про погоду", inline=True)
+    embed.add_field(name="!a пробки <Город>",
+                    value="Рассказать про пробки", inline=True)
+    embed.add_field(name="!a голосование <вариант1> <вариант2>",
+                    value="Запустить голосование", inline=True)
+    embed.add_field(name="!a голосую <вариант>",
+                    value="Проголосовать в созданном голосовании", inline=True)
+    embed.add_field(name="!a кто <описание>",
+                    value="Сказать, кто", inline=True)
+    embed.add_field(name="!a когда <описание>",
+                    value="Сказать, когда произойдёт что-то", inline=True)
+    embed.add_field(name="!a вероятность <описание>",
+                    value="Вычислить вероятность", inline=True)
+    embed.add_field(name="!anal",
+                    value="Анальная рулетка", inline=True)
+    embed.add_field(name="!CENA",
+                    value="Джон Сина", inline=True)
+    embed.add_field(name="!vader",
+                    value="Вэйдер", inline=True)
+
+    embed.set_footer(text=f"Обращайся дорогой")
     await ctx.send(embed=embed)
 
 client.run(tok)
