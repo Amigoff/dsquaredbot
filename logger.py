@@ -1,8 +1,6 @@
 import datetime
 from colorlog import ColoredFormatter
-from config import *
-import os
-from importlib import import_module
+from config import LOG_LEVEL, LOG_NAME_FORMAT
 
 
 def logger(name):
@@ -13,7 +11,8 @@ def logger(name):
     """
     filename = datetime.datetime.now().strftime(LOG_NAME_FORMAT)
     try:
-        logging.basicConfig(filename=filename, level=LOG_LEVEL, format='%(asctime)s: %(name)s - %(levelname)s  | %(message)s')
+        logging.basicConfig(filename=filename, level=LOG_LEVEL,
+                            format='%(asctime)s: %(name)s - %(levelname)s  | %(message)s')
     except BaseException as e:
         print("Base except logger {}".format(e))
 

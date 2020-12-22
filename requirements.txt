@@ -24,4 +24,4 @@ dnspython==1.16.0
 gtts
 SpeechRecognition
 wave
-colorlog 
+colorlog
