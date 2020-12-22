@@ -594,6 +594,12 @@ async def play(ctx):
 
             info = ydl.extract_info(video_link, download=False)
             logger.info(str(info))
+
+            # Если у нас играет плейлист (т.е. трек был найден через поиск),
+            # то берём первое найденное видео
+            if info.get('_type') == 'playlist':
+                info = info['entries'][0]
+
             URL = info['formats'][0]['url']
 
         voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
