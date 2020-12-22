@@ -230,7 +230,7 @@ async def recognizion(ctx, start=True, time_delta=0):
     if not ctx.voice_client:
         await ctx.author.voice.channel.connect()
     
-    if RECORDING.get(ctx.author.mention):
+    if start and RECORDING.get(ctx.author.mention):
         await say(ctx, 'Уже распознаю твою речь, брат, э. Стопаю')
         RECORDING.pop(ctx.author.mention)
         return
@@ -252,8 +252,9 @@ async def recognizion(ctx, start=True, time_delta=0):
         # await say(ctx, "Ща распознаем, что ты сказал, долбоёб!")
         try:
             result = recorgnize(wave_file)
+            await ctx.send("- {}".format(result))
             if f"{NAME} " in result.lower():
-                await ctx.send("- {}".format(result))
+
                 await ctx.send('Выполняю')
 
                 # TODO: Транслит команд
