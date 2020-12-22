@@ -18,7 +18,7 @@ FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconne
 OPUS_LIBS = ['libopus.so.0.5.3', 'libopus-0.x86.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
 
 NAME = 'аллах'
-tok = "NzkwNTUyMTY3NjUxMzQ0Mzg1.X-CRFA.6K1AM1L088_JSP9o7Z4-J5b4sAk"
+tok = "NzAyMTM5MjM5MTIyNDY4OTc0.Xp7sHw.tb7X4XSUcMthvgiVEz_7hN1Vrn0"
 yandex_api_key = '3c39ba17-9a2c-4ba4-9e70-9f695fb7eae5'
 whether_api_key = '75f6890557ef108e7ad5b23fd1acf04c'
 
@@ -41,7 +41,6 @@ class Phrases(object):
                     'error': ['Аллах разгневался... Не могу поставить эту песню. (Ошибка воспроизведения)']
                     }
         return choice(_phrases.get(state, []))
-
 
 
 COLOR_YELLOW = 0xFFC300
