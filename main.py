@@ -13,6 +13,10 @@ import threading
 import datetime
 import time
 from recognizer import recorgnize
+from config import *
+from logger import logger
+
+logger = logger('BOT')
 
 socket.gethostbyname("")
 path = os.getcwd()
@@ -26,14 +30,7 @@ intents = discord.Intents.default()
 intents.members = True
 
 
-NAME = 'аллах'
-tok = "NzkwNTUyMTY3NjUxMzQ0Mzg1.X-CRFA.6K1AM1L088_JSP9o7Z4-J5b4sAk"
-yandex_api_key = '3c39ba17-9a2c-4ba4-9e70-9f695fb7eae5'
-whether_api_key = '75f6890557ef108e7ad5b23fd1acf04c'
 client = commands.Bot(command_prefix='~', intents=intents)
-
-FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
-OPUS_LIBS = ['libopus.so.0.5.3', 'libopus-0.x86.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
 
 RECORDING = {}
 
@@ -48,14 +45,14 @@ def load_opus_lib(opus_libs=OPUS_LIBS):
             discord.opus.load_opus(opus_lib)
             return 0
         except OSError as e:
-            print('error os', e)
+            logger.error(f'error os: {e}')
     return 1
 
 
 if load_opus_lib():
-    print('Can not load opus')
+    logger.warning('Can not load opus')
 else:
-    print('OPUS LOADED')
+    logger.info('OPUS LOADED')
 
 
 @client.command(pass_context=True)
@@ -147,7 +144,6 @@ async def a(ctx, *arg):
         for k in arg[1:-int(arg[-1]) - 1]:
             t += " "
             t += str(k)
-            print(k)
         await vibori(ctx, arg[-int(arg[-1]) - 1:-1])
 
     elif "голосую" in str(arg).lower():
@@ -402,25 +398,25 @@ async def set_nicknames(new, members):
 
 @client.command(pass_context=True)
 async def da(ctx):
-    print('Вызвана команда "да"')
+    logger.info('Вызвана команда "побазарим"')
     await ctx.send("Без баб")
 
 
 @client.command(pass_context=True)
 async def random4ik(ctx):
     global voice
-    print("Играем в рулетку!")
+    logger.info("Играем в рулетку!")
     channel = ctx.author.voice.channel
 
     try:
         voice = await channel.connect()
     except:
         pass
-    print('Channel members: {}'.format(channel.members))
+    logger.info('Channel members: {}'.format(channel.members))
     random_user = choice(channel.members)
 
     guild = ctx.message.guild
-    print('MEMBERS GUILD: {}'.format(guild.members))
+    logger.info('MEMBERS GUILD: {}'.format(guild.members))
 
     kick_channel = await guild.create_voice_channel(name='kick')
 
@@ -434,14 +430,14 @@ async def random4ik(ctx):
 async def say(ctx, *arg):
     global voice
     arg_str = ' '.join(arg)
-    print('Говорю {}'.format(arg_str))
+    logger.info('Говорю {}'.format(arg_str))
     try:
         channel = ctx.author.voice.channel
         voice = await channel.connect()
     except Exception as e:
-        print(f'ОШИБКА ПОЛУЧЕНИЯ VOICE: {e}')
+        logger.error(f'ОШИБКА ПОЛУЧЕНИЯ VOICE: {e}')
     
-    print(': {}'.format(arg_str))
+    logger.debug(': {}'.format(arg_str))
     
     if not isinstance(arg_str, str):
         tts = gTTS(arg_str, lang='ru')
@@ -464,7 +460,7 @@ async def say(ctx, *arg):
         except:
             pass
     except Exception as e:
-        print('err', e)   
+        logger.warning('err', e)
     os.remove(filename)
 
 
@@ -477,7 +473,7 @@ async def weather(ctx, city=None):
     res = requests.get("http://api.openweathermap.org/data/2.5/weather",
                        params={'q': city, 'units': 'metric', 'lang': 'ru', 'APPID': whether_api_key})
     data = res.json()
-    print(data)
+    logger.debug(data)
     if data['cod'] != 200:
         return await say(ctx, "Ошибка вышла, не могу узнать текущую погоду")
 
@@ -535,9 +531,9 @@ def load_map_by_coords(x, y, zoom=16, typ="map,trf"):
     map_request = "http://static-maps.yandex.ru/1.x/?ll={ll}&z={z}&l={type}".format(ll=ll, z=zoom, type=typ)
     response = requests.get(map_request)
     if not response:
-        print("Ошибка выполнения запроса:")
-        print(map_request)
-        print("Http статус:", response.status_code, "(", response.reason, ")")
+        logger.warning("Ошибка выполнения запроса:")
+        logger.warning(map_request)
+        logger.warning("Http статус:", response.status_code, "(", response.reason, ")")
         sys.exit(1)
 
     # Запись полученного изображения в файл.
@@ -546,7 +542,7 @@ def load_map_by_coords(x, y, zoom=16, typ="map,trf"):
         with open(map_file, "wb") as file:
             file.write(response.content)
     except IOError as ex:
-        print("Ошибка записи временного файла:", ex)
+        logger.warning("Ошибка записи временного файла:", ex)
     return map_file
 
 
@@ -557,7 +553,6 @@ def fetch_coordinates(place):
     response = requests.get(base_url, params=params)
     # print(response.json())
     response_data = response.json()['properties']['ResponseMetaData']['SearchResponse']
-    print(response_data)
     lon1, lat1 = response_data['boundedBy'][0]
     lon2, lat2 = response_data['boundedBy'][1]
     return lon1, lat1, lon2, lat2
@@ -566,7 +561,7 @@ def fetch_coordinates(place):
 @client.command(pass_context=True)
 async def pizda(ctx):
     try:
-        print('Вызвана команда "пизда"')
+        logger.info('Вызвана команда "пизда"')
         guild = ctx.message.guild
         voice_client = guild.voice_client
         await voice_client.disconnect()
@@ -591,18 +586,16 @@ async def play(ctx):
             }],
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-            ur = lst1[0]
-            print(ur)
-            print("Пытаюсь сыграть:")
-            if str(ur).startswith("http"):
-                ydl.download([ur])
-            else:
-                arg = " ".join(ur)
-                print(arg)
+            video_link = lst1[0]
+            logger.info(video_link)
+            logger.info("Пытаюсь сыграть:")
+            if not str(video_link).startswith("http"):
+                arg = " ".join(video_link)
+                logger.debug(arg)
                 video_link = "ytsearch: " + arg
 
-                info = ydl.extract_info(video_link, download=False)
-                URL = info['formats'][0]['url']
+            info = ydl.extract_info(video_link, download=False)
+            URL = info['formats'][0]['url']
 
         voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
 
@@ -633,13 +626,13 @@ async def manda(ctx, url):
     global voice
     try:
         channel = ctx.author.voice.channel
-        print('Вызвана команда "манда"')
+        logger.info('Вызвана команда "манда"')
         voice = await channel.connect(timeout=10.0)
     except Exception as e:
-        print('Error', e)
+        logger.error('Error', e)
 
     if count == 0:
-        print(lst1)
+        logger.info(lst1)
         await play(ctx)
     else:
         pass  

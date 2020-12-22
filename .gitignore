@@ -96,3 +96,5 @@ modules.xml
 
 
 *.wav
+*.log
+__pycache__/
