@@ -593,6 +593,7 @@ async def play(ctx):
                 video_link = "ytsearch: " + arg
 
             info = ydl.extract_info(video_link, download=False)
+            logger.info(str(info))
             URL = info['formats'][0]['url']
 
         voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
@@ -600,7 +601,7 @@ async def play(ctx):
         if dur != 'Стрим':
             dur = str(dur) + 'мин.'
         await ctx.send("Играю: " + info['title'] + f'\nДлительность: {dur}\n\n')
-        logger.info(str(info))
+
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
         try:
