@@ -32,6 +32,7 @@ yandex_api_key = '3c39ba17-9a2c-4ba4-9e70-9f695fb7eae5'
 whether_api_key = '75f6890557ef108e7ad5b23fd1acf04c'
 client = commands.Bot(command_prefix='~', intents=intents)
 
+FFMPEG_OPTIONS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 OPUS_LIBS = ['libopus.so.0.5.3', 'libopus-0.x86.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
 
 RECORDING = {}
@@ -592,19 +593,19 @@ async def play(ctx):
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ur = lst1[0]
             print(ur)
-            print("Тут ссылка")
+            print("Пытаюсь сыграть:")
             if str(ur).startswith("http"):
                 ydl.download([ur])
             else:
                 arg = " ".join(ur)
                 print(arg)
-                stroka = "ytsearch: " + arg
-                ydl.extract_info(stroka, download=True)
-            for file in os.listdir("./"):
-                print(f'Тут файл: {file}')
-                if file.endswith(".mp3"):
-                    lst.append(str(file))
-        voice.play(discord.FFmpegPCMAudio(lst[0]))
+                video_link = "ytsearch: " + arg
+
+                info = ydl.extract_info(video_link, download=False)
+                URL = info['formats'][0]['url']
+
+        voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+
         await ctx.send("Играю: " + lst[0][:-16])
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
