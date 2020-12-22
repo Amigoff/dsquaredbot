@@ -599,7 +599,7 @@ async def play(ctx):
         dur = info["duration"] / 60 or "Стрим"
         if dur != 'Стрим':
             dur = str(dur) + 'мин.'
-        await ctx.send("Играю: " + info['title'] + f'\nДлительность: {dur}\n\n}')
+        await ctx.send("Играю: " + info['title'] + f'\nДлительность: {dur}\n\n')
         logger.info(str(info))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
