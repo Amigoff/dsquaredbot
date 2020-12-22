@@ -605,10 +605,10 @@ async def play(ctx):
         dur = info["duration"] / 60 or "Стрим"
         if dur != 'Стрим':
             dur = str(round(dur, 2)) + 'мин.'
-            
+
         text = "Играю: " + info['title'] + f'\nДлительность: {dur}\n\n'
 
-        embed = get_embed(title='Проигрывание музыки', color=discord.Colour('#2ECC71'), description=text)
+        embed = get_embed(title='Проигрывание музыки', color=discord.Colour(COLOR_GREEN), description=text)
         await ctx.send(embed=embed)
 
         while voice.is_playing() or voice.is_paused():
@@ -639,16 +639,23 @@ async def manda(ctx, url):
     global songthere
     lst1.append(url)
     if len(lst1) > 1:
-        await ctx.send("Добавлено в очередь")
-        await ctx.send("Длина очереди " + str(len(lst1) - 1))
+        text = Phrases().get_phrase_playing_music('queue', len(lst1) - 1)
+        embed = get_embed(title='Проигрывание музыки', color=discord.Colour(COLOR_YELLOW), description=text)
+        await ctx.send(embed=embed)
     else:
-        await ctx.send("Зделаю дарагой ежжи")
+        text = Phrases().get_phrase_playing_music('ok', len(lst1) - 1)
+        embed = get_embed(title='Проигрывание музыки', color=discord.Colour(COLOR_YELLOW), description=text)
+        await ctx.send(embed=embed)
+
     global voice
     try:
         channel = ctx.author.voice.channel
         logger.info('Вызвана команда "манда"')
         voice = await channel.connect(timeout=10.0)
     except Exception as e:
+        text = Phrases().get_phrase_playing_music('error', len(lst1) - 1)
+        embed = get_embed(title='Проигрывание музыки', color=discord.Colour(COLOR_RED), description=text)
+        await ctx.send(embed=embed)
         logger.error('Error: {}'.format(e))
 
     if count == 0:
@@ -699,26 +706,28 @@ async def stop_playing(ctx):
     
 @client.command(pass_context=True)
 async def info(ctx):
-    await ctx.send("Префикс: !a (английская), если не указано другое\
-                  \nПроигрывание музыки: сыграй <ссылка> (или) <поиск по названию>\
-                  \nОтключение от голосового канала: фсо давай (или) всё пока\
-                  \nОчистка очереди проигрывания: очисти\
-                  \nПауза: стопэ\
-                  \nСнять с паузы: паехали\
-                  \nОстановить воспроизведение: хватит\
-                  \nПобазарить за жизнь: побазарим\
-                  \nРассказать ситуацию на райончике: расскажи чё на районе\
-                  \nРассказать ситуацию где-то ещё: расскажи <Город>\
-                  \nРассказать про погоду: погода <Город>\
-                  \nПробки: пробки <Город>\
-                  \nГолосование: голосование <вариант1> <вариант2>\
-                  \nПроголосовать: голосую <вариант>\
-                  \nСказать, кто долбоёб: кто <описание>\
-                  \nСказать, когда произойдёт что-то: когда <описание>\
-                  \nВычислить вероятность: вероятность <описание>\
-                  \nАнальная рулетка: анальная рулетка\
-                  \nДжон Сина: !CENA\
-                  \nVaider: !vader\
-                  \nОбращайся дарагой")
+    text = "Префикс: !a (английская), если не указано другое\
+              \nПроигрывание музыки: сыграй <ссылка> (или) <поиск по названию>\
+              \nОтключение от голосового канала: фсо давай (или) всё пока\
+              \nОчистка очереди проигрывания: очисти\
+              \nПауза: стопэ\
+              \nСнять с паузы: паехали\
+              \nОстановить воспроизведение: хватит\
+              \nПобазарить за жизнь: побазарим\
+              \nРассказать ситуацию на райончике: расскажи чё на районе\
+              \nРассказать ситуацию где-то ещё: расскажи <Город>\
+              \nРассказать про погоду: погода <Город>\
+              \nПробки: пробки <Город>\
+              \nГолосование: голосование <вариант1> <вариант2>\
+              \nПроголосовать: голосую <вариант>\
+              \nСказать, кто долбоёб: кто <описание>\
+              \nСказать, когда произойдёт что-то: когда <описание>\
+              \nВычислить вероятность: вероятность <описание>\
+              \nАнальная рулетка: анальная рулетка\
+              \nДжон Сина: !CENA\
+              \nVaider: !vader\
+              \nОбращайся дарагой"
+    embed = get_embed(title='Шпора', color=discord.Colour(COLOR_BLUE), description=text)
+    await ctx.send(embed=embed)
 
 client.run(tok)

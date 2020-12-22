@@ -1,5 +1,7 @@
 import os
 import logging
+from random import choice
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
@@ -20,3 +22,29 @@ tok = "NzkwNTUyMTY3NjUxMzQ0Mzg1.X-CRFA.6K1AM1L088_JSP9o7Z4-J5b4sAk"
 yandex_api_key = '3c39ba17-9a2c-4ba4-9e70-9f695fb7eae5'
 whether_api_key = '75f6890557ef108e7ad5b23fd1acf04c'
 
+
+class Phrases(object):
+
+    def get_phrase_playing_music(self, state, queue_len=0):
+        """
+        Возвращает фразу при проигрывании музыки
+        :param state: Состояние, принимает значения "ok"/"queue"/"error"
+        """
+        _phrases = {'ok': ['Сделаю, дорогой', "Да... Хорошая песня, ставлю сиюминутно!", "*Ставит новую пластинку*",
+                           "Ежжи, будет сделано", "Всё для тебя... Включаю"],
+                    'queue': [f'Брат, тут очередь, добавил твой трек. \nДлина очереди: {queue_len}',
+                              f"Добавлено в очередь\nДлина очереди: {queue_len}",
+                              f"А не много вы мне запросов дали?\nДобавлено в очередь\nДлина очереди: {queue_len}",
+                              f"Добавлено в очередь\nДлина очереди: {queue_len}",
+                              f"Скоро сыграю ;)\nДобавлено в очередь\nДлина очереди: {queue_len}",
+                              f"Добавлено в очередь\nДлина очереди: {queue_len}"],
+                    'error': ['Аллах разгневался... Не могу поставить эту песню. (Ошибка воспроизведения)']
+                    }
+        return choice(_phrases.get(state, []))
+
+
+
+COLOR_YELLOW = "#FFC300"
+COLOR_GREEN = "#2ECC71"
+COLOR_BLUE = "#3498DB"
+COLOR_RED = "#C70039"
