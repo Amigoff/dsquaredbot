@@ -1,6 +1,7 @@
 import datetime
 from colorlog import ColoredFormatter
-from config import LOG_LEVEL, LOG_NAME_FORMAT
+from config import LOG_LEVEL, LOG_NAME_FORMAT, LOG_FORMAT
+import logging
 
 
 def logger(name):
