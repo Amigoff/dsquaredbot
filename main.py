@@ -614,9 +614,8 @@ async def play(ctx):
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
         try:
-            os.remove(lst[0])
-            del lst[0]
-            del lst1[0]
+            lst1.pop(0)
+            lst.pop(0)
         except Exception as e:
             pass
     count = 0    
