@@ -605,7 +605,7 @@ async def play(ctx):
         voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
         dur = info["duration"] / 60 or "Стрим"
         if dur != 'Стрим':
-            dur = str(dur) + 'мин.'
+            dur = str(round(dur, 2)) + 'мин.'
         await ctx.send("Играю: " + info['title'] + f'\nДлительность: {dur}\n\n')
 
         while voice.is_playing() or voice.is_paused():
