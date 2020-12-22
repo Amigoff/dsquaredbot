@@ -207,7 +207,6 @@ async def choose(ctx, arg):
 @client.command(pass_context=True)
 async def start_recognizion(ctx, arg=None):
     global NAME
-    await say(ctx, "Начинаем, ежжи, рад тебя снова видеть")
     if not ctx.voice_client:
         await ctx.author.voice.channel.connect()
     
@@ -215,15 +214,15 @@ async def start_recognizion(ctx, arg=None):
         await say(ctx, 'Уже распознаю твою речь, брат, э. Стопаю')
         RECORDING.pop(ctx.author.mention)
         return
+
+    await say(ctx, "Начинаем, ежжи, рад тебя снова видеть")
     RECORDING[ctx.author.mention] = True
     
     wave_file = datetime.datetime.now().strftime("%y%m%d_%H%M%S") + '.wav'
     
     while ctx.voice_client or RECORDING.get(ctx.author.mention):
         open(wave_file, 'a').close()
-        fp = open(wave_file, 'rb')
-
-        if False:
+        if True:
             ctx.voice_client.listen(discord.UserFilter(discord.WaveSink(str(wave_file)), ctx.author))
         else:
             ctx.voice_client.listen(discord.WaveSink(str(wave_file)))
@@ -587,8 +586,7 @@ async def play(ctx):
         }
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             video_link = lst1[0]
-            logger.info(video_link)
-            logger.info("Пытаюсь сыграть:")
+            logger.info(f"Пытаюсь сыграть: {video_link}")
             if not str(video_link).startswith("http"):
                 arg = " ".join(video_link)
                 logger.debug(arg)
@@ -600,7 +598,7 @@ async def play(ctx):
         voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
 
         # await ctx.send("Играю: " + lst[0])
-        await ctx.send("Играю: "+str(info))
+        logger.info(str(info))
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
         try:
