@@ -642,7 +642,7 @@ async def play(ctx, timestamp=None):
 
         # Если timestamp != default, то играем с timestamp
         if timestamp.seconds != 0:
-            ffmpeg_options['options'] += f'-ss {timestamp.seconds}'
+            ffmpeg_options['options'] += f' -ss {timestamp.seconds}'
         else:
             PLAYING_DATE = datetime.datetime.now()
 
