@@ -12,7 +12,7 @@ import datetime
 from recognizer import recorgnize
 from config import *
 from logger import logger
-from copy import deepcopy
+from copy import copy
 
 
 logger = logger('BOT')
@@ -32,8 +32,8 @@ intents.members = True
 client = commands.Bot(command_prefix='~', intents=intents)
 
 RECORDING = {}
-NEED_TO_PLAY_PRIORITY = False
-PRIORITY_TRACK = []
+PLAYING_DATE = None
+
 
 def load_opus_lib(opus_libs=OPUS_LIBS):
     """Загрузка opus"""
@@ -454,8 +454,7 @@ async def random4ik(ctx):
 @client.command(pass_context=True)
 async def say(ctx, *arg):
     global voice
-    global NEED_TO_PLAY_PRIORITY
-    global PRIORITY_TRACK
+    global PLAYING_DATE
     arg_str = ' '.join(arg)
     logger.info('Говорю {}'.format(arg_str))
     try:
@@ -476,15 +475,16 @@ async def say(ctx, *arg):
         
     try:
         if voice.is_playing():
-            voice.pause()
+            if not PLAYING_DATE:
+                PLAYING_DATE = datetime.datetime.now()
 
-            voice2 = deepcopy(voice)
-            voice2.play(discord.FFmpegPCMAudio(filename))
-            voice2.start()
-            while voice2.is_playing():
+            voice.stop()
+            timestamp = datetime.datetime.now() - PLAYING_DATE
+            voice.play(discord.FFmpegPCMAudio(filename))
+            while voice.is_playing():
                 await asyncio.sleep(1)
-                
-            voice.pause()
+
+            await play(ctx, timestamp)
         else:
             voice.play(discord.FFmpegPCMAudio(filename))
             while voice.is_playing() or voice.is_paused():
@@ -600,14 +600,17 @@ async def pizda(ctx):
         await ctx.send(f'Ошибочка бля {e}')
 
 
-async def play(ctx):
+async def play(ctx, timestamp=None):
     global lst
     global lst1
     global count
     global voice
-    global NEED_TO_PLAY_PRIORITY
-    global PRIORITY_TRACK
+    global PLAYING_DATE
     count = 1
+
+    if not timestamp:
+        timestamp = datetime.timedelta(seconds=0)
+
     while len(lst1) > 0:
         ydl_opts = {
             "format": "bestaudio/best",
@@ -635,7 +638,16 @@ async def play(ctx):
 
             URL = info['formats'][0]['url']
 
-        voice.play(discord.FFmpegPCMAudio(URL, **FFMPEG_OPTIONS))
+        ffmpeg_options = copy(FFMPEG_OPTIONS)
+
+        # Если timestamp != default, то играем с timestamp
+        if timestamp.seconds != 0:
+            ffmpeg_options['options'] += f'-ss {timestamp.seconds}'
+        else:
+            PLAYING_DATE = datetime.datetime.now()
+
+        voice.play(discord.FFmpegPCMAudio(URL, **ffmpeg_options))
+
         dur = info["duration"] / 60 or "Стрим"
         if dur != 'Стрим':
             dur = str(round(dur, 2)) + 'мин.'
