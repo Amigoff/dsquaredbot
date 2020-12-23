@@ -25,3 +25,6 @@ gtts
 SpeechRecognition
 wave
 colorlog
+pymorphy2
+gensim
+nltk

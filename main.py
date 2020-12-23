@@ -209,8 +209,8 @@ async def start_recognizion(ctx, *args):
     async def create_tasks():
         loop = asyncio.get_event_loop()
 
-        task1 = loop.create_task(recognizion(ctx, start=True, time_delta=0))
-        task2 = loop.create_task(recognizion(ctx, start=False, time_delta=3))
+        task1 = loop.create_task(recognizion(ctx, start=True, time_delta=0, loop=loop))
+        task2 = loop.create_task(recognizion(ctx, start=False, time_delta=3, loop=loop))
 
         await task1
         await task2
@@ -219,7 +219,7 @@ async def start_recognizion(ctx, *args):
     loop.run_until_complete(create_tasks())
 
 
-async def recognizion(ctx, start=True, time_delta=0):
+async def recognizion(ctx, start=True, time_delta=0, loop=None):
     global NAME
 
     await asyncio.sleep(time_delta)
@@ -261,8 +261,10 @@ async def recognizion(ctx, start=True, time_delta=0):
                 if 'сено' in result:
                     await CENA(ctx)
                     return
-                        
-                await a(ctx, *result.split())
+                loop = asyncio.get_event_loop()
+
+                # await a(ctx, *result.split())
+                task_message_handler = loop.create_task(a(ctx, *result.split()))
 
         except Exception as e:
             if "{}".format(e):
