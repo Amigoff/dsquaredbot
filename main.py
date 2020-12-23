@@ -475,7 +475,7 @@ async def say(ctx, *arg):
         
     try:
         if voice.is_playing():
-             = [filename]
+            PRIORITY_TRACK = [filename]
             NEED_TO_PLAY_PRIORITY = True
         else:
             while voice.is_playing() or voice.is_paused():
