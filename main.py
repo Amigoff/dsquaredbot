@@ -30,7 +30,8 @@ intents.members = True
 client = commands.Bot(command_prefix='~', intents=intents)
 
 RECORDING = {}
-
+NEED_TO_PLAY_PRIORITY = False
+PRIORITY_TRACK = []
 
 def load_opus_lib(opus_libs=OPUS_LIBS):
     """Загрузка opus"""
@@ -452,6 +453,8 @@ async def random4ik(ctx):
 @client.command(pass_context=True)
 async def say(ctx, *arg):
     global voice
+    global NEED_TO_PLAY_PRIORITY
+    global PRIORITY_TRACK
     arg_str = ' '.join(arg)
     logger.info('Говорю {}'.format(arg_str))
     try:
@@ -471,17 +474,12 @@ async def say(ctx, *arg):
     tts.save(filename)
         
     try:
-        try:
-            voice.pause()
-        except:
-            pass
-        voice.play(discord.FFmpegPCMAudio(filename))
-        while voice.is_playing() or voice.is_paused():
-            await asyncio.sleep(1)
-        try:
-            voice.pause()
-        except:
-            pass
+        if voice.is_playing():
+             = [filename]
+            NEED_TO_PLAY_PRIORITY = True
+        else:
+            while voice.is_playing() or voice.is_paused():
+                voice.play(discord.FFmpegPCMAudio(filename))
     except Exception as e:
         logger.warning('err', e)
     os.remove(filename)
@@ -598,6 +596,8 @@ async def play(ctx):
     global lst1
     global count
     global voice
+    global NEED_TO_PLAY_PRIORITY
+    global PRIORITY_TRACK
     count = 1
     while len(lst1) > 0:
         ydl_opts = {
@@ -636,7 +636,17 @@ async def play(ctx):
         embed = get_embed(title='Проигрывание музыки', color=discord.Colour(COLOR_GREEN), description=text)
         await ctx.send(embed=embed)
 
+        player = None
         while voice.is_playing() or voice.is_paused():
+            if NEED_TO_PLAY_PRIORITY:
+                voice.pause()
+                player = voice.create_ffmpeg_player(PRIORITY_TRACK[0])
+                player.start()
+                while player.is_playing():
+                    await asyncio.sleep(1)
+                NEED_TO_PLAY_PRIORITY = False
+                PRIORITY_TRACK.pop(0)
+
             await asyncio.sleep(1)
 
         try:
