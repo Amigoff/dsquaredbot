@@ -12,6 +12,8 @@ import datetime
 from recognizer import recorgnize
 from config import *
 from logger import logger
+from copy import deepcopy
+
 
 logger = logger('BOT')
 
@@ -475,10 +477,13 @@ async def say(ctx, *arg):
     try:
         if voice.is_playing():
             voice.pause()
-            player = voice.create_ffmpeg_player(PRIORITY_TRACK[0])
-            player.start()
-            while player.is_playing():
+
+            voice2 = deepcopy(voice)
+            voice2.play(discord.FFmpegPCMAudio(filename))
+            voice2.start()
+            while voice2.is_playing():
                 await asyncio.sleep(1)
+                
             voice.pause()
         else:
             voice.play(discord.FFmpegPCMAudio(filename))
@@ -640,7 +645,6 @@ async def play(ctx):
         embed = get_embed(title='Проигрывание музыки', color=discord.Colour(COLOR_GREEN), description=text)
         await ctx.send(embed=embed)
 
-        player = None
         while voice.is_playing() or voice.is_paused():
             await asyncio.sleep(1)
 
