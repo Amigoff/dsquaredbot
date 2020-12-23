@@ -478,8 +478,9 @@ async def say(ctx, *arg):
             PRIORITY_TRACK = [filename]
             NEED_TO_PLAY_PRIORITY = True
         else:
+            voice.play(discord.FFmpegPCMAudio(filename))
             while voice.is_playing() or voice.is_paused():
-                voice.play(discord.FFmpegPCMAudio(filename))
+                await asyncio.sleep(1)
     except Exception as e:
         logger.warning('err', e)
     os.remove(filename)
