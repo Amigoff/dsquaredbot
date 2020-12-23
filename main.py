@@ -264,7 +264,6 @@ async def recognizion(ctx, start=True, time_delta=0, loop=None):
                     return
                 loop = asyncio.get_event_loop()
 
-                # await a(ctx, *result.split())
                 task_message_handler = loop.create_task(a(ctx, *result.split()))
 
         except Exception as e:
@@ -475,8 +474,12 @@ async def say(ctx, *arg):
         
     try:
         if voice.is_playing():
-            PRIORITY_TRACK = [filename]
-            NEED_TO_PLAY_PRIORITY = True
+            voice.pause()
+            player = voice.create_ffmpeg_player(PRIORITY_TRACK[0])
+            player.start()
+            while player.is_playing():
+                await asyncio.sleep(1)
+            voice.pause()
         else:
             voice.play(discord.FFmpegPCMAudio(filename))
             while voice.is_playing() or voice.is_paused():
@@ -639,15 +642,6 @@ async def play(ctx):
 
         player = None
         while voice.is_playing() or voice.is_paused():
-            if NEED_TO_PLAY_PRIORITY:
-                voice.pause()
-                player = voice.create_ffmpeg_player(PRIORITY_TRACK[0])
-                player.start()
-                while player.is_playing():
-                    await asyncio.sleep(1)
-                NEED_TO_PLAY_PRIORITY = False
-                PRIORITY_TRACK.pop(0)
-
             await asyncio.sleep(1)
 
         try:
