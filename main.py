@@ -273,7 +273,7 @@ async def recognizion(ctx, start=True, time_delta=0, loop=None):
                 ctx.send('Ошибка: {}'.format(e))
             else: 
                 await say(ctx, 'Ошибка {}, брат'.format(e))
-    RECORDING[ctx.author.mention] = False-
+    RECORDING[ctx.author.mention] = False
 
 
 @client.command(pass_context=True)
