@@ -71,13 +71,13 @@ async def a(ctx, *arg):
     if "сыграй" in arg_str:
         url = arg[1:]
         if len(arg) == 2:
-            await manda(ctx, url[0])
+            await playinit(ctx, url[0])
         else:
-            await manda(ctx, url)
+            await playinit(ctx, url)
 
     elif "фсо" in arg_str or ('всё' in arg_str and 'пока' in arg_str):
         RECORDING = {}
-        await pizda(ctx)
+        await disconnect(ctx)
 
     elif "побазарим" in arg_str:
         await da(ctx)
@@ -252,7 +252,7 @@ async def recognizion(ctx, start=True, time_delta=0, loop=None):
 
         await asyncio.sleep(5)
         ctx.voice_client.stop_listening()
-        # await say(ctx, "Ща распознаем, что ты сказал, долбоёб!")
+        # await say(ctx, "Ща распознаем, что ты сказал!")
         try:
             result = recorgnize(wave_file)
             await ctx.send("- {}".format(result))
@@ -273,25 +273,7 @@ async def recognizion(ctx, start=True, time_delta=0, loop=None):
                 ctx.send('Ошибка: {}'.format(e))
             else: 
                 await say(ctx, 'Ошибка {}, брат'.format(e))
-    RECORDING[ctx.author.mention] = False
-    
-    
-@client.command(pass_context=True)
-async def anal(ctx, arg=None):
-    global lst1
-    global voice
-    try:
-        channel = ctx.author.voice.channel
-        voice = await channel.connect()
-    except:
-        pass
-    num = randint(0, 6)
-    spisAk = ["https://www.youtube.com/watch?v=idJKsVao0Kk", "https://www.youtube.com/watch?v=VWxjcQjHA7o",
-             "https://www.youtube.com/watch?v=NqX7GsLaOJM", "https://www.youtube.com/watch?v=MnnXemPKR7w", "https://www.youtube.com/watch?v=vHjY3okumj4"
-             "https://www.youtube.com/watch?v=KTfyGVI9Yxc"]
-    vid = spisAk[num]
-    lst1.append(vid)
-    await play(ctx)
+    RECORDING[ctx.author.mention] = False-
 
 
 @client.command(pass_context=True)
@@ -589,9 +571,9 @@ def fetch_coordinates(place):
 
 
 @client.command(pass_context=True)
-async def pizda(ctx):
+async def disconnect(ctx):
     try:
-        logger.info('Вызвана команда "пизда"')
+        logger.info('Вызвана команда "disconnect"')
         guild = ctx.message.guild
         voice_client = guild.voice_client
         await voice_client.disconnect()
@@ -678,7 +660,7 @@ def get_embed(title, color=discord.Colour(COLOR_BLUE), description=''):
 
 
 @client.command(pass_context=True)
-async def manda(ctx, url):
+async def playinit(ctx, url):
     global ydl_opts
     global count
     global lst1
@@ -696,7 +678,7 @@ async def manda(ctx, url):
     global voice
     try:
         channel = ctx.author.voice.channel
-        logger.info('Вызвана команда "манда"')
+        logger.info('Вызвана команда "playinit"')
         voice = await channel.connect(timeout=10.0)
     except Exception as e:
         logger.error('Error: {}'.format(e))
@@ -781,8 +763,6 @@ async def info(ctx):
                     value="Сказать, когда произойдёт что-то", inline=False)
     embed.add_field(name="!a вероятность <описание>",
                     value="Вычислить вероятность", inline=False)
-    embed.add_field(name="!anal",
-                    value="Анальная рулетка", inline=False)
     embed.add_field(name="!CENA",
                     value="Джон Сина", inline=False)
     embed.add_field(name="!vader",
